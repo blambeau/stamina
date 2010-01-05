@@ -1,0 +1,16 @@
+digraph small_dfa {
+	graph [rankdir="LR"];
+	node [shape="circle"];
+	zz [label="" width=0.01 height=0.01];
+	0 [shape=doublecircle label="s0"];
+	1 [label="s1"];
+	2 [shape=doublecircle label="s2"];
+	3 [label="s3"];
+	0 -> 1 [label="e0/a"]
+	1 -> 2 [label="e1/b"]
+	1 -> 3 [label="e2/a"]
+	3 -> 2 [label="e3/b"]
+	2 -> 0 [label="e4/c"]
+	1 -> 1 [label="e5/c"]
+	zz -> 3 [label=""]
+}

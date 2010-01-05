@@ -1,0 +1,12 @@
+#!/usr/bin/env ruby
+$LOAD_PATH << File.join(File.dirname(__FILE__),'..','lib')
+require "stamina"
+require "stamina/command/redblue_command"
+begin
+  Stamina::Command::RedBlueCommand.new.main(ARGV)
+rescue => ex
+  puts "Internal error occured, sorry for the inconvenience."
+  puts "If the problem persists, please contact Stamina developpers with the \
+        following backtrace:"
+  raise ex
+end

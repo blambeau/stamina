@@ -1,0 +1,12 @@
+#!/usr/bin/env ruby
+$LOAD_PATH << File.join(File.dirname(__FILE__),'..','lib')
+require "stamina"
+require "stamina/command/adl2dot_command"
+begin
+  Stamina::Command::Adl2DotCommand.new.main(ARGV)
+rescue => ex
+  puts "Internal error occured, sorry for the inconvenience."
+  puts "If the problem persists, please contact Stamina developpers with the \
+        following backtrace:"
+  raise ex
+end
