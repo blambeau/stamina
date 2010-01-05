@@ -10,12 +10,14 @@ version = File.read(lib)[/^\s*VERSION\s*=\s*(['"])(\d\.\d\.\d)\1/, 2]
 task :default => [:all]
 task :all => [:test, :rerdoc]
 
+
 desc "Lauches all tests"
 Rake::TestTask.new do |test|
   test.libs       << [ "lib", "test" ]
   test.test_files =  [ "test/test_all.rb" ]
   test.verbose    =  true
 end
+
 
 desc "Generates rdoc documentation"
 Rake::RDocTask.new do |rdoc|
