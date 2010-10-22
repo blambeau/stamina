@@ -1234,3 +1234,4 @@ module Stamina
   end # class Automaton
     
 end # module Stamina
+require 'stamina/automaton/walking'
