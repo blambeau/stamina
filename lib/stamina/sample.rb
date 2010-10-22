@@ -52,7 +52,7 @@ module Stamina
     def <<(str)
       case str
         when InputString
-          raise(InconsistencyError, "Inconsistent sample on #{str}", caller) if self.include?(str.negate)
+          #raise(InconsistencyError, "Inconsistent sample on #{str}", caller) if self.include?(str.negate)
           @size += 1 
           str.positive? ? (@positive_count += 1) : (@negative_count += 1)
           @strings << str
