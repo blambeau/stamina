@@ -21,8 +21,8 @@ end
 
 desc "Generates rdoc documentation"
 Rake::RDocTask.new do |rdoc|
-  rdoc.rdoc_files.include( "README", "lib/" )
-  rdoc.main     = "README"
+  rdoc.rdoc_files.include( "README.rdoc", "lib/" )
+  rdoc.main     = "README.rdoc"
   rdoc.rdoc_dir = "doc/api"
   rdoc.title    = "Stamina Documentation"
   rdoc.options << "-S" << "-N" << "-H"
