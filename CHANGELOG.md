@@ -1,6 +1,15 @@
 # 0.3.1 / FIX ME
 
-* ...
+* Major Enhancements
+
+    * Implemented the decoration algorithm of Damas10, allowing to decorate states
+      with information propagated from states to states until a fixpoint is reached.
+    * Added Automaton::Metrics module, automatically included, with useful metrics
+      like automaton depth, accepting ratio and so on.
+
+* On the devel side
+
+    * Moved specific automaton tests under test/stamina/automaton/...
 
 # 0.3.0 / 2011-03-24
 

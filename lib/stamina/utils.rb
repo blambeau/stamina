@@ -1,0 +1,1 @@
+require 'stamina/utils/decorate'
