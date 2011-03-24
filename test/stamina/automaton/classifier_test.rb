@@ -150,6 +150,110 @@ module Stamina
         assert_equal(false, @small_nfa.correctly_classify?(sample))
       end
   
+      def test_scoring_on_valid_sample
+        sample = ADL::parse_sample <<-SAMPLE
+          -
+          + b
+          + b c
+          - b c a
+          - b c a c
+          - b c a c a
+          - b c a a
+          + b c a b
+          + b c a b c a c b
+          - z
+          - b z
+        SAMPLE
+        measures = @small_dfa.scoring(sample)
+        assert_equal(sample.positive_count, measures.true_positive)
+        assert_equal(0, measures.false_positive)
+        assert_equal(sample.negative_count, measures.true_negative)
+        assert_equal(0, measures.false_negative)
+        assert_equal(1.0, measures.precision)  
+        assert_equal(1.0, measures.recall)  
+        assert_equal(1.0, measures.sensitivity)  
+        assert_equal(1.0, measures.specificity)  
+        assert_equal(1.0, measures.accuracy)
+      end
+
+      def test_scoring_on_invalid_sample
+        sample = ADL::parse_sample <<-SAMPLE
+          +
+          - b
+          - b c
+          + b c a
+          + b c a c
+          + b c a c a
+          + b c a a
+          - b c a b
+          - b c a b c a c b
+          + z
+          + b z
+        SAMPLE
+        measures = @small_dfa.scoring(sample)
+        assert_equal(0.0, measures.true_positive)
+        assert_equal(sample.negative_count, measures.false_positive)
+        assert_equal(0.0, measures.true_negative)
+        assert_equal(sample.positive_count, measures.false_negative)
+        assert_equal(0.0, measures.precision)  
+        assert_equal(0.0, measures.recall)  
+        assert_equal(0.0, measures.sensitivity)  
+        assert_equal(0.0, measures.specificity)  
+        assert_equal(0.0, measures.accuracy)
+      end
+
+      def test_scoring_with_positive_only
+        sample = ADL::parse_sample <<-SAMPLE
+          +
+          + b
+          + b c
+          + b c a
+          + b c a c
+          + b c a c a
+          + b c a a
+          + b c a b
+          + b c a b c a c b
+          + z
+          + b z
+        SAMPLE
+        measures = @small_dfa.scoring(sample)
+        assert_equal(4.0, measures.true_positive)
+        assert_equal(sample.size-sample.positive_count, measures.false_positive)
+        assert_equal(0, measures.true_negative)
+        assert_equal(sample.size-4.0, measures.false_negative)
+        assert_equal(1.0, measures.precision)  
+        assert_equal(4.0/sample.size, measures.recall)  
+        assert_equal(4.0/sample.size, measures.sensitivity)  
+        #assert_equal(0.0/0.0, measures.specificity)  
+        assert_equal(4.0/sample.size, measures.accuracy)
+      end
+      
+      def test_scoring_with_negative_only
+        sample = ADL::parse_sample <<-SAMPLE
+          -
+          - b
+          - b c
+          - b c a
+          - b c a c
+          - b c a c a
+          - b c a a
+          - b c a b
+          - b c a b c a c b
+          - z
+          - b z
+        SAMPLE
+        measures = @small_dfa.scoring(sample)
+        assert_equal(0.0, measures.true_positive)
+        assert_equal(4.0, measures.false_positive)
+        assert_equal(sample.size-4.0, measures.true_negative)
+        assert_equal(0.0, measures.false_negative)
+        assert_equal(0.0, measures.precision)  
+        #assert_equal(0.0, measures.recall)  
+        #assert_equal(0.0, measures.sensitivity)  
+        assert_equal((sample.size-4.0)/sample.size, measures.specificity)  
+        assert_equal((sample.size-4.0)/sample.size, measures.accuracy)
+      end
+
     end # class ClassifierTest
   end # class Automaton
 end # module Stamina

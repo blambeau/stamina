@@ -20,6 +20,21 @@ module Stamina
       end
       signature
     end
+    alias :classification_signature :signature
+
+    #
+    # Classifies a sample then compute the classification scoring that is obtained
+    # by comparing the signature obtained by classification and the one of the sample
+    # itself. Returns an object responding to methods defined in Scoring module.
+    #
+    # This method is actually a convenient shortcut for:
+    #
+    #    Stamina::Scoring.scoring(signature(sample), sample.signature)
+    #
+    def scoring(sample)
+      Stamina::Scoring.scoring(signature(sample), sample.signature)
+    end
+    alias :classification_scoring :scoring
     
     # 
     # Checks if a labeled sample is correctly classified by the classifier.

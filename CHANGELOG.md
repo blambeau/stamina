@@ -6,6 +6,8 @@
       with information propagated from states to states until a fixpoint is reached.
     * Added Automaton::Metrics module, automatically included, with useful metrics
       like automaton depth, accepting ratio and so on.
+    * Added Scoring module and Classifier#classification_scoring(sample) method
+      with common measures from information retrieval.
 
 * On the devel side
 
