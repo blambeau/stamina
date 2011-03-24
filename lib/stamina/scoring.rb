@@ -68,6 +68,13 @@ module Stamina
       alias :positive_predictive_value :precision
 
       #
+      # Returns the percentage of true negative over all negative
+      # 
+      def negative_predictive_value
+        true_negative.to_f / (true_negative + false_negative)
+      end
+
+      #
       # Returns the percentage of positive strings that were predicted as being
       # positive
       #
@@ -87,6 +94,20 @@ module Stamina
       alias :true_negative_rate :specificity
 
       #
+      # Returns the percentage of false positives
+      #
+      def false_positive_rate
+        false_positive.to_f / (false_positive + true_negative)
+      end
+
+      #
+      # Returns the percentage of false negatives
+      #
+      def false_negative_rate
+        false_negative.to_f / (true_positive + false_negative)
+      end
+
+      #
       # Returns the likelihood that a predicted positive is an actual positive
       # 
       def positive_likelihood
@@ -97,7 +118,7 @@ module Stamina
       # Returns the likelihood that a predicted negative is an actual negative
       # 
       def negative_likelihood
-       specificity / (1.0 - sensitivity)
+       (1.0 - sensitivity) / specificity
       end
 
       #
