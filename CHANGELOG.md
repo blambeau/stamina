@@ -1,4 +1,4 @@
-# 0.3.1 / FIX ME
+# 0.3.1 / 2011-03-24
 
 * Major Enhancements
 
