@@ -1,10 +1,8 @@
 module Stamina
   
-  # The current version of Stamina.
-  VERSION = "0.2.1".freeze
-
 end
-
+require 'stamina/version'
+require 'stamina/loader'
 require 'set'
 require 'enumerator'
 require 'stringio'

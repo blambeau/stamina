@@ -1,29 +1,23 @@
-require "rake/rdoctask"
-require "rake/testtask"
-require "rake/gempackagetask"
-require "rubygems"
-
-dir     = File.dirname(__FILE__)
-lib     = File.join(dir, "lib", "stamina.rb")
-version = File.read(lib)[/^\s*VERSION\s*=\s*(['"])(\d\.\d\.\d)\1/, 2]
-
-task :default => [:all]
-task :all => [:test, :rerdoc]
-
-
-desc "Lauches all tests"
-Rake::TestTask.new do |test|
-  test.libs       = [ "lib", "test" ]
-  test.test_files =  [ "test/test_all.rb" ]
-  test.verbose    =  true
+begin
+  gem "bundler", "~> 1.0"
+  require "bundler/setup"
+rescue LoadError => ex
+  puts ex.message
+  abort "Bundler failed to load, (did you run 'gem install bundler' ?)"
 end
 
+# Dynamically load the gem spec
+$gemspec_file = File.expand_path('../stamina.gemspec', __FILE__)
+$gemspec      = Kernel.eval(File.read($gemspec_file))
 
-desc "Generates rdoc documentation"
-Rake::RDocTask.new do |rdoc|
-  rdoc.rdoc_files.include( "README.rdoc", "lib/" )
-  rdoc.main     = "README.rdoc"
-  rdoc.rdoc_dir = "doc/api"
-  rdoc.title    = "Stamina Documentation"
-  rdoc.options << "-S" << "-N" << "-H"
+# We run tests by default
+task :default => :test
+
+#
+# Install all tasks found in tasks folder
+#
+# See .rake files there for complete documentation.
+#
+Dir["tasks/*.rake"].each do |taskfile|
+  instance_eval File.read(taskfile), taskfile
 end
