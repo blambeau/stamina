@@ -5,18 +5,18 @@ module Stamina
   module Scoring
 
       #
-      # From the signatures of a learned model and a reference, returns an object 
+      # From the signatures of a learned model and a actual, returns an object 
       # responding to all instance methods defined in the Scoring module.
       #
-      def self.scoring(learned, reference, max_size=nil)
-        unless learned.size==reference.size
-          raise ArgumentError, "Signatures must be of same size"
+      def self.scoring(learned, actual, max_size=nil)
+        unless learned.size==actual.size
+          raise ArgumentError, "Signatures must be of same size (#{learned.size} vs. #{actual.size})"
         end
         max_size ||= learned.size
         max_size = learned.size if max_size > learned.size
         tp, fn, fp, tn = 0, 0, 0, 0
         (0...max_size).each do |i|
-          positive, labeled_as = reference[i..i]=='1', learned[i..i]=='1'
+          positive, labeled_as = actual[i..i]=='1', learned[i..i]=='1'
           if positive==labeled_as
             positive ? (tp += 1) : (tn += 1)
           else
@@ -90,14 +90,14 @@ module Stamina
       # Returns the likelihood that a predicted positive is an actual positive
       # 
       def positive_likelihood
-        sensitivity / (1 - specificity)
+        sensitivity / (1.0 - specificity)
       end
 
       #
       # Returns the likelihood that a predicted negative is an actual negative
       # 
-      def positive_likelihood
-       specificity / (1 - sensitivity)
+      def negative_likelihood
+       specificity / (1.0 - sensitivity)
       end
 
       #
@@ -149,6 +149,7 @@ module Stamina
         2.0 * (sensitivity * specificity) / (sensitivity + specificity)
       end
       alias :hbcr :harmonic_balanced_classification_rate
+      alias :harmonic_bcr :harmonic_balanced_classification_rate
     
   end # module Scoring
 end # module Stamina
