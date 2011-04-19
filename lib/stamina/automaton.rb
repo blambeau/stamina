@@ -198,6 +198,15 @@ module Stamina
         (outs.size==@out_edges.size) and not(outs.include?(nil))
       end  
     
+      # Checks if this state is a sink state or not. Sink states are defined as
+      # non accepting states having no outgoing transition or only loop 
+      # transitions.
+      def sink?
+        return false if accepting?
+        out_edges.each{|e| return false unless e.target==self}
+        true
+      end
+
       #
       # Returns an array containing all incoming edges of the state. Edges are
       # sorted if _sorted_ is set to true. If two incoming edges have same symbol

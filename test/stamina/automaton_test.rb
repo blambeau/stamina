@@ -4,6 +4,18 @@ module Stamina
   
   class AutomatonTest < StaminaTest
 
+    def test_state_sink_q 
+      x, y = nil, nil
+      Automaton.new(true) do |fa|
+        x = fa.add_state(:initial => true,  :accepting => true)
+        y = fa.add_state(:initial => false, :accepting => false)
+        fa.connect(0,1,'a')
+        fa.connect(1,1,'b')
+      end
+      assert_equal false, x.sink?
+      assert_equal true, y.sink?
+    end
+
     # Tests that an automaton can be created with onself=true
     def test_new_on_self
       Automaton.new(true) do |fa|
