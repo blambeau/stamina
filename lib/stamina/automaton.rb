@@ -1216,6 +1216,14 @@ module Stamina
       end
     end
     
+    ### public section about adl utilities #######################################
+    public
+
+    # Prints this automaton in ADL format
+    def to_adl(buffer = "")
+      Stamina::ADL.print_automaton(self, buffer)
+    end
+
     ### public section about reordering ##########################################
     public
     
