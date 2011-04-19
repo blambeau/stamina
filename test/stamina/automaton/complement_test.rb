@@ -55,3 +55,4 @@ module Stamina
     end # class ComplementTest
   end # class Automaton
 end # module Stamina
+
