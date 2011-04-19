@@ -43,6 +43,7 @@ module Stamina
       def compute_minimal_dfa(groups)
         indexes = []
         Automaton.new do |fa|
+
           # create one state for each group
           groups.each_with_index do |group,index|
             group.each{|s| indexes[s.index] = index}
@@ -50,13 +51,14 @@ module Stamina
               if memo.nil?
                 s.data
               else
-                {:initial => memo[:initial] || s.initial?,
+                {:initial   => memo[:initial]   || s.initial?,
                  :accepting => memo[:accepting] || s.accepting?,
-                 :error => memo[:error] || s.error?}
+                 :error     => memo[:error]     || s.error?}
               end
             end
             fa.add_state(data)
           end
+
           # connect transitions now
           groups.each_with_index do |group,index|
             group.each do |s|
@@ -69,6 +71,7 @@ module Stamina
               end
             end
           end
+
         end
       end
       
