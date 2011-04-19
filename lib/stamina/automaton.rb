@@ -1244,4 +1244,5 @@ module Stamina
     
 end # module Stamina
 require 'stamina/automaton/walking'
+require 'stamina/automaton/complement'
 require 'stamina/automaton/metrics'
