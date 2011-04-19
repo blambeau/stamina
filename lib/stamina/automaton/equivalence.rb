@@ -4,8 +4,8 @@ module Stamina
     #
     # Checks if this automaton is equivalent to another one.
     #
-    # Both automata must be complemented or not complemented to guarantee that 
-    # this method works.
+    # Automata must be both minimal and complemented to guarantee that this method 
+    # works.
     #
     def equivalent?(other, equiv = nil, key = :equiv_state)
       equiv ||= Proc.new{|s1,s2| (s1.accepting? == s2.accepting?) && 
