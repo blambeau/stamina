@@ -2,7 +2,7 @@ require 'test/unit'
 require 'stamina/stamina_test'
 module Stamina
   class Automaton
-    class ComplementTest < StaminaTest
+    class CompleteTest < StaminaTest
     
       def test_on_not_complete
         x, y, z = nil, nil, nil
@@ -15,7 +15,7 @@ module Stamina
         end
 
         assert_equal false, dfa.complete?
-        dfa.complement!
+        dfa.complete!
         assert_equal true, dfa.complete?
 
         assert_equal 3, dfa.state_count
@@ -35,7 +35,7 @@ module Stamina
           fa.connect(1,0,'a')
         end
         assert_equal true, dfa.complete?
-        dfa.complement!
+        dfa.complete!
         assert_equal 2, dfa.state_count
       end
  
@@ -47,12 +47,12 @@ module Stamina
           fa.connect(0,1,'a')
           fa.connect(1,0,'b')
         end
-        c = dfa.complement
+        c = dfa.complete
         assert_equal 2, dfa.state_count
         assert_equal 3, c.state_count
       end
 
-    end # class ComplementTest
+    end # class CompleteTest
   end # class Automaton
 end # module Stamina
 

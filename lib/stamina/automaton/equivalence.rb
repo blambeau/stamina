@@ -4,7 +4,7 @@ module Stamina
     #
     # Checks if this automaton is equivalent to another one.
     #
-    # Automata must be both minimal and complemented to guarantee that this method 
+    # Automata must be both minimal and complete to guarantee that this method 
     # works.
     #
     def equivalent?(other, equiv = nil, key = :equiv_state)

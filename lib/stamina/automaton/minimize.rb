@@ -5,7 +5,7 @@ module Stamina
     # Checks if this automaton is minimal.
     #
     def minimal?
-      self.minimize <=> self.complement
+      self.minimize <=> self.complete
     end
       
     #

@@ -10,16 +10,16 @@ module Stamina
     end
 
     #
-    # Returns a complemented copy of this automaton
+    # Returns a completed copy of this automaton
     #
-    def complement
-      self.dup.complement!
+    def complete
+      self.dup.complete!
     end
 
     #
-    # Complements this automaton.
+    # Completes this automaton.
     #
-    def complement!(sink_data = {:initial => false, :accepting => false, :error => false})
+    def complete!(sink_data = {:initial => false, :accepting => false, :error => false})
       alph = alphabet
       sink = add_state(sink_data)
       each_state do |s|

@@ -8,7 +8,7 @@ module Stamina
         assert @small_dfa.minimal?
         result = @small_dfa.minimize
         assert result.minimal?
-        assert result.complement <=> @small_dfa.complement
+        assert result.complete <=> @small_dfa.complete
       end
       
       def test_on_example_1
@@ -29,7 +29,7 @@ module Stamina
           2 4 f
           2 4 g
         EOF
-        dfa.complement!
+        dfa.complete!
         assert_equal false, dfa.minimal?
         expected = Stamina::ADL.parse_automaton <<-EOF
           3 7
@@ -44,7 +44,7 @@ module Stamina
           1 2 f
           1 2 g
         EOF
-        expected.complement!
+        expected.complete!
         result = dfa.minimize
         assert result.minimal?
         assert expected <=> result
@@ -108,7 +108,7 @@ module Stamina
           1 2 f
           1 2 g
         EOF
-        expected.complement!
+        expected.complete!
         assert expected.minimal?
         assert expected <=> expected.minimize
       end
@@ -125,7 +125,7 @@ module Stamina
           2 2 b
           2 0 a
         EOF
-        source.complement!
+        source.complete!
         assert_equal true, source.minimal?
       end
       
