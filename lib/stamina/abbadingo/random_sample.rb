@@ -2,62 +2,106 @@ module Stamina
   module Abbadingo
     #
     # Generates a random Sample using the Abbadingo protocol.
-    # 
+    #
     class RandomSample
 
-      # Size of the target classifier
-      attr_reader :dfa_size
-
-      # Creates an algorithm instance with default options
-      def initialize(dfa_size = 64)
-        @dfa_size = dfa_size
-      end
-
-      # Returns the maximal number of a string
-      def max_string_length
-        @max_string_length ||= (2 * Math.log2(dfa_size) + 3).ceil
-      end
-
-      # Returns the number of strings up to max_string_length
-      def string_count
-        # Exactly the same as 16 * (dfa_size ** 2) -1
-        @string_count ||= (2 ** (max_string_length + 1)) - 1;
-      end
-
       #
-      # Returns the length of the string whose identifier is _x_
+      # Implements an enumerator for binary strings whose length lies between 0
+      # and max_length (passed at construction). 
       #
-      def length_for(x)
-        sum = 0
-        (0..max_string_length).each do |length|
-          sum += 2 ** length
-          return length if sum >= x
-        end
-        max_string_length
-      end
+      # The enumerator guarantees that strings are sampled with an uniform distribution 
+      # among them. As the number of strings of a given length is an exponential 
+      # function, this means that you've got 50% change of having a string of length 
+      # max_length, 25% of max_length - 1, 12.5% of max_length - 2 and so on.
+      #
+      # How to use it?
+      #
+      #   # create for strings between 0 and 10 symbols, inclusive
+      #   enum = Stamina::Abbadingo::StringEnumerator.new(10)
+      #
+      #   # this is how to generate strings while a predicate is true
+      #   enum.each do |s| 
+      #     # s is an array of binary integer symbols (0 or 1)
+      #     # true for continuing, false otherwise
+      #     return (true || false)
+      #   end
+      #
+      #   # this is how to generate a fixed number of strings
+      #   (1..1000).collect{ enum.one }
+      #
+      # How does it work? Well, the distribution of strings is as follows:
+      #
+      #    length     [n]b_strings        [c]umul       log2(n)         log2(c)    log2(c).floor
+      #                   (2**n)         2**(n+1)-1
+      #      0               1               1       0.0000000000       0.000000        0
+      #      1               2               3       1.0000000000       1.584963        1
+      #      2               4               7       2.0000000000       2.807355        2
+      #      3               8              15       3.0000000000       3.906891        3
+      #      4              16              31       4.0000000000       4.954196        4
+      #      5              32              63       5.0000000000       5.977280        5
+      #
+      # where _cumul_ is the total number of string upto _length_ symbols.
+      #
+      # Therefore, the idea is to see each string has an identifier, say _x_,
+      # between 1 and 2**(max_length+1)-1 (see max). 
+      #   * The length of the _x_th string is log2(x).floor (see length_for)
+      #   * The string itself is the binary decomposition of x, up to length_for(x) 
+      #     symbols (see string_for)
+      #
+      # As those identifiers naturally respect the exponential distribution, sampling
+      # the strings is the same as taking string_for(x) for random x upto _max_.
+      #
+      class StringEnumerator
+        include Enumerable
 
-      # Generates a single string
-      def generate_string
-        y = Kernel.rand(string_count)
-        length = length_for(1 + y)
-        s = ""
-        length.times{ s << Kernel.rand(2).to_s }
-        s
-      end
+        # Maximal length of a string
+        attr_reader :max_length
 
-      # Generates a full sample of _size_ strings, without replacement
-      def generate_sample(classifier, size = dfa_size ** 2)
-        s, seen = Stamina::Sample.new, {}
-        until s.size == size 
-          string = generate_string
-          next if seen[string]
-          if classifier.label_of(string) == 0
-            s << "- #{string}"
-          else
-            s << "+ #{string}"
-          end
+        def initialize(max_length = 16)
+          @max_length = max_length
         end
-      end
+
+        #
+        # Returns the length of the string whose identifier is _x_ (> 0)
+        #
+        def length_for(x)
+          Math.log2(x).floor
+        end
+
+        #
+        # Returns the binary string whose identifier is _x_ (> 0)
+        #
+        def string_for(x)
+          length = length_for(x)
+          (0..length-1).collect{|i| (x >> i) % 2}
+        end
+
+        # 
+        # Returns the maximum identifier, which is also the number of strings
+        # up to max_length symbols
+        # 
+        def max
+          @max ||= 2 ** (max_length+1) - 1
+        end
+
+        #
+        # Generates a string at random
+        # 
+        def one
+          string_for(1+Kernel.rand(max))
+        end
+
+        #
+        # Yields the block with a random string, until the block return false 
+        # or nil.
+        #
+        def each
+          begin 
+            cont = yield(one)
+          end while cont
+        end
+
+      end # class StringEnumerator
 
     end # class RandomSample
   end # module Abbadingo
