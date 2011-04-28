@@ -2,7 +2,7 @@ module Stamina
   module QuicklCommands
     class Main
       # 
-      # Generates samples Abbadingo's protocol
+      # Generates samples following Abbadingo's protocol
       #
       # SYNOPSIS
       #   #{program_name} #{command_name} target.adl
