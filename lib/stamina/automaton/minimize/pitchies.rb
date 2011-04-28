@@ -54,7 +54,7 @@ module Stamina
 
         # Execute the minimizer
         def self.execute(automaton, options={})
-          Pitchies.new(automaton.complete, options).main
+          Pitchies.new(automaton.strip.complete!, options).main
         end
       
       end # class Pitchies

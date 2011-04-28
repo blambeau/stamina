@@ -33,6 +33,13 @@ module Stamina
           assert_equivalent(algo.execute(dfa), min)
         end
 
+        def test_it_strips_when_needed
+          return unless algo
+          dfa = load_adl_automaton("should_strip_1.adl", __FILE__)
+          min = load_adl_automaton("should_strip_1.min.adl", __FILE__)
+          assert_equivalent(algo.execute(dfa), min)
+        end
+
         def test_it_has_no_effect_on_already_minimal
           return unless algo
           dfa = load_adl_automaton("rice_edu_13.min.adl", __FILE__)

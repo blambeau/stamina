@@ -107,7 +107,7 @@ module Stamina
         
         # Execute the minimizer
         def self.execute(automaton, options={})
-          Hopcroft.new(automaton.complete, options).main
+          Hopcroft.new(automaton.strip.complete!, options).main
         end
       
       end # class Hopcroft
