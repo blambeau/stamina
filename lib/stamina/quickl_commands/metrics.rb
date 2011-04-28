@@ -23,15 +23,20 @@ module Stamina
 
           # Loads the target automaton
           input = (args.size == 1 ? File.read(args.first) : $stdin.readlines.join("\n"))
-          target = Stamina::ADL::parse_automaton(input)
-
-          # Print metrics now
-          puts "Alphabet size:   #{target.alphabet_size}"
-          puts "State count:     #{target.state_count}"
-          puts "Edge count:      #{target.edge_count}"
-          puts "Degree (avg):    #{target.avg_degree}"
-          puts "Accepting ratio: #{target.accepting_ratio}"
-          puts "Depth:           #{target.depth}"
+          begin
+            target = Stamina::ADL::parse_automaton(input)
+            puts "Alphabet size:   #{target.alphabet_size}"
+            puts "State count:     #{target.state_count}"
+            puts "Edge count:      #{target.edge_count}"
+            puts "Degree (avg):    #{target.avg_degree}"
+            puts "Accepting ratio: #{target.accepting_ratio}"
+            puts "Depth:           #{target.depth}"
+          rescue ADL::ParseError 
+            sample = Stamina::ADL::parse_sample(input)
+            puts "Size:     #{sample.size}"
+            puts "Positive: #{sample.positive_count} (#{sample.positive_count.to_f / sample.size})"
+            puts "Negative: #{sample.negative_count} (#{sample.negative_count.to_f / sample.size})"
+          end
         end
         
       end # class Metrics
