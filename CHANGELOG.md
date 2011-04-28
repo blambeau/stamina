@@ -1,6 +1,16 @@
 # 0.3.2 / FIX ME
 
-* ...
+* Major Enhancements
+
+    * Added Automaton#to_adl as an shortcut for Stamina::ADL::print_automaton(...)
+    * Added Automaton completion (all strings parsable) under Automaton#complete[!?]
+    * Added Automaton stripping (removal of unreachable states) under Automaton#strip[!]
+    * Added Automaton minimization (Hopcroft + Pitchies) under Automaton#minimize
+    * Added Abbadingo generators
+
+* Bug fixes
+
+    * Fixed a bug in Automaton#depth when some states are unreachable
 
 # 0.3.1 / 2011-03-24
 
