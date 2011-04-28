@@ -1,6 +1,7 @@
 module Stamina
   
 end
+require 'stamina/ext/math'
 require 'stamina/version'
 require 'stamina/loader'
 require 'set'

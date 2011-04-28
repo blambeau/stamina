@@ -1,7 +1,7 @@
 module Stamina
   module Abbadingo
     #
-    # Generates DFA using the Abbadingo protocol.
+    # Generates a random DFA using the Abbadingo protocol.
     # 
     class RandomDFA
 
