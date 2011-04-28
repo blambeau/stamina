@@ -5,10 +5,6 @@ module Stamina
     module Minimize
       class MinimizeTest < StaminaTest
 
-        def assert_equivalent(expected, dfa)
-          assert expected.complete.equivalent?(dfa.complete)
-        end
-
         # To be overriden
         def algo 
           nil

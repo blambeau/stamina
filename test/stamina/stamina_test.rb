@@ -68,6 +68,13 @@ module Stamina
       end
     end
   
-  end # class StaminaTest
+    def assert_not_equivalent(expected, dfa)
+      assert !expected.complete.equivalent?(dfa.complete)
+    end
+  
+    def assert_equivalent(expected, dfa)
+      assert expected.complete.equivalent?(dfa.complete)
+    end
 
+  end # class StaminaTest
 end # module Stamina
