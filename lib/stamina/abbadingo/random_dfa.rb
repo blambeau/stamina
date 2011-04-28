@@ -29,7 +29,7 @@ module Stamina
 
         # Generate all edges
         dfa.each_state do |source|
-          ["a", "b"].each do |symbol|
+          ["0", "1"].each do |symbol|
             target = dfa.ith_state(Kernel.rand(dfa.state_count))
             dfa.connect(source, target, symbol)
           end

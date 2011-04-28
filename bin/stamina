@@ -1,0 +1,10 @@
+#!/usr/bin/env ruby
+require 'rubygems'
+require 'bundler'
+Bundler.setup(:default)
+
+$LOAD_PATH.unshift File.expand_path('../../lib', __FILE__)
+require "stamina/quickl_commands"
+
+Stamina::QuicklCommands::Main.run(ARGV, __FILE__)
+

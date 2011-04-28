@@ -122,13 +122,19 @@ module Stamina
           seen.size < nb
         end
 
+        # Make them 
+        strings = seen.keys.collect{|s| InputString.new(s, classifier.accepts?(s))}
+        pos, neg = strings.partition{|s| s.positive?}
+
         # Split them, 1800 in test and the rest in training set
-        test, training = Sample.new, Sample.new
-        seen.keys.each_with_index do |s, i|
-          string = InputString.new(s, classifier.accepts?(s))
-          (i < 1800 ? test : training) << string
+        if (pos.size > 900) && (neg.size > 900)
+          pos_test, pos_training = pos[0...900], pos[900..-1]
+          neg_test, neg_training = neg[0...900], neg[900..-1]
+        else
+          pos_test, pos_training = pos.partition{|s| Kernel.rand < 0.5}
+          neg_test, neg_training = neg.partition{|s| Kernel.rand < 0.5}
         end
-        [test, training]
+        [Sample.new(pos_training + neg_training), Sample.new(pos_test + neg_test)]
       end
 
     end # class RandomSample

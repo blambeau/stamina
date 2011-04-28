@@ -28,9 +28,10 @@ module Stamina
     #
     # Creates an empty sample.
     #
-    def initialize()
+    def initialize(strings = nil)
       @strings = []
       @size, @positive_count, @negative_count = 0, 0, 0
+      strings.each{|s| self << s } unless strings.nil?
     end
     
     #
