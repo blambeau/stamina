@@ -1,5 +1,8 @@
 module Stamina
   
+  # Raised when an algorithm explicitely abords something
+  class Abord < StandardError; end
+
   # Main class of all stamina errors.
   class StaminaError < StandardError; end
   
