@@ -55,10 +55,10 @@ module Stamina
       end
 
       def test_execute
-        dfa = RandomDFA.new(64).execute
+        dfa = RandomDFA.new(32).execute
         test, training = RandomSample.execute(dfa)
-        puts "#{test.size} #{test.positive_count} #{test.negative_count}" 
-        puts "#{training.size} #{training.positive_count} #{training.negative_count}" 
+#        puts "#{test.size} #{test.positive_count} #{test.negative_count}" 
+#        puts "#{training.size} #{training.positive_count} #{training.negative_count}" 
         assert dfa.correctly_classify?(training)
         assert dfa.correctly_classify?(test)
       end

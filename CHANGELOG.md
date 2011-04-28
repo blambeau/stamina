@@ -1,4 +1,4 @@
-# 0.3.2 / FIX ME
+# 0.4.0 / FIX ME
 
 * Major Enhancements
 

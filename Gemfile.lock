@@ -1,13 +1,15 @@
 PATH
   remote: .
   specs:
-    stamina (0.3.1)
+    stamina (0.4.0)
+      quickl (~> 0.2.0)
 
 GEM
   remote: http://rubygems.org/
   specs:
     bluecloth (2.0.11)
     diff-lcs (1.1.2)
+    quickl (0.2.0)
     rake (0.8.7)
     rspec (2.4.0)
       rspec-core (~> 2.4.0)
