@@ -6,7 +6,7 @@
     * Added Automaton completion (all strings parsable) under Automaton#complete[!?]
     * Added Automaton stripping (removal of unreachable states) under Automaton#strip[!]
     * Added Automaton minimization (Hopcroft + Pitchies) under Automaton#minimize
-    * Added Abbadingo generators
+    * Added Abbadingo generators under Abbadingo::RandomDFA and Abbadingo::RandomSample
 
 * Bug fixes
 
