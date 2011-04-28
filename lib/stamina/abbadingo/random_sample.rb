@@ -73,7 +73,7 @@ module Stamina
         #
         def string_for(x)
           length = length_for(x)
-          (0..length-1).collect{|i| (x >> i) % 2}
+          (0..length-1).collect{|i| ((x >> i) % 2).to_s}
         end
 
         # 
@@ -102,6 +102,34 @@ module Stamina
         end
 
       end # class StringEnumerator
+
+      #
+      # Generates a Sample instance with _nb_ strings randomly sampled with a 
+      # uniform distribution over all strings up   
+      #
+      def self.execute(classifier, max_length = classifier.depth + 3)
+        enum = StringEnumerator.new(max_length)
+
+        # We generate 1800 strings for the test set plus n^2/2 strings for
+        # the training set. If there are no enough strings available, we generate
+        # the maximum we can
+        seen = {}
+        nb = Math.min(1800 + (classifier.state_count**2), enum.max)
+
+        # Let's go now
+        enum.each do |s|
+          seen[s] = true
+          seen.size < nb
+        end
+
+        # Split them, 1800 in test and the rest in training set
+        test, training = Sample.new, Sample.new
+        seen.keys.each_with_index do |s, i|
+          string = InputString.new(s, classifier.accepts?(s))
+          (i < 1800 ? test : training) << string
+        end
+        [test, training]
+      end
 
     end # class RandomSample
   end # module Abbadingo

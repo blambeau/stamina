@@ -9,3 +9,12 @@ if RUBY_VERSION < "1.9"
   end
 
 end
+
+def Math.max(i, j)
+  i > j ? i : j
+end
+
+def Math.min(i, j)
+  i < j ? i : j
+end
+

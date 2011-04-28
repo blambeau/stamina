@@ -19,12 +19,12 @@ module Stamina
       def test_string_for
         rs = RandomSample::StringEnumerator.new
         assert_equal [], rs.string_for(1)
-        assert_equal [0], rs.string_for(2)
-        assert_equal [1], rs.string_for(3)
-        assert_equal [0, 0], rs.string_for(4)
-        assert_equal [1, 0], rs.string_for(5)
-        assert_equal [0, 1], rs.string_for(6)
-        assert_equal [1, 1], rs.string_for(7)
+        assert_equal ["0"], rs.string_for(2)
+        assert_equal ["1"], rs.string_for(3)
+        assert_equal ["0", "0"], rs.string_for(4)
+        assert_equal ["1", "0"], rs.string_for(5)
+        assert_equal ["0", "1"], rs.string_for(6)
+        assert_equal ["1", "1"], rs.string_for(7)
       end
 
       def test_string_for_generates_all_diff
@@ -52,6 +52,15 @@ module Stamina
         assert((prop[-1] >= 0.45) && (prop[-1] <= 0.55))
         assert((prop[-2] >= 0.2) && (prop[-2] <= 0.3))
         assert((prop[-3] >= 0.1) && (prop[-3] <= 0.15))
+      end
+
+      def test_execute
+        dfa = RandomDFA.new(64).execute
+        test, training = RandomSample.execute(dfa)
+        puts "#{test.size} #{test.positive_count} #{test.negative_count}" 
+        puts "#{training.size} #{training.positive_count} #{training.negative_count}" 
+        assert dfa.correctly_classify?(training)
+        assert dfa.correctly_classify?(test)
       end
 
     end # class RandomDFATest
