@@ -68,41 +68,41 @@ module Stamina
         # Main method of the algorithm
         def main
           # Partition states a first time according to accepting/non accepting
-          @blocks = initial_partition # P in pseudo code
-          @to_refine = @blocks.dup    # W in pseudo code
+          @partition = initial_partition # P in pseudo code
+          @worklist = @partition.dup     # W in pseudo code
           
           # Until a block needs to be refined
-          until @to_refine.empty?
-            refined = @to_refine.pop
+          until @worklist.empty?
+            refined = @worklist.pop
             
             # We compute the reverse delta on the group and look at the groups
             rdelta = reverse_delta(refined)
             rdelta.each_pair do |symbol, sources| # sources is la in pseudo code
               
               # Find blocks to be refined
-              @blocks.dup.each_with_index do |block, index| # block is R in pseudo code
+              @partition.dup.each_with_index do |block, index| # block is R in pseudo code
                 next if block.subset?(sources)
                 intersection = block & sources    # R1 in pseudo code
                 next if intersection.empty?
                 difference = block - intersection # R2 in pseudo code
                 
                 # replace R in P with R1 and R2
-                @blocks[index] = intersection
-                @blocks << difference
+                @partition[index] = intersection
+                @partition << difference
                 
                 # Adds the new blocks as to be refined
-                if @to_refine.include?(block)
-                  @to_refine.delete(block)
-                  @to_refine << intersection << difference
+                if @worklist.include?(block)
+                  @worklist.delete(block)
+                  @worklist << intersection << difference
                 else
-                  @to_refine << (intersection.size <= difference.size ? intersection : difference)
+                  @worklist << (intersection.size <= difference.size ? intersection : difference)
                 end
-              end # @blocks.each
+              end # @partition.each
               
             end # rdelta.each_pair
-          end # until @to_refine.empty?
+          end # until @worklist.empty?
           
-          compute_minimal_dfa(@blocks)
+          compute_minimal_dfa(@partition)
         end # def main
         
         # Execute the minimizer

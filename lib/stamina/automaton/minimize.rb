@@ -21,3 +21,5 @@ module Stamina
   end # class Automaton
 end # module Stamina
 require 'stamina/automaton/minimize/hopcroft'
+require 'stamina/automaton/minimize/pitchies'
+

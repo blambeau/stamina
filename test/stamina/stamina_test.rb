@@ -18,6 +18,10 @@ module Stamina
   # - @nfa_examples is an array containing non-deterministic automaton only.
   #
   class StaminaTest < Test::Unit::TestCase
+
+    def load_adl_automaton(file, resolver)
+      Stamina::ADL.parse_automaton_file(File.expand_path("../#{file}", resolver))
+    end
   
     # Creates a small automaton for the sake of simple tests
     def setup
