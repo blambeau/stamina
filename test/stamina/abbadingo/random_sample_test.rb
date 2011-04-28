@@ -28,10 +28,17 @@ module Stamina
         max = 2*(sample.dfa_size ** 2)
         max.times{ lengths[sample.generate_string.length] += 1 }
         assert (lengths.keys - (0..sample.max_string_length).to_a).empty?
+        assert (lengths.keys.size > 5)
         prop = (0..sample.max_string_length).collect{|i| lengths[i].to_f/max}
         assert prop[-1] >= 0.4 and prop[-1] <= 0.6
         assert prop[-2] >= 0.2 and prop[-1] <= 0.3
         assert prop[-3] >= 0.1 and prop[-1] <= 0.15
+      end
+
+      def test_it_generates_empty_string
+        sample, count = RandomSample.new(1), 0
+        count += 1 until (sample.generate_string.length == 0) || (count == 100) 
+        assert count < 100
       end
 
     end # class RandomDFATest
