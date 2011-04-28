@@ -22,7 +22,7 @@ module Stamina
           raise Quickl::Help unless args.size <= 1
 
           # Loads the target automaton
-          input = (args.size == 1 ? File.read(args.first) : $stdin)
+          input = (args.size == 1 ? File.read(args.first) : $stdin.readlines.join("\n"))
           target = Stamina::ADL::parse_automaton(input)
 
           # Print metrics now
