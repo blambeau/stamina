@@ -43,7 +43,7 @@ module Stamina
 
           # Induce the DFA
           t1 = Time.now
-          dfa = Stamina::Induction::RedBlue.execute(sample, {:verbose => verbose})
+          dfa = Stamina::Induction::BlueFringe.execute(sample, {:verbose => verbose})
           t2 = Time.now
 
           # Flush result

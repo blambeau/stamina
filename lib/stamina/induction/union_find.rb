@@ -86,7 +86,7 @@ module Stamina
     # == Transactional support
     #
     # The main aim of this UnionFind is to make the implementation induction algorithms 
-    # Stamina::Induction::RPNI and Stamina::Induction::RedBlue (sufficiently) efficient, 
+    # Stamina::Induction::RPNI and Stamina::Induction::BlueFringe (sufficiently) efficient, 
     # simple and readable. These algorithms rely on a try-and-error strategy are must be
     # able to revert the changes they have made during their last try. The transaction 
     # support implemented by this data structure helps them achieving this goal. For this
@@ -129,7 +129,7 @@ module Stamina
         # Duplicates this node, ensuring that future changes will not affect the copy. 
         # Please note that the user data itself is not duplicated and is not expected 
         # to change. This property (not changing user data) is respected by the RPNI
-        # and RedBlue classes as implemented in this library.
+        # and BlueFringe classes as implemented in this library.
         #
         def dup
           Node.new(@parent, @data)
