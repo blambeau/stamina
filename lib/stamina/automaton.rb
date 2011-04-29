@@ -373,8 +373,8 @@ module Stamina
       # 
       def dfa_delta(symbol)
         return nil if symbol.nil?
-        @out_edges.each {|e| return e.target if e.symbol==symbol}
-        return nil
+        edge = @out_edges.find{|e| e.symbol==symbol}
+        edge.nil? ? nil : edge.target
       end
     
       #
@@ -465,10 +465,14 @@ module Stamina
       end
     
       # Returns edge symbol.
-      def symbol() @data[:symbol] end
+      def symbol() 
+        @data[:symbol] 
+      end
     
       # Sets edge symbol.
-      def symbol=(symbol) @data[:symbol]=symbol end
+      def symbol=(symbol) 
+        @data[:symbol] = symbol 
+      end
     
       alias :source :from
       alias :target :to
