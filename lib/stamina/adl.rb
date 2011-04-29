@@ -71,11 +71,11 @@ module Stamina
               # looking for |number initial accepting|
               raise(ADL::ParseError,
                     "Parse error line #{line_number}: state definition expected, "\
-                    "'#{l}' found.") unless /^(\S+)\s+(true|false)\s+(true|false)$/ =~ l
-              id, initial, accepting = $1, $2, $3
-              initial, accepting = ("true"==initial), ("true"==accepting)
+                    "'#{l}' found.") unless /^(\S+)\s+(true|false)\s+(true|false)(\s+(true|false))?$/ =~ l
+              id, initial, accepting, error = $1, $2, $3, $5
+              initial, accepting, error = ("true"==initial), ("true"==accepting), ("true"==error)
             
-              state = fa.add_state(:initial => initial, :accepting => accepting)
+              state = fa.add_state(:initial => initial, :accepting => accepting, :error => error)
               state[:name]=id.to_s
               states[id] = state
             
@@ -142,7 +142,7 @@ module Stamina
     def self.print_automaton(fa, buffer="")
       buffer << "#{fa.state_count.to_s} #{fa.edge_count.to_s}" << "\n"
       fa.states.each do |s|
-        buffer << "#{s.index.to_s} #{s.initial?} #{s.accepting?}" << "\n"
+        buffer << "#{s.index.to_s} #{s.initial?} #{s.accepting?}" << (s.error? ? " true" : "") << "\n"
       end
       fa.edges.each do |e|
         buffer << "#{e.source.index.to_s} #{e.target.index.to_s} #{e.symbol.to_s}" << "\n"

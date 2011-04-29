@@ -486,6 +486,31 @@ module Stamina
         EOF
       end
     end
+
+    def test_allows_error_states
+      dfa = ADL::parse_automaton <<-EOF
+        5 0
+        0 true true true
+        1 false false true
+        2 false false false
+        3 false true false
+        4 false true
+      EOF
+      assert dfa.ith_state(0).accepting? && dfa.ith_state(0).error?
+      assert !dfa.ith_state(1).accepting? && dfa.ith_state(1).error?
+      assert !dfa.ith_state(2).accepting? && !dfa.ith_state(2).error?
+      assert dfa.ith_state(3).accepting? && !dfa.ith_state(3).error?
+      assert !dfa.ith_state(4).error?
+    end
+
+    def test_flushes_error_states
+      dfa = ADL::parse_automaton <<-EOF
+        2 0
+        0 true false
+        1 false false true
+      EOF
+      assert_equal "1 false false true", dfa.to_adl.split("\n")[2].strip
+    end
+
   end # class ADLTest
-    
 end # module Stamina
