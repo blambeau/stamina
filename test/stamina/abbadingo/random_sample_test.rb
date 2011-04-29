@@ -73,24 +73,6 @@ module Stamina
        end
 
 
-      def test_it_can_be_used_on_big_dfas
-        dfa = RandomDFA.new(64).execute
-        training, test = RandomSample.execute(dfa)
-
-        assert test.size > 0
-        assert training.size > 0
-
-        # check training sample
-        assert training.positive_count > 0 
-        assert training.negative_count > 0
-        assert dfa.correctly_classify?(training)
-
-        # check test sample
-        assert test.positive_count > 0 
-        assert test.negative_count > 0
-        assert dfa.correctly_classify?(test)
-       end
-
     end # class RandomDFATest
   end # module Abbadingo
 end # module Stamina
