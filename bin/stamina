@@ -4,7 +4,7 @@ require 'bundler'
 Bundler.setup(:default)
 
 $LOAD_PATH.unshift File.expand_path('../../lib', __FILE__)
-require "stamina/quickl_commands"
+require "stamina/command"
 
-Stamina::QuicklCommands::Main.run(ARGV, __FILE__)
+Stamina::Command.run(ARGV, __FILE__)
 

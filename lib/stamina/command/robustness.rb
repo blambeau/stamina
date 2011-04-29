@@ -1,5 +1,5 @@
 module Stamina
-  module QuicklCommands
+  class Command
     module Robustness
 
       # Checks that a given file is readable or raises a Quickl::IOAccessError
@@ -17,6 +17,6 @@ module Stamina
       end
       
     end # module Robustness
-  end # module QuicklCommands
+  end # class Command
 end # module Stamina
 
