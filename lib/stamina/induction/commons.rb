@@ -24,11 +24,6 @@ module Stamina
       # Additional options of the algorithm
       attr_reader :options
       
-      # Creates an algorithm instance with given options.
-      def initialize(options={})
-        @options = DEFAULT_OPTIONS.merge(options)
-      end
-
       # Is the verbose mode on ?
       def verbose?
         @verbose ||= !!options[:verbose]

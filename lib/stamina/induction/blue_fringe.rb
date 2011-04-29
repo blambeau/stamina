@@ -31,6 +31,12 @@ module Stamina
       # Union-find data structure used internally
       attr_reader :ufds
       
+      # Creates an algorithm instance with given options.
+      def initialize(options={})
+        raise ArgumentError, "Invalid options #{options.inspect}" unless options.is_a?(Hash)
+        @options = DEFAULT_OPTIONS.merge(options)
+      end
+
       #
       # Computes the score of a single (group) merge. Returned value is 1 if both are 
       # accepting states or both are error states and 0 otherwise. Note that d1 and d2
