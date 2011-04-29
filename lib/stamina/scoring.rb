@@ -171,6 +171,34 @@ module Stamina
       end
       alias :hbcr :harmonic_balanced_classification_rate
       alias :harmonic_bcr :harmonic_balanced_classification_rate
+
+      MEASURES = [
+        :false_positive, :false_negative,
+        :true_positive, :true_negative,
+        :accuracy, :error_rate,
+        :precision, :recall, :f_measure,
+        :false_positive_rate, :false_negative_rate,
+        :true_positive_rate, :true_negative_rate,
+        :positive_predictive_value, :negative_predictive_value,
+        :sensitivity, :specificity,
+        :positive_likelihood, :negative_likelihood,
+        :balanced_classification_rate, :balanced_error_rate, :harmonic_bcr
+      ]
+      def to_s
+        s = ""
+        MEASURES.each do |m|
+          vals = case val = self.send(m.to_sym)
+            when Integer
+              "%s" % val
+            when Float
+              "%.5f" % val
+            else
+              "%s" % val
+          end
+          s += "%30s: %10s\n" % [m.to_s, vals]
+        end
+        s
+      end
     
   end # module Scoring
 end # module Stamina
