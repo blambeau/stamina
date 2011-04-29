@@ -1,6 +1,6 @@
 require File.expand_path('../../commons', __FILE__)
 
-size = 64
+size = 128
 
 # Generate a dfa and a training sample
 dfa_file = File.expand_path("../#{size}.adl", __FILE__)
