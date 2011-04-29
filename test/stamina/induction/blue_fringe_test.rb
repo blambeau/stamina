@@ -1,28 +1,28 @@
 require File.join(File.dirname(__FILE__), "induction_test")
 module Stamina
   module Induction
-    class RedBlueTest < Stamina::Induction::InductionTest
+    class BlueFringeTest < Stamina::Induction::InductionTest
       
-      # Factors a ready to be tested RedBlue instance
-      def redblue(ufds)
-        redblue = Stamina::Induction::RedBlue.new(:verbose => false)
-        redblue.instance_eval do
+      # Factors a ready to be tested BlueFringe instance
+      def blue_fringe(ufds)
+        blue_fringe = Stamina::Induction::BlueFringe.new(:verbose => false)
+        blue_fringe.instance_eval do
           @ufds = ufds
         end
-        redblue
+        blue_fringe
       end
       
       def test_merge_and_determinize_score
-        redblue = redblue(factor_ufds)
-        assert_equal nil, redblue.merge_and_determinize_score(1, 0)
-        assert_equal 1, redblue.merge_and_determinize_score(1, 3)
-        assert_equal 1, redblue.merge_and_determinize_score(2, 0)
+        blue_fringe = blue_fringe(factor_ufds)
+        assert_equal nil, blue_fringe.merge_and_determinize_score(1, 0)
+        assert_equal 1, blue_fringe.merge_and_determinize_score(1, 3)
+        assert_equal 1, blue_fringe.merge_and_determinize_score(2, 0)
       end
       
       def test_main_whole_execution
         ufds = factor_ufds
-        redblue = redblue(ufds)
-        assert_equal [0, 1, 0, 1, 0, 1, 0, 0, 1, 0], redblue.main(ufds).to_a
+        blue_fringe = blue_fringe(ufds)
+        assert_equal [0, 1, 0, 1, 0, 1, 0, 0, 1, 0], blue_fringe.main(ufds).to_a
       end
       
       def test_execute_whole_execution
@@ -35,7 +35,7 @@ module Stamina
           1 0 b
           1 1 a
         EOF
-        dfa = RedBlue.execute(@sample)
+        dfa = BlueFringe.execute(@sample)
         assert_equal true, @sample.correctly_classified_by?(dfa)
         assert_equal @sample.signature, dfa.signature(@sample)
         assert_nil equivalent?(expected, dfa)
@@ -48,7 +48,7 @@ module Stamina
           sample = Stamina::ADL.parse_sample_file(sample_file)
           expected = Stamina::ADL.parse_automaton_file(File.join(here, "redblue_#{name}_expected.adl"))
           assert sample.correctly_classified_by?(expected)
-          dfa = RedBlue.execute(sample)
+          dfa = BlueFringe.execute(sample)
           assert sample.correctly_classified_by?(dfa)
           assert_equal sample.signature, dfa.signature(sample)
           assert_nil equivalent?(expected, dfa)
@@ -59,12 +59,12 @@ module Stamina
       def test_on_public_characteristic_example
         example_folder = File.join(File.dirname(__FILE__), '..', '..', '..', 'example', 'basic')
         sample = Stamina::ADL.parse_sample_file(File.join(example_folder, 'characteristic_sample.adl'))
-        redblued = Stamina::Induction::RedBlue.execute(sample)
-        assert_equal 4, redblued.state_count
-        s0, = redblued.initial_state
-        s1 = redblued.dfa_step(s0, 'b')
-        s2 = redblued.dfa_step(s0, 'a')
-        s3 = redblued.dfa_step(s2, 'b')
+        blue_fringed = Stamina::Induction::BlueFringe.execute(sample)
+        assert_equal 4, blue_fringed.state_count
+        s0, = blue_fringed.initial_state
+        s1 = blue_fringed.dfa_step(s0, 'b')
+        s2 = blue_fringed.dfa_step(s0, 'a')
+        s3 = blue_fringed.dfa_step(s2, 'b')
         assert_equal true, s0.accepting?
         assert_equal true, s3.accepting?
         assert_equal false, s1.accepting?
@@ -75,7 +75,7 @@ module Stamina
         assert_equal s3, s2.dfa_step('b')
         assert_equal s3, s3.dfa_step('b')
         assert_equal s0, s3.dfa_step('a')
-        assert_equal sample.signature, redblued.signature(sample)
+        assert_equal sample.signature, blue_fringed.signature(sample)
       end
       
     end

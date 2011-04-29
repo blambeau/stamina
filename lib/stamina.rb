@@ -19,4 +19,4 @@ require 'stamina/utils'
 require 'stamina/induction/union_find'
 require 'stamina/induction/commons'
 require "stamina/induction/rpni"
-require "stamina/induction/redblue"
+require "stamina/induction/blue_fringe"

@@ -2,7 +2,7 @@ module Stamina
   module Induction
     
     #
-    # Implementation of the RedBlue variant of the RPNI algorithm (with the blue-fringe
+    # Implementation of the BlueFringe variant of the RPNI algorithm (with the blue-fringe
     # heuristics).
     #
     # See Lang, K., B. Pearlmutter, andR. Price. 1998. Results of the Abbadingo One DFA
@@ -13,19 +13,19 @@ module Stamina
     #   # sample typically comes from an ADL file
     #   sample = Stamina::ADL.parse_sample_file('sample.adl')
     #
-    #   # let RedBlue build the smallest dfa
-    #   dfa = Stamina::Induction::RedBlue.execute(sample, {:verbose => true})
+    #   # let BlueFringe build the smallest dfa
+    #   dfa = Stamina::Induction::BlueFringe.execute(sample, {:verbose => true})
     #
     # Remarks:
     # - Constructor and instance methods of this class are public but not intended 
     #   to be used directly. They are left public for testing purposes only.
-    # - Having read the Stamina::Induction::RedBlue base algorithm may help undertanding
+    # - Having read the Stamina::Induction::BlueFringe base algorithm may help undertanding
     #   this variant.
     # - This class intensively uses the Stamina::Induction::UnionFind class and 
     #   methods defined in the Stamina::Induction::Commons module which are worth
     #   reading to understand the algorithm implementation.
     #
-    class RedBlue
+    class BlueFringe
       include Stamina::Induction::Commons
       
       # Union-find data structure used internally
@@ -163,7 +163,7 @@ module Stamina
       #   sample are correctly classified by it.
       #
       def main(ufds)
-        puts "Starting RedBlue (#{ufds.size} states)" if @options[:verbose]
+        puts "Starting BlueFringe (#{ufds.size} states)" if @options[:verbose]
         @ufds, @kernel = ufds, [0]
         
         # we do it until the fringe is empty (compute it only once each step)
@@ -204,7 +204,7 @@ module Stamina
             raise "Unexpected case" unless merge_and_determinize(best[0], best[1])
           end
           
-          # redblue does not guarantee that it will not merge a state of lower rank
+          # blue_fringe does not guarantee that it will not merge a state of lower rank
           # with a kernel state. The kernel should then be update at each step to keep
           # lowest indices for the whole kernel, and we sort it
           @kernel = @kernel.collect{|k| @ufds.find(k)}.sort
@@ -226,7 +226,7 @@ module Stamina
       #   given as input.
       #
       # Remarks:
-      # - This instance version of RedBlue.execute is not intended to be used directly and
+      # - This instance version of BlueFringe.execute is not intended to be used directly and
       #   is mainly provided for testing purposes. Please use the class variant of this 
       #   method if possible.
       #
@@ -255,10 +255,10 @@ module Stamina
       #   given as input.
       #
       def self.execute(sample, options={})
-        RedBlue.new(options).execute(sample)
+        BlueFringe.new(options).execute(sample)
       end
       
-    end # class RedBlue
+    end # class BlueFringe
     
   end # module Induction
 end # module Stamina

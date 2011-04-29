@@ -2,7 +2,7 @@ module Stamina
   module Induction
     
     #
-    # Defines common utilities used by rpni and redblue. About acronyms: 
+    # Defines common utilities used by rpni and blue_fringe. About acronyms: 
     # - _pta_ stands for Prefix Tree Acceptor
     # - _ufds_ stands for Union-Find Data Structure
     #
