@@ -210,6 +210,81 @@ module Stamina
       SAMPLE
       assert_equal '110?', s.signature
     end
+
+    def test_to_pta_on_empty_sample
+      empty = Stamina::ADL::parse_automaton <<-EOF
+        1 0
+        0 true false
+      EOF
+      assert_equivalent empty, Sample.new.to_pta
+    end
+
+    def test_to_pta_on_lambda_accepting_sample
+      dfa = Stamina::ADL::parse_automaton <<-EOF
+        1 0
+        0 true true false
+      EOF
+      sample = Stamina::ADL::parse_sample <<-EOF
+        +
+      EOF
+      assert_equivalent dfa, sample.to_pta
+    end
+    
+    def test_to_pta_on_lambda_rejecting_sample
+      dfa = Stamina::ADL::parse_automaton <<-EOF
+        1 0
+        0 true false true
+      EOF
+      sample = Stamina::ADL::parse_sample <<-EOF
+        -
+      EOF
+      assert_equivalent dfa, sample.to_pta
+    end
+
+    def test_to_pta_respects_natural_ordering
+      dfa = Stamina::ADL::parse_automaton <<-EOF
+        3 2
+        0 true false
+        1 false true
+        2 false true
+        0 1 a
+        0 2 b
+      EOF
+      sample = Stamina::ADL::parse_sample <<-EOF
+        + a
+        + b
+      EOF
+      pta = sample.to_pta
+      assert_equivalent dfa, pta
+      assert_equal pta.ith_state(1), pta.dfa_reached("? a")
+      assert_equal pta.ith_state(2), pta.dfa_reached("? b")
+    end
+
+    def test_to_pta_on_realcase_example
+      dfa = Stamina::ADL::parse_automaton <<-EOF
+        5 4
+        0 true true
+        1 false true
+        2 false false true
+        3 false false true
+        4 false true
+        0 1 a
+        0 2 b
+        1 3 b
+        2 4 a
+      EOF
+      sample = Stamina::ADL::parse_sample <<-EOF
+        +
+        + a
+        + b a
+        - a b
+        - b
+      EOF
+      pta = sample.to_pta
+      assert_equivalent dfa, pta
+      assert_equal pta.ith_state(3), pta.dfa_reached("? a b")
+      assert_equal pta.ith_state(4), pta.dfa_reached("? b a")
+    end
     
   end # class SampleTest
 end # module Stamina

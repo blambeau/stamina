@@ -185,7 +185,60 @@ module Stamina
     end
     alias :to_s :to_adl
     alias :inspect :to_adl
+
+    #
+    # Converts a Sample to an (augmented) prefix tree acceptor. This method ensures 
+    # that the states of the PTA are in lexical order, according to the <code><=></code>
+    # operator defined on symbols. States reached by negative strings are tagged as
+    # non accepting and error.
+    #
+    def self.to_pta(sample)
+      Automaton.new do |pta|
+        initial_state = add_state(:initial => true, :accepting => false)
+
+        # Fill the PTA with each string
+        sample.each do |str|
+          # split string using the dfa
+          parsed, reached, remaining = pta.dfa_split(str, initial_state)
+    
+          # remaining symbols are not empty -> build the PTA
+          unless remaining.empty?
+            remaining.each do |symbol|
+              newone = pta.add_state(:initial => false, :accepting => false, :error => false)
+              pta.connect(reached, newone, symbol)
+              reached = newone
+            end
+          end
+    
+          # flag state      
+          str.positive? ? reached.accepting! : reached.error!
+          
+          # check consistency, should not arrive as Sample does not allow
+          # inconsistencies. Should appear only if _sample_ is not a Sample
+          # instance but some other enumerable.
+          raise(InconsistencyError, "Inconsistent sample on #{str}", caller)\
+            if (reached.error? and reached.accepting?)
+        end
+
+        # Reindex states by applying BFS
+        to_index, index = [initial_state], 0
+        until to_index.empty?
+          state = to_index.shift
+          state[:__index__] = index
+          state.out_edges.sort{|e,f| e.symbol<=>f.symbol}.each {|e| to_index << e.target} 
+          index += 1 
+        end
+        # Force the automaton to reindex
+        pta.order_states{|s0,s1| s0[:__index__] <=> s1[:__index__]}
+        # Remove marks
+        pta.states.each{|s| s.remove_mark(:__index__)}
+      end
+    end
+
+    # Convenient shortcut for Sample.to_pta(sample_instance)
+    def to_pta
+      Sample.to_pta(self)
+    end
     
   end # class Sample
-
 end # module Stamina
