@@ -36,6 +36,7 @@ module Stamina
 end # module Stamina
 require 'stamina/quickl_commands/help'
 require 'stamina/quickl_commands/metrics'
+require 'stamina/quickl_commands/classify'
 require 'stamina/quickl_commands/abbadingo_dfa'
 require 'stamina/quickl_commands/abbadingo_samples'
 

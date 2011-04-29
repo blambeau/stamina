@@ -11,6 +11,7 @@ module Stamina
       # #{summarized_options}
       #
       class Metrics < Quickl::Command(__FILE__, __LINE__)
+        include Robustness
         
         # Install options
         options do |opt|
@@ -22,7 +23,13 @@ module Stamina
           raise Quickl::Help unless args.size <= 1
 
           # Loads the target automaton
-          input = (args.size == 1 ? File.read(args.first) : $stdin.readlines.join("\n"))
+          input = if args.size == 1
+            File.read assert_readable_file(args.first)
+          else
+            $stdin.readlines.join("\n")
+          end
+          
+          # Flush metrics 
           begin
             target = Stamina::ADL::parse_automaton(input)
             puts "Alphabet size:   #{target.alphabet_size}"
