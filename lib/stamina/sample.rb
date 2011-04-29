@@ -203,7 +203,7 @@ module Stamina
     # non accepting and error.
     #
     def self.to_pta(sample)
-      Automaton.new do |pta|
+      thepta = Automaton.new do |pta|
         initial_state = add_state(:initial => true, :accepting => false)
 
         # Fill the PTA with each string
@@ -235,14 +235,27 @@ module Stamina
         until to_index.empty?
           state = to_index.shift
           state[:__index__] = index
-          state.out_edges.sort{|e,f| e.symbol<=>f.symbol}.each {|e| to_index << e.target} 
+          state.out_edges.sort{|e,f| e.symbol<=>f.symbol}.each{|e| to_index << e.target} 
           index += 1 
         end
-        # Force the automaton to reindex
-        pta.order_states{|s0,s1| s0[:__index__] <=> s1[:__index__]}
-        # Remove marks
-        pta.states.each{|s| s.remove_mark(:__index__)}
       end
+
+      # Now we rebuild a fresh one with states in order.
+      # This look more efficient that reordering states of the PTA
+      Automaton.new do |ordered|
+        ordered.add_n_states(thepta.state_count)
+        thepta.each_state do |pta_state|
+          source = ordered.ith_state(pta_state[:__index__])
+          source.initial!   if pta_state.initial?
+          source.accepting! if pta_state.accepting?
+          source.error!     if pta_state.error?
+          pta_state.out_edges.each do |e| 
+            target = ordered.ith_state(e.target[:__index__])
+            ordered.connect(source, target, e.symbol)
+          end
+        end
+      end
+
     end
 
     # Convenient shortcut for Sample.to_pta(sample_instance)
