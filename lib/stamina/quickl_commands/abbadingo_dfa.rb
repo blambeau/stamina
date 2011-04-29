@@ -11,7 +11,8 @@ module Stamina
       # #{summarized_options}
       #
       class AbbadingoDfa < Quickl::Command(__FILE__, __LINE__)
-        
+        include Robustness 
+
         # Size of the target automaton
         attr_accessor :size
 
@@ -20,6 +21,9 @@ module Stamina
 
         # Tolerance on the automaton depth
         attr_accessor :depth_tolerance
+
+        # Where to flush the dfa
+        attr_accessor :output_file
 
         # Install options
         options do |opt|
@@ -39,6 +43,12 @@ module Stamina
             @depth_tolerance = x
           end
 
+          @output_file = nil
+          opt.on("-o", "--output=OUTPUT",
+                 "Flush DFA in output file") do |value|
+            @output_file = assert_writable_file(value)
+          end
+
         end # options
 
         def accept?(dfa)
@@ -49,11 +59,21 @@ module Stamina
         # Command execution
         def execute(args)
           require 'stamina/abbadingo'
+
+          # generate it
           randomizer = Stamina::Abbadingo::RandomDFA.new(size)
           begin
             dfa = randomizer.execute
           end until accept?(dfa)
-          puts dfa.to_adl
+
+          # flush it
+          if output_file 
+            File.open(output_file, 'w') do |file|
+              Stamina::ADL.print_automaton(dfa, file)
+            end
+          else
+            Stamina::ADL.print_automaton(dfa, $stdout)
+          end
         end
         
       end # class AbbadingoDFA

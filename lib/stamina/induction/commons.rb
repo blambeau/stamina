@@ -16,6 +16,36 @@ module Stamina
     #
     module Commons
       
+      DEFAULT_OPTIONS = {
+        :verbose    => false,
+        :verbose_io => $stderr
+      }
+
+      # Additional options of the algorithm
+      attr_reader :options
+      
+      # Creates an algorithm instance with given options.
+      def initialize(options={})
+        @options = DEFAULT_OPTIONS.merge(options)
+      end
+
+      # Is the verbose mode on ?
+      def verbose?
+        @verbose ||= !!options[:verbose]
+      end
+
+      def verbose_io
+        @verbose_io ||= options[:verbose_io] || $stderr
+      end
+      
+      # Display an information message (when verbose)
+      def info(msg)
+        if verbose?
+          verbose_io << msg << "\n"
+          verbose_io.flush
+        end
+      end
+
       #
       # Factors and returns a UnionFind data structure from a PTA, keeping natural order 
       # of its states for union-find elements. The resulting UnionFind contains a Hash as 

@@ -31,16 +31,6 @@ module Stamina
       # Union-find data structure used internally
       attr_reader :ufds
       
-      # Additional options of the algorithm
-      attr_reader :options
-      
-      #
-      # Creates an algorithm instance with specific options
-      #
-      def initialize(options={})
-        @options = options
-      end
-      
       #
       # Computes the score of a single (group) merge. Returned value is 1 if both are 
       # accepting states or both are error states and 0 otherwise. Note that d1 and d2
@@ -163,7 +153,7 @@ module Stamina
       #   sample are correctly classified by it.
       #
       def main(ufds)
-        puts "Starting BlueFringe (#{ufds.size} states)" if @options[:verbose]
+        info("Starting BlueFringe (#{ufds.size} states)")
         @ufds, @kernel = ufds, [0]
         
         # we do it until the fringe is empty (compute it only once each step)
@@ -196,10 +186,10 @@ module Stamina
           # If not found, the last candidate must be consolidated. Otherwise, we 
           # do the best merging
           unless to_consolidate.nil?
-            puts "Consolidation of #{to_consolidate}" if @options[:verbose]
+            info("Consolidation of #{to_consolidate}")
             @kernel << to_consolidate
           else
-            puts "Merging #{best[0]} and #{best[1]} [#{best[2]}]" if @options[:verbose]
+            info("Merging #{best[0]} and #{best[1]} [#{best[2]}]")
             # this one should never fail because its score was positive before
             raise "Unexpected case" unless merge_and_determinize(best[0], best[1])
           end
@@ -232,7 +222,7 @@ module Stamina
       #
       def execute(sample)
         # create union-find
-        puts "Creating PTA and UnionFind structure" if @options[:verbose]
+        info("Creating PTA and UnionFind structure")
         ufds = sample2ufds(sample)
         # refine it
         ufds = main(ufds)

@@ -31,14 +31,6 @@ module Stamina
       # Union-find data structure used internally
       attr_reader :ufds
       
-      # Additional options of the algorithm
-      attr_reader :options
-      
-      # Creates an algorithm instance with given options.
-      def initialize(options={})
-        @options = options
-      end
-      
       #
       # Merges a state of rank j with a state of lower rank i. This merge method 
       # includes merging for determinization.
@@ -118,7 +110,7 @@ module Stamina
       #
       def main(ufds)
         @ufds = ufds
-        puts "Starting RPNI (#{@ufds.size} states)" if @options[:verbose]
+        info("Starting RPNI (#{@ufds.size} states)")
         # First loop, iterating all PTA states
         (1...@ufds.size).each do |i|
           # we ignore those that have been previously merged
@@ -130,7 +122,7 @@ module Stamina
             # simply break the loop if it works!
             success = successfull_merge_or_nothing(i,j)
             if success
-              puts "#{i} and #{j} successfully merged" if @options[:verbose]
+              info("#{i} and #{j} successfully merged")
               break
             end
           end # j loop
@@ -156,7 +148,7 @@ module Stamina
       #
       def execute(sample)
         # create union-find
-        puts "Creating PTA and UnionFind structure" if @options[:verbose]
+        info("Creating PTA and UnionFind structure")
         ufds = sample2ufds(sample)
         # refine it
         ufds = main(ufds)

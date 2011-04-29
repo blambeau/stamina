@@ -95,7 +95,7 @@ module Stamina
           raise Quickl::Help unless args.size == 1
         
           # Parses the sample
-          puts "Parsing sample..." if verbose
+          $stderr << "Parsing sample...\n" if verbose
           sample = load_sample(assert_readable_file(args.first))
 
           # Induce the DFA
