@@ -33,6 +33,7 @@ module Stamina
 
   end # class Command
 end # module Stamina
+require 'stamina/command/robustness'
 require 'stamina/command/help'
 require 'stamina/command/adl2dot'
 require 'stamina/command/metrics'
