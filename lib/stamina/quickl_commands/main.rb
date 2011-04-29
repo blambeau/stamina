@@ -40,4 +40,6 @@ require 'stamina/quickl_commands/classify'
 require 'stamina/quickl_commands/score'
 require 'stamina/quickl_commands/abbadingo_dfa'
 require 'stamina/quickl_commands/abbadingo_samples'
+require 'stamina/quickl_commands/rpni'
+require 'stamina/quickl_commands/blue_fringe'
 
