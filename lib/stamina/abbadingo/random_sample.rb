@@ -134,7 +134,10 @@ module Stamina
           pos_test, pos_training = pos.partition{|s| Kernel.rand < 0.5}
           neg_test, neg_training = neg.partition{|s| Kernel.rand < 0.5}
         end
-        [Sample.new(pos_training + neg_training), Sample.new(pos_test + neg_test)]
+        flusher = lambda{|x,y| Kernel.rand < 0.5 ? 1 : -1}
+        training = (pos_training + neg_training).sort &flusher
+        test = (pos_test + neg_test).sort &flusher
+        [Sample.new(training), Sample.new(test)]
       end
 
     end # class RandomSample

@@ -184,6 +184,15 @@ module Stamina
         :positive_likelihood, :negative_likelihood,
         :balanced_classification_rate, :balanced_error_rate, :harmonic_bcr
       ]
+
+      def to_h
+        h = {}
+        MEASURES.each do |m|
+          h[m] = self.send(m.to_sym)
+        end
+        h
+      end
+
       def to_s
         s = ""
         MEASURES.each do |m|
