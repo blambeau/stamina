@@ -2,7 +2,8 @@ module Stamina
   module QuicklCommands
     class Main
       # 
-      # Blue-fringe induction algorithm (induces a DFA from a training sample)
+      # Grammar inference, induces a DFA from a training sample using an 
+      # chosen algorithm.
       #
       # SYNOPSIS
       #   #{program_name} #{command_name} sample.adl
@@ -10,15 +11,21 @@ module Stamina
       # OPTIONS
       # #{summarized_options}
       #
-      class BlueFringe < Quickl::Command(__FILE__, __LINE__)
+      class Infer < Quickl::Command(__FILE__, __LINE__)
         include Robustness
         
+        attr_accessor :algorithm
         attr_accessor :verbose
         attr_accessor :output_file
 
         # Install options
         options do |opt|
         
+          @algorithm = :rpni
+          opt.on("--algorithm=X", "Sets the induction algorithm to use (rpni, bluefringe)") do |x|
+            @algorithm = x.to_sym
+          end
+
           @verbose = true
           opt.on("-v", "--[no-]verbose", "Verbose mode") do |x|
             @verbose = x
@@ -33,6 +40,25 @@ module Stamina
 
         end # options
 
+        def launch_induction(sample)
+          require 'benchmark'
+
+          algo_clazz = case algorithm
+            when :rpni
+              Stamina::Induction::RPNI
+            when :bluefringe
+              Stamina::Induction::BlueFringe
+            else
+              raise Quickl::InvalidOption, "Unknown induction algorithm: #{algo}"
+          end
+
+          dfa, tms = nil, nil
+          tms = Benchmark.measure do 
+            dfa = algo_clazz.execute(sample, {:verbose => verbose})
+          end
+          [dfa, tms]
+        end
+
         # Command execution
         def execute(args)
           raise Quickl::Help unless args.size == 1
@@ -42,9 +68,7 @@ module Stamina
           sample = Stamina::ADL.parse_sample_file(assert_readable_file(args.first))
 
           # Induce the DFA
-          t1 = Time.now
-          dfa = Stamina::Induction::BlueFringe.execute(sample, {:verbose => verbose})
-          t2 = Time.now
+          dfa, tms = launch_induction(sample)
 
           # Flush result
           if @output_file 
@@ -56,10 +80,10 @@ module Stamina
           end
 
           # Display information
-          puts "Executed in #{t2-t1} sec." if verbose
+          puts "Executed in #{tms.total} sec." if verbose
         end
         
-      end # class BlueFringe
+      end # class Infer
     end # class Main
   end # module QuicklCommands
 end # module Stamina
