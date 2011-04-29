@@ -176,6 +176,16 @@ module Stamina
       end
       signature
     end
+
+    #
+    # Takes only a given proportion of this sample and returns it as a new Sample.
+    #
+    def take(proportion = 0.5)
+      taken = Stamina::Sample.new
+      each_positive{|s| taken << s if Kernel.rand < proportion}
+      each_negative{|s| taken << s if Kernel.rand < proportion}
+      taken
+    end
     
     # 
     # Prints an ADL description of this sample on the buffer.
