@@ -35,6 +35,7 @@ module Stamina
       def initialize(options={})
         raise ArgumentError, "Invalid options #{options.inspect}" unless options.is_a?(Hash)
         @options = DEFAULT_OPTIONS.merge(options)
+        @score_cache = {}
       end
 
       #
@@ -119,13 +120,16 @@ module Stamina
       #   been evaluated and is then seen unchanged by the caller.
       #
       def merge_and_determinize_score(i, j)
-        # score the merging, always rollback the transaction
-        score = nil
-        @ufds.transactional do
-          score = merge_and_determinize(i, j)
-          false
+        score = @score_cache[[i,j]] ||= begin
+          # score the merging, always rollback the transaction
+          score = nil
+          @ufds.transactional do
+            score = merge_and_determinize(i, j)
+            false
+          end
+          score || -1
         end
-        score
+        score == -1 ? nil : score
       end
 
       #
@@ -160,7 +164,7 @@ module Stamina
       #
       def main(ufds)
         info("Starting BlueFringe (#{ufds.size} states)")
-        @ufds, @kernel = ufds, [0]
+        @ufds, @kernel, @score_cache = ufds, [0], {}
         
         # we do it until the fringe is empty (compute it only once each step)
         until (the_fringe=fringe).empty?
@@ -195,6 +199,7 @@ module Stamina
             info("Consolidation of #{to_consolidate}")
             @kernel << to_consolidate
           else
+            @score_cache.clear
             info("Merging #{best[0]} and #{best[1]} [#{best[2]}]")
             # this one should never fail because its score was positive before
             raise "Unexpected case" unless merge_and_determinize(best[0], best[1])

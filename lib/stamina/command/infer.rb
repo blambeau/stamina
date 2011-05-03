@@ -1,5 +1,5 @@
 module Stamina
-  class Main
+  class Command
     # 
     # Grammar inference, induces a DFA from a training sample using an 
     # chosen algorithm.

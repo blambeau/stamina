@@ -167,9 +167,13 @@ module Stamina
       # _symbol_. Returns nil (or an empty array, according to the same conventions) 
       # if no such state exists.
       #
-      def dfa_delta(from, symbol) 
-        delta = walking_to_from(from).collect{|s| s.dfa_delta(symbol)}.flatten.uniq
-        walking_to_dfa_result(delta, from)
+      def dfa_delta(from, symbol)
+        if from.is_a?(Automaton::State)
+          from.dfa_delta(symbol)
+        else
+          delta = walking_to_from(from).collect{|s| s.dfa_delta(symbol)}.flatten.uniq
+          walking_to_dfa_result(delta, from)
+        end
       end
     
       #
@@ -219,24 +223,47 @@ module Stamina
 
       # Same as split, respecting dfa conventions.
       def dfa_split(input, from=nil)
-        # the three elements of the triplet
-        parsed = []
-        reached = walking_to_from(from)
-        remaining = walking_to_modifiable_symbols(input)
-    
-        # walk now
-        until remaining.empty?
-          symb = remaining[0]
-          next_reached = dfa_delta(reached, symb)
+        from = initial_state if from.nil?
+        from = ith_state(from) if from.is_a?(Integer)
+        if from.is_a?(Automaton::State)
+          # the three elements of the triplet
+          parsed = []
+          reached = from
+          remaining = walking_to_modifiable_symbols(input)
+          
+          # walk now
+          until remaining.empty?
+            symb = remaining[0]
+            next_reached = reached.dfa_delta(symb)
+        
+            # stop it if no reached state
+            break if next_reached.nil?
+        
+            # otherwise, update triplet
+            parsed << remaining.shift
+            reached = next_reached
+          end
+          [parsed, reached, remaining]
+        else
+          # the three elements of the triplet
+          parsed = []
+          reached = walking_to_from(from)
+          remaining = walking_to_modifiable_symbols(input)
       
-          # stop it if no reached state
-          break if next_reached.nil? or next_reached.empty? 
-      
-          # otherwise, update triplet
-          parsed << remaining.shift
-          reached = next_reached
+          # walk now
+          until remaining.empty?
+            symb = remaining[0]
+            next_reached = dfa_delta(reached, symb)
+        
+            # stop it if no reached state
+            break if next_reached.nil? or next_reached.empty? 
+        
+            # otherwise, update triplet
+            parsed << remaining.shift
+            reached = next_reached
+          end
+          [parsed, walking_to_dfa_result(reached, from), remaining]
         end
-        [parsed, walking_to_dfa_result(reached, from), remaining]
       end
   
       #
