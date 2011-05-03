@@ -35,6 +35,7 @@ module Stamina
       def initialize(options={})
         raise ArgumentError, "Invalid options #{options.inspect}" unless options.is_a?(Hash)
         @options = DEFAULT_OPTIONS.merge(options)
+        @score_cache = {}
       end
 
       #
@@ -163,10 +164,8 @@ module Stamina
       #
       def main(ufds)
         info("Starting BlueFringe (#{ufds.size} states)")
-        @ufds, @kernel = ufds, [0]
+        @ufds, @kernel, @score_cache = ufds, [0], {}
         
-        @score_cache = {}
-
         # we do it until the fringe is empty (compute it only once each step)
         until (the_fringe=fringe).empty?
           # state to consolidate (if any)
