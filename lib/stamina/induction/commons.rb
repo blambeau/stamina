@@ -6,10 +6,10 @@ module Stamina
     # - _pta_ stands for Prefix Tree Acceptor
     # - _ufds_ stands for Union-Find Data Structure
     #
-    # Methods pta2ufds, sample2pta and sample2ufds are simply conversion methods used
-    # when the induction algorithm starts (executed on a sample, it first built a pta 
-    # then convert it to a union find). Method ufds2pta is used when the algorithm ends, 
-    # to convert refined union find to a dfa.
+    # Methods pta2ufds and sample2ufds are simply conversion methods used when the induction 
+    # algorithm starts (executed on a sample, it first built a pta then convert it to a union 
+    # find). Method ufds2dfa is used when the algorithm ends, to convert refined union find to 
+    # a dfa.
     #
     # The merge_user_data method is probably the most important as it actually computes 
     # the merging of two states and build information about merging for determinization.
@@ -72,46 +72,7 @@ module Stamina
       # non accepting and error.
       #
       def sample2pta(sample)
-        Automaton.new do |pta|
-          initial_state = add_state(:initial => true, :accepting => false)
-
-          # Fill the PTA with each string
-          sample.each do |str|
-            # split string using the dfa
-            parsed, reached, remaining = pta.dfa_split(str, initial_state)
-      
-            # remaining symbols are not empty -> build the PTA
-            unless remaining.empty?
-              remaining.each do |symbol|
-                newone = pta.add_state(:initial => false, :accepting => false, :error => false)
-                pta.connect(reached, newone, symbol)
-                reached = newone
-              end
-            end
-      
-            # flag state      
-            str.positive? ? reached.accepting! : reached.error!
-            
-            # check consistency, should not arrive as Sample does not allow
-            # inconsistencies. Should appear only if _sample_ is not a Sample
-            # instance but some other enumerable.
-            raise(InconsistencyError, "Inconsistent sample on #{str}", caller)\
-              if (reached.error? and reached.accepting?)
-          end
-
-          # Reindex states by applying BFS
-          to_index, index = [initial_state], 0
-          until to_index.empty?
-            state = to_index.shift
-            state[:__index__] = index
-            state.out_edges.sort{|e,f| e.symbol<=>f.symbol}.each {|e| to_index << e.target} 
-            index += 1 
-          end
-          # Force the automaton to reindex
-          pta.order_states{|s0,s1| s0[:__index__]<=>s1[:__index__]}
-          # Remove marks
-          pta.states.each{|s| s.remove_mark(:__index__)}
-        end
+        sample.to_pta
       end
 
       #
