@@ -3,10 +3,20 @@
 * Major Enhancements
 
     * Added Automaton#to_adl as an shortcut for Stamina::ADL::print_automaton(...)
+    * Added Sample#to_pta taken from Induction::Commons
     * Added Automaton completion (all strings parsable) under Automaton#complete[!?]
     * Added Automaton stripping (removal of unreachable states) under Automaton#strip[!]
     * Added Automaton minimization (Hopcroft + Pitchies) under Automaton#minimize
     * Added Abbadingo generators under Abbadingo::RandomDFA and Abbadingo::RandomSample
+    * Added a main 'stamina' command relying on Quickl. classiy/adl2dot commands become 
+      subcommands of stamina itself (see stamina --help for a list of available commands).
+      Induction command (rpni and redblue) are now handled by a 'stamina infer' with 
+      options.
+    * Error states and now correctly handled in ADL::parse and ADL::flush
+    * RedBlue has been renamed as BlueFringe everywhere (red_?blue -> blue_fringe)
+
+* Minnor Enhancements
+    * Added a few optimizations here and there
 
 * Bug fixes
 
