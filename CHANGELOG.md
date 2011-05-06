@@ -1,4 +1,11 @@
-# 0.4.0 / FIX ME
+# 0.4.1 / FIX ME
+
+* Major enhancements
+
+* Minor enhancements
+    * Fixed a bug with bundler usage in main stamina binary
+
+# 0.4.0 / 2011-05-01
 
 * Major Enhancements
 

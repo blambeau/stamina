@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    stamina (0.4.0)
+    stamina (0.4.1)
       quickl (~> 0.2.0)
 
 GEM
