@@ -12,7 +12,7 @@ module Stamina
     class Adl2dot < Quickl::Command(__FILE__, __LINE__)
       include Robustness
       
-      attr_reader :gif_output
+      attr_reader :output_format
 
       # Install options
       options do |opt|
@@ -22,16 +22,22 @@ module Stamina
                "Flush result output file") do |value|
           @output_file = assert_writable_file(value)
         end
-
+       
+        @output_format = "dot"
         opt.on("-g", "--gif",
                "Generates a gif file instead of a dot one") do
-          @gif_output = true
+          @output_format = "gif"
+        end
+
+        opt.on("--png",
+               "Generates a png file instead of a dot one") do
+          @output_format = "png"
         end
 
       end # options
 
       def output_file(infile)
-        @output_file || "#{File.basename(infile || 'stdin.adl', '.adl')}.#{gif_output ? 'gif' : 'dot'}"
+        @output_file || "#{File.basename(infile || 'stdin.adl', '.adl')}.#{output_format}"
       end
 
       # Command execution
@@ -44,14 +50,20 @@ module Stamina
         else
           $stdin.readlines.join("\n")
         end
-        automaton = Stamina::ADL::parse_automaton(input)
+
+        begin
+          automaton = Stamina::ADL::parse_automaton(input)
+        rescue ADL::ParseError 
+          sample = Stamina::ADL::parse_sample(input)
+          automaton = sample.to_pta
+        end
 
         # create a file for the dot output
-        if gif_output
+        if output_format == 'dot'
+          dotfile = output_file(args.first)
+        else
           require 'tempfile'
           dotfile = Tempfile.new("stamina").path
-        else
-          dotfile = output_file(args.first)
         end
         
         # Flush automaton inside it
@@ -60,8 +72,8 @@ module Stamina
         end
         
         # if gif output, use dot to convert it
-        if gif_output
-          `dot -Tgif -o #{output_file(args.first)} #{dotfile}` 
+        unless output_format == 'dot'
+          `dot -T#{output_format} -o #{output_file(args.first)} #{dotfile}` 
         end
       end
       
