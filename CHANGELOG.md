@@ -2,8 +2,8 @@
 
 * Major enhancements
 
-    * adl2dot command now support samples as input in addition to automata. In that
-      case, the dot result models a PTA (prefix tree acceptor)
+    * adl2dot command now support samples as input in addition to automata. In 
+      that case, the dot result models a PTA (prefix tree acceptor)
     * Added --png to 'stamina adl2dot'
 
 * Minor enhancements

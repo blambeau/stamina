@@ -13,12 +13,9 @@ module Stamina
       
       # Command execution
       def execute(args)
-        if args.size != 1
-          puts super_command.help
-        else
-          cmd = has_command!(args.first, super_command)
-          puts cmd.help
-        end
+        sup = Quickl.super_command(self)
+        sub = (args.size != 1) ? sup : Quickl.sub_command!(sup, args.first)
+        puts Quickl.help(sub)
       end
       
     end # class Help

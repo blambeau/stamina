@@ -1,7 +1,7 @@
 source 'http://rubygems.org'
 
 group :runtime do
-  gem "quickl", "~> 0.2.0"
+  gem "quickl", "~> 0.4.1"
 end
 
 group :development do

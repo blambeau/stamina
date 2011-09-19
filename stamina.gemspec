@@ -130,7 +130,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency("bluecloth", "~> 2.0.9")
   s.add_development_dependency("wlang", "~> 0.10.1")
   s.add_development_dependency("gnuplot", "~> 2.3.6")
-  s.add_dependency("quickl", "~> 0.2.0")
+  s.add_dependency("quickl", "~> 0.4.1")
 
   # The version of ruby required by this gem
   #
