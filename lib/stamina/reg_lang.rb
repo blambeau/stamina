@@ -43,6 +43,7 @@ module Stamina
     def complement
       RegLang.new(to_dfa.complement)
     end
+    alias :-@ :complement
 
     #
     # Returns a regular language defined as the union of `self` with `other`.
@@ -53,6 +54,18 @@ module Stamina
       other.to_fa.dup(unioned)
       RegLang.new(unioned)
     end
+    alias :| :+
+    alias :union :+
+
+    #
+    # Returns a regular language defined as the intersection of `self` with 
+    # `other`.
+    #
+    def *(other)
+      RegLang.new(fa.compose(other.fa))
+    end
+    alias :& :*
+    alias :intersect :*
 
     # 
     # Checks if this regular language includes a given string

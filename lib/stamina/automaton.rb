@@ -297,8 +297,8 @@ module Stamina
       # exists; which one is returned must be considered non deterministic.
       #
       def dfa_step(symbol)
-        @out_edges.each {|e| return e.target if e.symbol==symbol}
-        nil
+        edge = @out_edges.find{|e| e.symbol==symbol}
+        edge ? edge.target : nil
       end
             
       #
@@ -1303,3 +1303,4 @@ require 'stamina/automaton/equivalence'
 require 'stamina/automaton/determinize'
 require 'stamina/automaton/minimize'
 require 'stamina/automaton/metrics'
+require 'stamina/automaton/compose'
