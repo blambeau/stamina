@@ -788,7 +788,9 @@ module Stamina
     # <tt>eps*</tt> regular expression, where eps is the epsilon symbol.
     #
     def initial_states
-      @initials = compute_initial_states if @initials.nil? or @initials.empty?
+      if @initials.nil? or @initials.empty?
+        @initials = compute_initial_states 
+      end
       @initials
     end
   
@@ -1118,7 +1120,9 @@ module Stamina
     
     # Returns true if the automaton is deterministic, false otherwise
     def deterministic?
-      @deterministic = @states.reject{|s| s.deterministic?}.empty? if @deterministic.nil?
+      if @deterministic.nil?
+        @deterministic = @states.all?{|s| s.deterministic?}
+      end
       @deterministic
     end
     
