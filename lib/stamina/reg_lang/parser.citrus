@@ -39,7 +39,7 @@ grammar Stamina::RegLang::Parser
   end
 
   rule parenthesized
-    '(' space* regexp space* ')'
+    ('(' space* expr:regexp space* ')')        <Stamina::RegLang::Parenthesized>
   end
 
   rule space

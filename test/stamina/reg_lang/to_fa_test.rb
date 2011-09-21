@@ -88,6 +88,16 @@ module Stamina
         assert match.to_fa.canonical <=> expected.canonical
       end
 
+      def test_parenthesized
+        match = Parser.parse("(a)", :root => :parenthesized)
+        expected = Automaton.new do
+          add_state(:initial => true, :accepting => false)
+          add_state(:initial => false, :accepting => true)
+          connect(0,1,"a")
+        end
+        assert match.to_fa.canonical <=> expected.canonical
+      end
+
     end # class ParserTest
   end # class RegLang
 end # module Stamina
