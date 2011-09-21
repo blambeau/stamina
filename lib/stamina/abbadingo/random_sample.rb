@@ -9,10 +9,11 @@ module Stamina
       # Implements an enumerator for binary strings whose length lies between 0
       # and max_length (passed at construction). 
       #
-      # The enumerator guarantees that strings are sampled with an uniform distribution 
-      # among them. As the number of strings of a given length is an exponential 
-      # function, this means that you've got 50% change of having a string of length 
-      # max_length, 25% of max_length - 1, 12.5% of max_length - 2 and so on.
+      # The enumerator guarantees that strings are sampled with an uniform 
+      # distribution among all available. As the number of strings of a given 
+      # length is an exponential function, this means that you've got 50% change 
+      # of having a string of length max_length, 25% of max_length - 1, 12.5% of 
+      # max_length - 2 and so on.
       #
       # How to use it?
       #
@@ -23,7 +24,7 @@ module Stamina
       #   enum.each do |s| 
       #     # s is an array of binary integer symbols (0 or 1)
       #     # true for continuing, false otherwise
-      #     return (true || false)
+      #     (true || false)
       #   end
       #
       #   # this is how to generate a fixed number of strings
