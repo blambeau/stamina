@@ -847,7 +847,7 @@ module Stamina
     def add_n_states(n, data={})
       created = []
       n.times do |i|
-        created << add_state(data.dup)
+        created << add_state(block_given? ? data.merge(yield(i)) : data.dup)
       end
       created
     end
@@ -886,32 +886,44 @@ module Stamina
     alias :create_edge :add_edge
     alias :connect :add_edge
 
+    #
     # Adds all states and transitions (as copies) from a different automaton.
-    # Returns the initial state of the added part. In order to ensure that names of 
-    # the new states do not clash with names of existing states, state names may have 
-    # to be removed from added states; this is the case if _clear_names_ is set to true.
-    # None of the added states are made initial.
-    def add_automaton(what,clear_names=true)
-      map_what_self = {}
-      what.states.each do |state|
-        map_what_self[state]=add_state(state.data)
-        map_what_self[state][:name]=nil if clear_names
-        map_what_self[state][:initial]=false
-      end
-      what.edges.each do |edge|
-        add_edge(map_what_self[edge.from],map_what_self[edge.to],edge.data)
-      end
-      map_what_self[what.initial_state]
+    # None of the added states are made initial. Returns the (associated state 
+    # of the) initial state of the added part. 
+    #
+    # This method is deprecated and should not be used anymore. Use dup instead.
+    #
+    # In order to ensure that names of the new states do not clash with names of 
+    # existing states, state names may have to be removed from added states; 
+    # this is the case if _clear_names_ is set to true. 
+    #
+    def add_automaton(fa, clear_names = true)
+      initial = nil
+      fa.dup(self){|source,target|
+        initial = target if target.initial?
+        target[:initial] = false
+        target[:name] = nil if clear_names
+      }
+      initial
     end
 
+    #
     # Constructs a replica of this automaton and returns a copy.
+    #
     # This copy can be modified in whatever way without affecting the original
     # automaton.
-    def dup
-      Automaton.new(false) do |fa|
-        initial = fa.add_automaton(self,false)
-        initial[:initial] = true unless initial.nil?
+    #
+    def dup(fa = Automaton.new)
+      added = states.collect do |source|
+        target = fa.add_state(source.data.dup)
+        yield(source, target) if block_given?
+        target
       end
+      edges.each do |edge|
+        from, to = added[edge.from.index], added[edge.to.index]
+        fa.connect(from, to, edge.data.dup)
+      end
+      fa
     end
 
     #
