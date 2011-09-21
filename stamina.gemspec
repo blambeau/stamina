@@ -131,6 +131,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency("wlang", "~> 0.10.1")
   s.add_development_dependency("gnuplot", "~> 2.3.6")
   s.add_dependency("quickl", "~> 0.4.1")
+  s.add_dependency("citrus", "~> 2.4.0")
 
   # The version of ruby required by this gem
   #

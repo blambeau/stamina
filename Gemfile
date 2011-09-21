@@ -2,6 +2,7 @@ source 'http://rubygems.org'
 
 group :runtime do
   gem "quickl", "~> 0.4.1"
+  gem "citrus", "~> 2.4.0"
 end
 
 group :development do

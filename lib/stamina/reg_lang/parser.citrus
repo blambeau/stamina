@@ -1,0 +1,49 @@
+grammar Stamina::RegLang::Parser
+
+  rule regexp
+    alternative
+  end
+
+  rule alternative
+    (head:sequence space* '|' space* tail:alternative)   <Stamina::RegLang::Alternative>
+  | sequence
+  end
+
+  rule sequence
+    (head:monadic space+ tail:sequence)             <Stamina::RegLang::Sequence>
+  | monadic
+  end
+
+  rule monadic
+    star | plus | question | term
+  end
+
+  rule star
+    (term '*')                                          <Stamina::RegLang::Star>
+  end
+
+  rule plus
+    (term '+')                                          <Stamina::RegLang::Plus>
+  end
+
+  rule question
+    (term '?')                                      <Stamina::RegLang::Question>
+  end
+
+  rule term
+    symbol | parenthesized
+  end
+
+  rule symbol
+    [a-zA-Z0-9$_-]+                                   <Stamina::RegLang::Symbol>
+  end
+
+  rule parenthesized
+    '(' space* regexp space* ')'
+  end
+
+  rule space
+    [ \t]
+  end
+
+end

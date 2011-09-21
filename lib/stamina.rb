@@ -20,3 +20,4 @@ require 'stamina/induction/union_find'
 require 'stamina/induction/commons'
 require "stamina/induction/rpni"
 require "stamina/induction/blue_fringe"
+require "stamina/reg_lang"
