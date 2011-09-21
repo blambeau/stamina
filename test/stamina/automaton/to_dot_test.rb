@@ -28,14 +28,14 @@ module Stamina
       def test_automaton_to_dot_with_default_rewriter
         expected = <<-EOF
           #digraph G {
-          #  graph [rankdir="LR"];
-          #  0 [color="black" fillcolor="green" shape="circle" style="filled"];
-          #  1 [color="black" fillcolor="white" shape="doublecircle" style="filled"];
-          #  2 [color="black" fillcolor="red" shape="doublecircle" style="filled"];
-          #  0 -> 1 [label="a"];
-          #  1 -> 0 [label="b"];
-          #  1 -> 2 [label="a"];
-          #  2 -> 2 [label=""];
+          #  graph [margin="0" pack="true" rankdir="LR" ranksep="0"];
+          #  0 [color="black" fillcolor="green" fixedsize="true" height="0.6" shape="circle" style="filled" width="0.6"];
+          #  1 [color="black" fillcolor="white" fixedsize="true" height="0.6" shape="doublecircle" style="filled" width="0.6"];
+          #  2 [color="black" fillcolor="red" fixedsize="true" height="0.6" shape="doublecircle" style="filled" width="0.6"];
+          #  0 -> 1 [arrowsize="0.7" label="a"];
+          #  1 -> 0 [arrowsize="0.7" label="b"];
+          #  1 -> 2 [arrowsize="0.7" label="a"];
+          #  2 -> 2 [arrowsize="0.7" label=""];
           #}
         EOF
         expected = expected.gsub(/^\s+#/,'')
