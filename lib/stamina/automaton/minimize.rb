@@ -16,8 +16,7 @@ module Stamina
     def minimize(options = {})
       Minimize::Hopcroft.execute(self, options)
     end
-
-
+    
   end # class Automaton
 end # module Stamina
 require 'stamina/automaton/minimize/hopcroft'
