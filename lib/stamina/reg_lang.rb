@@ -36,6 +36,23 @@ module Stamina
       RegLang.new(automaton)
     end
 
+    #
+    # Returns the complement of this regular language
+    #
+    def complement
+      RegLang.new(to_dfa.complement)
+    end
+
+    #
+    # Returns a regular language defined as the union of `self` with `other`.
+    #
+    def +(other)
+      unioned = Automaton.new
+      fa.dup(unioned)
+      other.to_fa.dup(unioned)
+      RegLang.new(unioned)
+    end
+
     # 
     # Checks if this regular language includes a given string
     #
@@ -59,7 +76,7 @@ module Stamina
     # Returned automaton is not guaranteed to be minimal or canonical.
     #
     def to_dfa
-      fa.deterministic
+      fa.determinize
     end
 
     #
