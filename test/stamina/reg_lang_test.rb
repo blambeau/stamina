@@ -21,7 +21,6 @@ module Stamina
 
     def test_complement
       ab_star_c = RegLang.parse("(a b)*").complement
-      puts ab_star_c.to_fa.to_dot
       assert ab_star_c.is_a?(RegLang)
       assert !ab_star_c.include?("?")
       assert !ab_star_c.include?("? a b")
@@ -38,6 +37,12 @@ module Stamina
       assert unioned.include?("?")
       assert unioned.include?("? a b")
       assert unioned.include?("? b a")
+    end
+
+    def test_equality
+      ab_plus   = RegLang.parse("(a b)+")
+      ab_plus_2 = RegLang.parse("a b (a b)*")
+      assert ab_plus.eql?(ab_plus_2)
     end
 
   end # class RegLangTest

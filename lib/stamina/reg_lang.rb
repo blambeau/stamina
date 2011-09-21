@@ -87,6 +87,13 @@ module Stamina
       fa.to_cdfa
     end
 
+    #
+    # Checks if `self` and `other` capture the same regular language.
+    #
+    def eql?(other)
+      self.to_cdfa <=> other.to_cdfa
+    end
+
     protected :fa
   end # class RegLang
 end # module Stamina
