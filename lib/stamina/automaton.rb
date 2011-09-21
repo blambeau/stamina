@@ -1231,14 +1231,17 @@ module Stamina
         to_dot do |elm, kind|
           case kind
             when :automaton
-              {:rankdir => "LR"}
+              {:pack => true, :rankdir => "LR", :ranksep => 0, :margin => 0}
             when :state
               {:shape => (elm.accepting? ? "doublecircle" : "circle"),
                :style => "filled",
                :color => "black",
-               :fillcolor => (elm.initial? ? "green" : (elm.error? ? "red" : "white"))}
+               :fillcolor => (elm.initial? ? "green" : (elm.error? ? "red" : "white")),
+               :width => 0.6, :height => 0.6, :fixedsize => true
+              }
             when :edge
-              {:label => elm.symbol.nil? ? '' : elm.symbol.to_s}
+              {:label => elm.symbol.nil? ? '' : elm.symbol.to_s,
+               :arrowsize => 0.7}
           end
         end
       else
