@@ -43,7 +43,7 @@ grammar Stamina::RegLang::Parser
   end
 
   rule space
-    [ \t]
+    [ \t\n]
   end
 
 end
