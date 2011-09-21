@@ -65,7 +65,16 @@ module Stamina
       RegLang.new(fa.compose(other.fa))
     end
     alias :& :*
-    alias :intersect :*
+    alias :intersection :*
+
+    #
+    # Returns a regular language defined capturing all strings from `self` but
+    # those in common with `other`.
+    #
+    def -(other)
+      self & other.complement
+    end
+    alias :difference :-
 
     # 
     # Checks if this regular language includes a given string
