@@ -9,7 +9,7 @@ module Stamina
           add_state(:initial => false, :accepting => true)
           connect(0,1,"a")
         end
-        assert match.to_fa.canonical <=> expected.canonical
+        assert match.to_cdfa <=> expected.to_cdfa
       end
 
       def test_question
@@ -19,7 +19,7 @@ module Stamina
           add_state(:initial => false, :accepting => true)
           connect(0,1,"a")
         end
-        assert match.to_fa.canonical <=> expected.canonical
+        assert match.to_cdfa <=> expected.to_cdfa
       end
 
       def test_plus
@@ -30,7 +30,7 @@ module Stamina
           connect(0,1,"a")
           connect(1,1,"a")
         end
-        assert match.to_fa.canonical <=> expected.canonical
+        assert match.to_cdfa <=> expected.to_cdfa
       end
 
       def test_star
@@ -39,7 +39,7 @@ module Stamina
           add_state(:initial => true,  :accepting => true)
           connect(0,0,"a")
         end
-        assert match.to_fa.canonical <=> expected.canonical
+        assert match.to_cdfa <=> expected.to_cdfa
       end
 
       def test_sequence_1
@@ -49,7 +49,7 @@ module Stamina
           add_state(:initial => false, :accepting => true)
           connect(0,1,"a")
         end
-        assert match.to_fa.canonical <=> expected.canonical
+        assert match.to_cdfa <=> expected.to_cdfa
       end
 
       def test_sequence_2
@@ -63,7 +63,7 @@ module Stamina
           connect(1,2,"b")
           connect(2,3,"c")
         end
-        assert match.to_fa.canonical <=> expected.canonical
+        assert match.to_cdfa <=> expected.to_cdfa
       end
 
       def test_alternative_1
@@ -73,7 +73,7 @@ module Stamina
           add_state(:initial => false, :accepting => true)
           connect(0,1,"a")
         end
-        assert match.to_fa.canonical <=> expected.canonical
+        assert match.to_cdfa <=> expected.to_cdfa
       end
 
       def test_alternative_2
@@ -85,7 +85,7 @@ module Stamina
           connect(0,1,"b")
           connect(0,1,"c")
         end
-        assert match.to_fa.canonical <=> expected.canonical
+        assert match.to_cdfa <=> expected.to_cdfa
       end
 
       def test_parenthesized
@@ -95,7 +95,7 @@ module Stamina
           add_state(:initial => false, :accepting => true)
           connect(0,1,"a")
         end
-        assert match.to_fa.canonical <=> expected.canonical
+        assert match.to_cdfa <=> expected.to_cdfa
       end
 
     end # class ParserTest

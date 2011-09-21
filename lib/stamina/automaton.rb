@@ -202,9 +202,7 @@ module Stamina
       # non accepting states having no outgoing transition or only loop 
       # transitions.
       def sink?
-        return false if accepting?
-        out_edges.each{|e| return false unless e.target==self}
-        true
+        !accepting? && out_edges.all?{|e| e.target==self}
       end
 
       #
@@ -1151,6 +1149,29 @@ module Stamina
       @alphabet = alph.sort
     end
     
+    ### public section about coercions ###########################################
+    public
+
+    # Returns a finite automaton
+    def to_fa
+      self
+    end
+
+    # Returns a deterministic finite automaton
+    def to_dfa
+      self.deterministic? ? self : self.determinize
+    end
+
+    # Returns a canonical deterministic finite automaton
+    def to_cdfa
+      cdfa = self
+      cdfa = cdfa.determinize unless self.deterministic? 
+      cdfa = cdfa.complete    unless self.complete?
+      cdfa = cdfa.minimize
+      cdfa.drop_states *cdfa.states.select{|s| s.sink?}
+      cdfa
+    end
+
     ### public section about dot utilities #######################################
     protected
     
@@ -1266,5 +1287,4 @@ require 'stamina/automaton/strip'
 require 'stamina/automaton/equivalence'
 require 'stamina/automaton/determinize'
 require 'stamina/automaton/minimize'
-require 'stamina/automaton/canonical'
 require 'stamina/automaton/metrics'

@@ -8,6 +8,14 @@ module Stamina
         to.accepting!
         fa
       end
+    
+      def to_dfa
+        to_fa.to_dfa
+      end
+    
+      def to_cdfa
+        to_fa.to_cdfa
+      end
 
     end # module Node
   end # class RegLang

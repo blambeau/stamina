@@ -66,8 +66,8 @@ module Stamina
     # Returns the canonical deterministic finite automaton capturing this
     # regular language.
     #
-    def to_cfa
-      fa.canonical
+    def to_cdfa
+      fa.to_cdfa
     end
 
     protected :fa

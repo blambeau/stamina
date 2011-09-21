@@ -14,6 +14,10 @@ module Stamina
           @initial = initial
         end
 
+        def empty?
+          states.empty?
+        end
+
         def marks
           @marks ||= begin
             marks = {}
@@ -70,6 +74,7 @@ module Stamina
           current = to_visit.pop
           alph.each do |symbol|
             found = current.delta(symbol)
+            next if found.empty?
             unless map.has_key?(found)
               map[found] = minimized.add_state(found.marks)
               to_visit << found
