@@ -8,6 +8,7 @@ module Stamina
         assert Parser.parse("a b")
         assert Parser.parse("(a b)*")
         assert Parser.parse("(a | b)+")
+        assert Parser.parse("   (a | b)+   ")
       end
 
       def test_sequence

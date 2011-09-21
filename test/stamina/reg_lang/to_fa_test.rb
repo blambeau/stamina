@@ -98,6 +98,16 @@ module Stamina
         assert match.to_cdfa <=> expected.to_cdfa
       end
 
+      def test_regexp
+        match = Parser.parse("  (a | b)*  ", :root => :regexp)
+        expected = Automaton.new do
+          add_state(:initial => true, :accepting => true)
+          connect(0,0,"a")
+          connect(0,0,"b")
+        end
+        assert match.to_cdfa <=> expected.to_cdfa
+      end
+
     end # class ParserTest
   end # class RegLang
 end # module Stamina

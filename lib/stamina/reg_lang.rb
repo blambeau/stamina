@@ -8,6 +8,7 @@ module Stamina
     require "stamina/reg_lang/star"
     require "stamina/reg_lang/sequence"
     require "stamina/reg_lang/alternative"
+    require "stamina/reg_lang/regexp"
     Citrus.require "stamina/reg_lang/parser"
 
     # Automaton capturing this regular language
