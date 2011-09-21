@@ -58,6 +58,17 @@ module Stamina
       @nfa_examples = [@small_nfa]
     end
   
+    # Returns an automaton recognizing (ab)*
+    def ab_star
+      Automaton.new(true) do |fa|
+        fa.alphabet = ["a", "b"]
+        fa.add_state(:initial => true,  :accepting => true)
+        fa.add_state(:initial => false, :accepting => false)
+        fa.connect(0,1,'a')
+        fa.connect(1,0,'b')
+      end
+    end
+
     # Tests the validity of examples
     def test_validity_of_examples
       @dfa_examples.each do |e|

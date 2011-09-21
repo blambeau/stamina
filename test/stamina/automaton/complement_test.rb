@@ -4,17 +4,6 @@ module Stamina
   class Automaton
     class ComplementTest < StaminaTest
 
-      # Returns an automaton recognizing (ab)*
-      def ab_star
-        Automaton.new(true) do |fa|
-          fa.alphabet = ["a", "b"]
-          fa.add_state(:initial => true,  :accepting => true)
-          fa.add_state(:initial => false, :accepting => false)
-          fa.connect(0,1,'a')
-          fa.connect(1,0,'b')
-        end
-      end
-
       def test_complete
         dfa = ab_star
         assert dfa.accepts?("?")
