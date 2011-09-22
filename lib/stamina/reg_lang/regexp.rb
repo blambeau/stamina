@@ -4,7 +4,7 @@ module Stamina
       include Node
     
       def to_fa!(fa)
-        alt.to_fa!(fa)
+        self.alt.to_fa!(fa)
       end
 
     end # module Regexp

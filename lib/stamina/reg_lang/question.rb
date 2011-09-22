@@ -5,7 +5,7 @@ module Stamina
     
       def to_fa!(fa)
         f1, t1 = fa.add_n_states(2)
-        f2, t2 = term.to_fa!(fa)
+        f2, t2 = self.term.to_fa!(fa)
         fa.connect(f1,f2,nil)
         fa.connect(t2,t1,nil)
         fa.connect(f1,t1,nil)

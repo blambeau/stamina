@@ -4,7 +4,7 @@ module Stamina
       include Node
     
       def to_fa!(fa)
-        expr.to_fa!(fa)
+        self.expr.to_fa!(fa)
       end
 
     end # module Parenthesized
