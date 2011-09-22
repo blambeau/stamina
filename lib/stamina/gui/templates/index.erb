@@ -1,31 +1,51 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>Stamina Web Engine</title>
-<script type="text/javascript" src="js/jquery-1.6.2.min.js"></script>
-<script type="text/javascript" src="js/jquery-ui-1.8.16.min.js"></script>
-<script type="text/javascript" src="js/mustache.js"></script>
-<script type="text/javascript" src="js/stamina.js"></script>
-<link rel="stylesheet" type="text/css" href="css/jquery-ui-1.8.16.css" media="screen" />
-<link rel="stylesheet" type="text/css" href="css/stamina.css" media="screen" />
-<script type="text/javascript">
-  $(document).ready(function(){
-    stamina_init();
-  });
-</script>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <title>Stamina Web Engine</title>
+
+  <link rel="stylesheet" type="text/css" href="css/jquery-ui-1.8.16.css" media="screen" />
+  <link rel="stylesheet/less" type="text/css" href="css/stamina.less">
+
+  <script type="text/javascript" src="js/jquery-1.6.2.min.js"></script>
+  <script type="text/javascript" src="js/jquery-ui-1.8.16.min.js"></script>
+  <script type="text/javascript" src="js/mustache.js"></script>
+  <script type="text/javascript" src="js/less-1.1.3.min.js"></script>
+  <script type="text/javascript" src="js/stamina.js"></script>
+  <script type="text/javascript">
+    $(document).ready(function(){
+      stamina_init();
+    });
+  </script>
 </head>
+
 <body>
-<div id="center">
-  <ul>
-    <li><a href="#tabs-1">Source code</a></li>
-  </ul>
-  <div id="tabs-1">
-    <form id="goform">
-      <textarea name="src" id="src"></textarea>
-    </form>
-    <input id="go" type="button" value="Go"/>
-  </div>
-</div>
+<table id="main"><tr>
+  <td>
+    <div id="menu">
+      <h3><a href="#">Automata</a></h3>
+      <div></div>
+      <h3><a href="#">Regular languages</a></h3>
+      <div></div>
+      <h3><a href="#">Grammar induction</a></h3>
+      <div></div>
+    </div>
+  </td>
+  <td>
+    <div id="center">
+      <ul>
+        <li><a href="#tabs-1">Source code</a></li>
+      </ul>
+      <div id="tabs-1">
+        <form id="goform">
+          <textarea name="src" id="src"></textarea>
+        </form>
+        <input id="go" type="button" value="Go"/>
+      </div>
+    </div>
+  </td>
+  <td>
+  </td>
+</tr></table>
 </body>
 </html>

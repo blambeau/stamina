@@ -1,0 +1,40 @@
+@menu-width:    250px;
+@center-width:  3 * @menu-width;
+@center-height: 600px;
+
+body {
+  padding: 15px 50px 0px 0px;
+  font-family: 'Palatino', sans-serif;
+  font-size: 12px;
+  color: #212122;
+  width: 2*@menu-width + @center-width;
+  margin: auto;
+}
+
+a, a:visited {
+  text-decoration: none;
+  color: #A30600;
+}
+a:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+#main tr td {
+  vertical-align: top;
+}
+
+#menu {
+  width: @menu-width;
+}
+
+#center {
+  width:  @center-width;
+  height: @center-height;
+}
+
+#src {
+  width: 100%;
+  height: @center-height - 90px;
+  font-family: "Consolas", "Courier New"
+}
