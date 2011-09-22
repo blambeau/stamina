@@ -1,10 +1,15 @@
 module Stamina
   class RegLangTest < Test::Unit::TestCase
 
+    def test_sigma_star
+      assert RegLang.sigma_star('a'..'b') <=> RegLang.parse("(a | b)*")
+    end
+
     def test_equality
       ab_plus   = RegLang.parse("(a b)+")
       ab_plus_2 = RegLang.parse("a b (a b)*")
       assert ab_plus.eql?(ab_plus_2)
+      assert ab_plus <=> ab_plus_2
     end
 
     def test_parse

@@ -22,6 +22,19 @@ module Stamina
     end
 
     # 
+    # Builds a sigma star language
+    # 
+    def self.sigma_star(alph)
+      new(Automaton.new do |fa|
+        fa.alphabet = alph.to_a
+        fa.add_state(:initial => true, :accepting => true)
+        alph.each do |symbol|
+          fa.connect(0,0,symbol)
+        end
+      end)
+    end
+
+    # 
     # Creates a regular language by parsing an expression.
     #
     def self.parse(str)
@@ -130,6 +143,7 @@ module Stamina
     def eql?(other)
       self.to_cdfa <=> other.to_cdfa
     end
+    alias :<=> :eql?
 
     protected :fa
   end # class RegLang
