@@ -23,12 +23,16 @@
 <table id="main"><tr>
   <td>
     <div id="menu">
-      <h3><a href="#">Automata</a></h3>
-      <div></div>
-      <h3><a href="#">Regular languages</a></h3>
-      <div></div>
-      <h3><a href="#">Grammar induction</a></h3>
-      <div></div>
+      <% for category in examples %>
+      <h3><a href="#"><%= category.label %></a></h3>
+      <div>
+        <ul>
+        <% for example in category %>
+          <li><a class="example" href="/<%= category.url %>/<%= example.url %>"><%= example.label %></a></li>
+        <% end %>
+        </ul>
+      </div>
+      <% end %>
     </div>
   </td>
   <td>

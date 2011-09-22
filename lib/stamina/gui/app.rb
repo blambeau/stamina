@@ -1,6 +1,7 @@
 require 'tmpdir'
 require 'json'
 require 'sinatra/base'
+require 'stamina/gui/examples'
 module Stamina
   module Gui
     class App < Sinatra::Base
@@ -28,9 +29,15 @@ module Stamina
 
       get '/' do
         erb :index, :locals => {
-          :source_code => 'hello = regular "(hello world)*"',
-          :variables   => [:hello]
+          :examples => Gui::Examples.new
         }
+      end
+
+      # example handlers 
+      get '/examples/:folder/:file' do
+        send_file File.join(Gui::Examples::FOLDER, 
+                            params[:folder], 
+                            "#{params[:file]}.rb")
       end
 
       # THE go post service
@@ -40,7 +47,7 @@ module Stamina
         context = go_for(session[:tmpdir], params[:src])
         content_type :json
         context.collect{|k,v|
-          v.respond_to?(:to_dot) ? k : nil
+          (k != :main and v.respond_to?(:to_dot)) ? k : nil
         }.compact.to_json
       end
 
