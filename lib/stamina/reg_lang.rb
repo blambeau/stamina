@@ -43,7 +43,11 @@ module Stamina
     def complement
       RegLang.new(to_dfa.complement)
     end
-    alias :-@ :complement
+
+    def **(x)
+      raise ArgumentError, "Invalid argument for ** (#{x})" unless x == -1
+      complement
+    end
 
     #
     # Returns a regular language defined as the union of `self` with `other`.

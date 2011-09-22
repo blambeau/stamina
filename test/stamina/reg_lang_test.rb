@@ -34,7 +34,7 @@ module Stamina
     end
 
     def test_complement_2
-      ab_star_c = -RegLang.parse("(a b)*")
+      ab_star_c = RegLang.parse("(a b)*")**-1
       assert ab_star_c.include?("? b")
       assert ab_star_c.include?("? a a")
       assert !ab_star_c.include?("? a b")
