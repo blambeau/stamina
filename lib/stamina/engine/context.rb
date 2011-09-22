@@ -11,7 +11,9 @@ module Stamina
       end
 
       def each
-        vars.each &Proc.new
+        vars.each do |key|
+          yield(key, self[key])
+        end
       end
 
       def [](name)
@@ -19,12 +21,12 @@ module Stamina
       end
 
       def to_h
-        Hash[collect{|v| [v,self[v]]}]
+        Hash[collect{|k,v| [k,v]}]
       end
 
       def to_s
-        vars.collect{|v| 
-          "#{v}: #{self[v]}"
+        collect{|k,v| 
+          "#{k}: #{v}"
         }.join("\n")
       end
 

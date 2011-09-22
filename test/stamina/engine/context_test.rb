@@ -14,7 +14,7 @@ module Stamina
       end
 
       def test_to_a
-        assert_equal([:main, :a, :b], context.to_a)
+        assert_equal([[:main, 2],[:a, 1], [:b, 2]], context.to_a)
       end
 
     end # class ContextTest
