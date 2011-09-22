@@ -4,13 +4,26 @@ module Stamina
   class Engine
     include Engine::DSL
 
-    def self.execute(__code__)
-      new.instance_eval <<-EOF
+    def execute_binding
+      binding
+    end
+
+    def execute(code, file = nil)
+      code = <<-EOF
         main = begin
-          #{__code__}
+          #{code}
         end
-        Context.new(local_variables - [:__code__], binding)
+        Context.new(local_variables, binding)
       EOF
+      if file
+        eval(code, execute_binding, file)
+      else
+        eval(code, execute_binding)
+      end
+    end
+
+    def self.execute(*args)
+      new.execute(*args)
     end
 
   end # class Engine

@@ -33,7 +33,12 @@ module Stamina
       @size, @positive_count, @negative_count = 0, 0, 0
       strings.each{|s| self << s } unless strings.nil?
     end
-    
+
+    # Parses an ADL input
+    def self.parse(adl)
+      ADL::parse_sample(adl)
+    end
+
     #
     # Returns true if this sample does not contain any string, 
     # false otherwise.
@@ -258,9 +263,21 @@ module Stamina
 
     end
 
-    # Convenient shortcut for Sample.to_pta(sample_instance)
+    # Converts this sample to a PTA
     def to_pta
       Sample.to_pta(self)
+    end
+    alias :to_fa  :to_pta
+    alias :to_dfa :to_pta
+
+    # Converts this sample to a canonical dfa
+    def to_cdfa
+      to_pta.to_cdfa
+    end
+
+    # Converts this sample to a dot output
+    def to_dot
+      to_pta.to_dot
     end
     
   end # class Sample

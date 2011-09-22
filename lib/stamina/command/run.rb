@@ -45,7 +45,7 @@ module Stamina
       def execute(args)
         raise Quickl::Help unless args.size == 1
         assert_readable_file(file = args.first)
-        context = Stamina::Engine.execute(File.read(file))
+        context = Stamina::Engine.execute(File.read(file), file)
         do_output(context, File.dirname(file))
       end
 
