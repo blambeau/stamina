@@ -111,6 +111,16 @@ module Stamina
     end
 
     #
+    # Returns a dot output
+    # 
+    def to_dot
+      dfa = to_cdfa
+      dfa.depth
+      dfa.order_states{|s,t| s[:depth] <=> t[:depth]}
+      dfa.to_dot
+    end
+
+    #
     # Checks if `self` and `other` capture the same regular language.
     #
     def eql?(other)
