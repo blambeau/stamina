@@ -94,7 +94,17 @@ module Stamina
           raise(ArgumentError, "#{str} is not a valid argument.", caller)   
       end
     end
-    
+
+    #
+    # Returns a new sample as the union of both `self` and `other`
+    #
+    def +(other)
+      s = Sample.new 
+      each{|x| s << x}
+      other.each{|x| s << x}
+      s
+    end
+
     #
     # Compares with another sample _other_, which is required to be a Sample 
     # instance. Returns true if the two samples contains the same strings (including 

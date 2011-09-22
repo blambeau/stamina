@@ -285,6 +285,22 @@ module Stamina
       assert_equal pta.ith_state(3), pta.dfa_reached("? a b")
       assert_equal pta.ith_state(4), pta.dfa_reached("? b a")
     end
+
+    def test_union
+      s1 = Sample.parse <<-EOF
+        + a
+        + c
+      EOF
+      s2 = Sample.parse <<-EOF
+        + a
+        - b
+      EOF
+      expected = Sample.parse <<-EOF
+        + a
+        + c
+        - b
+      EOF
+    end
     
   end # class SampleTest
 end # module Stamina
