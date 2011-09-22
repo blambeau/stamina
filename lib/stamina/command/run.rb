@@ -47,6 +47,7 @@ module Stamina
         assert_readable_file(file = args.first)
         context = Stamina::Engine.execute(File.read(file), file)
         do_output(context, File.dirname(file))
+        context
       end
 
       private

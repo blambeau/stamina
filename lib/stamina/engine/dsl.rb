@@ -12,6 +12,10 @@ module Stamina
         Induction::RPNI.execute(sample)
       end
 
+      def blue_fringe(sample)
+        Induction::BlueFringe.execute(sample)
+      end
+
       ### regular languages
 
       def regular(str)

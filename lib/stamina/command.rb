@@ -43,4 +43,5 @@ require 'stamina/command/abbadingo_dfa'
 require 'stamina/command/abbadingo_samples'
 require 'stamina/command/infer'
 require 'stamina/command/run'
+require 'stamina/command/gui'
 

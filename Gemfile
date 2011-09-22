@@ -3,6 +3,7 @@ source 'http://rubygems.org'
 group :runtime do
   gem "quickl", "~> 0.4.1"
   gem "citrus", "~> 2.4.0"
+  gem "sinatra", "~> 1.2.6"
 end
 
 group :development do
