@@ -6,6 +6,10 @@ module Stamina
         RegLang.parse(str)
       end
 
+      def prefix_closed(str)
+        RegLang.parse(str).prefix_closed
+      end
+
     end # module DSL
   end # class Engine
 end # module Stamina
