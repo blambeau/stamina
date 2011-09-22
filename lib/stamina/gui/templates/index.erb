@@ -11,6 +11,13 @@
   <script type="text/javascript" src="js/jquery-ui-1.8.16.min.js"></script>
   <script type="text/javascript" src="js/mustache.js"></script>
   <script type="text/javascript" src="js/less-1.1.3.min.js"></script>
+
+  <script src="js/ace.js" type="text/javascript" charset="utf-8"></script>
+  <script src="js/ace-textmate.js" type="text/javascript" charset="utf-8"></script>
+  <script src="js/ace-twilight.js" type="text/javascript" charset="utf-8"></script>
+  <script src="js/ace-eclipse.js" type="text/javascript" charset="utf-8"></script>
+  <script src="js/ace-ruby.js" type="text/javascript" charset="utf-8"></script>
+
   <script type="text/javascript" src="js/stamina.js"></script>
   <script type="text/javascript">
     $(document).ready(function(){
@@ -20,36 +27,41 @@
 </head>
 
 <body>
-<table id="main"><tr>
-  <td>
-    <div id="menu">
-      <% for category in examples %>
-      <h3><a href="#"><%= category.label %></a></h3>
-      <div>
-        <ul>
-        <% for example in category %>
-          <li><a class="example" href="/<%= category.url %>/<%= example.url %>"><%= example.label %></a></li>
+<table id="main">
+  <tr>
+    <td>
+      <div id="menu">
+        <% for category in examples %>
+        <h3><a href="#"><%= category.label %></a></h3>
+        <div>
+          <ul>
+          <% for example in category %>
+            <li><a class="example" href="/<%= category.url %>/<%= example.url %>"><%= example.label %></a></li>
+          <% end %>
+          </ul>
+        </div>
         <% end %>
+      </div>
+    </td>
+    <td>
+      <div id="center">
+        <ul>
+          <li><a href="#tabs-1">Source code</a></li>
         </ul>
+        <div id="tabs-1">
+          <div id="editor">
+          </div>
+        </div>
       </div>
-      <% end %>
-    </div>
-  </td>
-  <td>
-    <div id="center">
-      <ul>
-        <li><a href="#tabs-1">Source code</a></li>
-      </ul>
-      <div id="tabs-1">
-        <form id="goform">
-          <textarea name="src" id="src"></textarea>
-        </form>
-        <input id="go" type="button" value="Go"/>
-      </div>
-    </div>
-  </td>
-  <td>
-  </td>
-</tr></table>
+    </td>
+    <td>
+    </td>
+  </tr>
+  <tr>
+    <td></td>
+    <td><input id="go" type="button" value="Go"/></td>
+    <td></td>
+  </tr>
+</table>
 </body>
 </html>
