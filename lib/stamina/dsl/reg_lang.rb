@@ -41,6 +41,14 @@ module Stamina
         regular(arg).kernel
       end
 
+      #
+      # Extracts a characteristic sample for a regular language (coerced from 
+      # `arg`) as a Sample instance.
+      #
+      def characteristic_sample(arg)
+        regular(arg).characteristic_sample
+      end
+
       # 
       # Hides allbut `alph` symbols in the regular language `arg`
       # 

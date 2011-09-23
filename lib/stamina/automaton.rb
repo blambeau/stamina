@@ -1268,7 +1268,9 @@ module Stamina
         buffer = "digraph G {\n"
         attrs = attributes2dot(rewriter.call(self, :automaton))
         buffer << "  graph [#{attrs}];\n"
-        states.each do |s|
+        self.depth
+        states.sort{|s1,s2| s1[:depth] <=> s2[:depth]}.each do |s|
+          s.remove_mark(:depth)
           attrs = attributes2dot(rewriter.call(s, :state))
           buffer << "  #{s.index} [#{attrs}];\n"
         end

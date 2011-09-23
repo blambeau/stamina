@@ -133,6 +133,10 @@ module Stamina
       canonical_info.kernel
     end
 
+    def characteristic_sample
+      canonical_info.characteristic_sample
+    end
+
     private
 
     def canonical_info

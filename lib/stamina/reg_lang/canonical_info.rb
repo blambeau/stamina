@@ -23,10 +23,12 @@ module Stamina
         @cdfa = lang.to_cdfa
       end
 
-      # Returns the short prefix of `state`
-      def short_prefix(state)
-        SHORT_PREFIXES.execute(cdfa, nil, []) unless state[:short_prefix]
-        state[:short_prefix]
+      # Returns the short prefix of a state or an edge.
+      def short_prefix(s_or_e)
+        prefixes!
+        s_or_e[:short_prefix] ||= begin
+          s_or_e.source[:short_prefix] + [s_or_e.symbol]
+        end
       end
 
       # Returns a positive suffix for `state`
@@ -56,15 +58,54 @@ module Stamina
       def kernel
         kernel = Sample.new
         kernel << InputString.new([], cdfa.initial_state.accepting?)
-        cdfa.each_edge do |edge|
-          symbols  = short_prefix(edge.source) + [edge.symbol]
-          positive = edge.target.accepting?
-          kernel << InputString.new(symbols, positive, false)
+        cdfa.each_edge do |e|
+          kernel << InputString.new(short_prefix(e), e.target.accepting?)
         end
         kernel
       end
 
+      #
+      # Builds a characteristic sample 
+      #
+      def characteristic_sample
+        sample = Sample.new
+        
+        # condition 1: positive string for each element of the kernel 
+        cdfa.each_edge do |edge|
+          pos = short_prefix(edge) + positive_suffix(edge.target)
+          sample << InputString.new(pos, true, false)
+        end
+
+        # condition 2: pair-wise distinguising suffixes
+        diffs = {}
+        cdfa.each_state do |source|
+          cdfa.each_edge do |edge|
+            next if (target = edge.target) == source
+            if suffix = distinguish(source, target, [], diffs)
+              sign = cdfa.accepts?(suffix, source)
+              sample << InputString.new(short_prefix(source) + suffix, sign)
+              sample << InputString.new(short_prefix(edge) + suffix, !sign)
+            end
+          end
+        end
+
+        sample
+      end
+
       private
+
+      # Ensures that short prefixes of states are recognized
+      def prefixes!
+        unless defined?(@prefixes)
+          SHORT_PREFIXES.execute(cdfa, nil, [])
+          @prefixes = true
+        end
+      end
+
+      # Distinguishes two states, returning a suffix which is accepted for one
+      # and rejected by the other
+      def distinguish(x, y, stack = [], seen = {}, recur = {})
+      end
 
       # Recursively finds a positive/negative suffix for `state`
       def find_suffix(state, positive, stack = [], seen = {})
@@ -78,10 +119,11 @@ module Stamina
           # recurse on a neighbour if you find one
           seen[state] = true
           find_suffix(found.target, positive, stack << found.symbol, seen)
-        elsif !positive && 
-              (found = (state.automaton.alphabet.to_a - state.out_symbols).first)
+        elsif !positive
           # in case of negative suffix: pick one in alphabet
-          stack << found
+          outs  = state.out_symbols
+          found = state.automaton.alphabet.find{|s| !outs.include?(s)}
+          found ? (stack << found) : nil
         else
           # unable to find a suffix :-(
           nil

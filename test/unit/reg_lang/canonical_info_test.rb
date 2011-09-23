@@ -3,10 +3,16 @@ module Stamina
   class RegLang
     class CanonicalInfoTest < StaminaTest
 
-      def test_short_prefix
+      def test_short_prefix_on_state
         info = CanonicalInfo.new(ab_star)
         assert_equal [], info.short_prefix(info.cdfa.ith_state(0))
         assert_equal ["a"], info.short_prefix(info.cdfa.ith_state(1))
+      end
+
+      def test_short_prefix_on_edge
+        info = CanonicalInfo.new(ab_star)
+        assert_equal ["a"], info.short_prefix(info.cdfa.ith_edge(0))
+        assert_equal ["a", "b"], info.short_prefix(info.cdfa.ith_edge(1))
       end
 
       def test_positive_suffix

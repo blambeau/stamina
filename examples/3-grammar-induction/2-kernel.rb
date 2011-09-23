@@ -10,6 +10,9 @@ lang = automaton <<-ADL
   2 0 a
 ADL
 
+require 'stamina/abbadingo'
+lang = Abbadingo::RandomDFA.new(10).execute
+
 # In a canonical automaton A(lang) of language `lang`, the set of short prefixes 
 # is the set of first strings in standard order, each leading to a particular 
 # state of the canonical automaton. As a consequence, there are as many short 
@@ -23,3 +26,11 @@ prefixes = short_prefixes(lang)
 # automaton A(lang). Indeed, they are obtained by adding one symbol to the short 
 # pre-fixes which capture its states.
 kernel   = kernel(lang)
+
+characteristic = characteristic_sample(lang)
+
+# A characteristic sample is such that RPNI will find the target automaton if 
+# invoked
+# rpnied         = rpni(characteristic)
+# assert (regular(lang) - rpnied).empty?
+
