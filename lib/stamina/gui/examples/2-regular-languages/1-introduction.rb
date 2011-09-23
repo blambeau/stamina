@@ -5,7 +5,7 @@
 # Let's build a regular language
 abstar = regular("(a b)*")
 
-# More complex regular languages can be putted on multiple lines
+# More complex regular languages may be put on multiple lines
 complex = regular <<-LANG
   (a b)+
 | a+
