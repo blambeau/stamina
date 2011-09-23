@@ -22,6 +22,18 @@ module Stamina
         assert prefix_closed("a b") <=> expected
       end
 
+      def test_hide
+        ab_star = regular("(a b)*")
+        a_star = regular("a*")
+        assert hide(ab_star, ["b"]) <=> a_star
+      end
+
+      def test_project
+        ab_star = regular("(a b)*")
+        a_star = regular("a*")
+        assert project(ab_star, ["a"]) <=> a_star
+      end
+
     end
   end
 end

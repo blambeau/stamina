@@ -23,6 +23,20 @@ module Stamina
         regular(arg).prefix_closed
       end
 
+      # 
+      # Hides allbut `alph` symbols in the regular language `arg`
+      # 
+      def project(arg, alph)
+        hide(arg, automaton(arg).alphabet.to_a - alph.to_a)
+      end
+
+      # 
+      # Hides `alph` symbols in the regular language `arg`
+      # 
+      def hide(arg, alph)
+        regular(automaton(arg).hide(alph))
+      end
+
     end # module RegLang
     include RegLang
   end # module Dsl
