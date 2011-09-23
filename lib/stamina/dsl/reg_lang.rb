@@ -25,6 +25,14 @@ module Stamina
         regular(arg).prefix_closed
       end
 
+      #
+      # Extracts the kernel of a regular language (coerced from `arg`) as 
+      # a Sample instance.
+      #
+      def kernel(arg)
+        regular(arg).kernel
+      end
+
       # 
       # Hides allbut `alph` symbols in the regular language `arg`
       # 

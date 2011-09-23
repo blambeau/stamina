@@ -186,3 +186,4 @@ module Stamina
     EMPTY = RegLang.new(Automaton::DUM)
   end # class RegLang
 end # module Stamina
+require 'stamina/reg_lang/kernel'
