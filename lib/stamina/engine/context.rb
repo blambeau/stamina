@@ -6,7 +6,7 @@ module Stamina
       attr_reader :vars, :binding
 
       def initialize(vars, binding)
-        @vars = vars
+        @vars = vars.collect{|v| v.to_sym}
         @binding = binding
       end
 
