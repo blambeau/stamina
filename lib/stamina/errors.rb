@@ -5,6 +5,9 @@ module Stamina
 
   # Main class of all stamina errors.
   class StaminaError < StandardError; end
+
+  # Raised when an assertion fails.
+  class AssertionError < StandardError; end
   
   # Raised by samples implementations and other induction algorithms
   # when a sample is inconsistent (same string labeled as being both 

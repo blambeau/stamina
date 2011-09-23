@@ -2,7 +2,7 @@ require 'stamina/stamina_test'
 module Stamina
   module Dsl
     class RegLangTest < StaminaTest
-      include Stamina::Dsl::RegLang
+      include Stamina::Dsl
     
       def test_regular
         expected = Stamina::RegLang.parse("(a b)*")
