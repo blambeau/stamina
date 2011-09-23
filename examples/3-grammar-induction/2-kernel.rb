@@ -22,4 +22,4 @@ prefixes = short_prefixes(lang)
 # to the kernel. The kernel elements capture the transitions of the canonical 
 # automaton A(lang). Indeed, they are obtained by adding one symbol to the short 
 # pre-fixes which capture its states.
-kernel   = kernel(target)
+kernel   = kernel(lang)
