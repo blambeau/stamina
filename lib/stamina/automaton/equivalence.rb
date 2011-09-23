@@ -8,7 +8,8 @@ module Stamina
     # works.
     #
     def equivalent?(other, equiv = nil, key = :equiv_state)
-      equiv ||= Proc.new{|s1,s2| (s1.accepting? == s2.accepting?) && 
+      equiv ||= Proc.new{|s1,s2| (s1 && s2) &&
+                                 (s1.accepting? == s2.accepting?) && 
                                  (s1.error? == s2.error?) && 
                                  (s1.initial? == s2.initial?) }
 
