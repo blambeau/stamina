@@ -1,24 +1,23 @@
 module Stamina
   class RegLang
     
-    module ShortPrefix
-      def suppremum(d0, d1) 
-        return d0 if d1.nil?
-        return d1 if d0.nil?
-        d0.size <= d1.size ? d0 : d1
+    #
+    # Returns the short prefixes of the language as a sample
+    #
+    def short_prefixes
+      cdfa = SHORT_PREFIXES_EXTRACTOR.execute(to_cdfa, nil, [])
+      prefixes = Sample.new
+      cdfa.each_state do |s|
+        prefixes << InputString.new(s[:short_prefix], s.accepting?, false)
       end
-      def propagate(deco, edge) 
-        deco.dup << edge.symbol
-      end
+      prefixes
     end
 
     #
     # Returns the language kernel as a sample
     #
     def kernel
-      algo = Stamina::Utils::Decorate.new(:short_prefix)
-      algo.extend(ShortPrefix)
-      algo.execute(cdfa = to_cdfa, nil, [])
+      cdfa = SHORT_PREFIXES_EXTRACTOR.execute(to_cdfa, nil, [])
       kernel = Sample.new
       kernel << InputString.new([], cdfa.initial_state.accepting?)
       cdfa.each_edge do |edge|
@@ -27,6 +26,23 @@ module Stamina
         kernel << InputString.new(symbols, positive, false)
       end
       kernel
+    end
+
+    private 
+
+    SHORT_PREFIXES_EXTRACTOR = begin
+      algo = Stamina::Utils::Decorate.new(:short_prefix)
+      algo.set_suppremum do |d0,d1|
+        if (d0.nil? || d1.nil?) 
+          (d0 || d1)
+        else
+          d0.size <= d1.size ? d0 : d1
+        end
+      end
+      algo.set_propagate do |deco, edge|
+        deco.dup << edge.symbol
+      end
+      algo
     end
 
   end # class RegLang

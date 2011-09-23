@@ -26,6 +26,14 @@ module Stamina
       end
 
       #
+      # Extracts the short prefixes of a regular language (coerced from `arg`) 
+      # as a Sample instance.
+      #
+      def short_prefixes(arg)
+        regular(arg).short_prefixes
+      end
+
+      #
       # Extracts the kernel of a regular language (coerced from `arg`) as 
       # a Sample instance.
       #
