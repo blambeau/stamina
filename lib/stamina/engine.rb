@@ -1,8 +1,7 @@
 require "stamina/engine/context"
-require "stamina/engine/dsl"
 module Stamina
   class Engine
-    include Engine::DSL
+    include Stamina::Dsl
 
     def execute_binding
       binding

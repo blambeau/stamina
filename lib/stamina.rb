@@ -21,5 +21,6 @@ require 'stamina/induction/commons'
 require "stamina/induction/rpni"
 require "stamina/induction/blue_fringe"
 require "stamina/reg_lang"
-require "stamina/engine"
 require "stamina/dsl"
+require "stamina/engine"
+
