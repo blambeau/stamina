@@ -4,7 +4,8 @@ module Stamina
 
       def assert(x, msg = nil)
         raise Stamina::AssertionError, 
-              "Assertion failed: #{msg || 'no message provided'}" unless x
+              "Assertion failed: #{msg || 'no message provided'}",
+              caller unless x
       end
 
     end # module Core
