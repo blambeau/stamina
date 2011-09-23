@@ -43,5 +43,5 @@ variables:
     - {name: gnuplot,   version: "~> 2.3.6",  groups: [development]}
   rake_tasks:
     unit_test:
-      libs: [lib, test]
+      libs: [lib, test/unit]
       pattern: test/**/*_test.rb

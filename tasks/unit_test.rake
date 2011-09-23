@@ -31,7 +31,7 @@ begin
 
     # List of directories to added to $LOAD_PATH before running the
     # tests. (default is 'lib')
-    t.libs = ["lib", "test"]
+    t.libs = ["lib", "test/unit"]
 
     # True if verbose test output desired. (default is false)
     t.verbose = false
