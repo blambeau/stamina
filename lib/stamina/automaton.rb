@@ -1184,6 +1184,11 @@ module Stamina
       cdfa
     end
 
+    # Returns a regular language
+    def to_reglang
+      RegLang.new(self)
+    end
+
     ### public section about dot utilities #######################################
     protected
     

@@ -21,6 +21,23 @@ module Stamina
       @fa = fa
     end
 
+    #
+    # Coerces `arg` to a regular language
+    #
+    # @raise ArgumentError if `arg` cannot be coerced to a regular language
+    #
+    def self.coerce(arg)
+      if arg.respond_to?(:to_reglang)
+        arg.to_reglang
+      elsif arg.respond_to?(:to_fa)
+        new(arg.to_fa)
+      elsif arg.is_a?(String)
+        parse(arg)
+      else
+        raise ArgumentError, "Invalid argument #{arg} for `RegLang`"
+      end
+    end
+
     # 
     # Builds a sigma star language
     # 
@@ -98,6 +115,13 @@ module Stamina
     #
     def include?(str)
       fa.accepts?(str)
+    end
+
+    #
+    # Returns self.
+    #
+    def to_reglang
+      self
     end
 
     #

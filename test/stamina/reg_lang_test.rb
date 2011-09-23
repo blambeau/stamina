@@ -1,5 +1,12 @@
 module Stamina
-  class RegLangTest < Test::Unit::TestCase
+  class RegLangTest < StaminaTest
+
+    def test_coerce
+      assert RegLang.coerce("(a b)*").is_a?(RegLang)
+      assert RegLang.coerce(ab_star).is_a?(RegLang)
+      assert RegLang.coerce(RegLang.coerce(ab_star)).is_a?(RegLang)
+      assert RegLang.coerce(Sample.new).is_a?(RegLang)
+    end
 
     def test_sigma_star
       assert RegLang.sigma_star('a'..'b') <=> RegLang.parse("(a | b)*")
