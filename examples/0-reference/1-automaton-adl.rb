@@ -1,4 +1,4 @@
-code = <<ADL
+code = <<-ADL
 # First, it allows line comments 'a la' ruby, that is, lines starting with '#' 
 # are simply ignored. White spaces may also be inserted between the comment 
 # symbol like

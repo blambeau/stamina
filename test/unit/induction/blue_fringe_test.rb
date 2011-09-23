@@ -57,8 +57,7 @@ module Stamina
       
       # Tests on characteristic sample
       def test_on_public_characteristic_example
-        example_folder = File.join(File.dirname(__FILE__), '..', '..', '..', 'example', 'basic')
-        sample = Stamina::ADL.parse_sample_file(File.join(example_folder, 'characteristic_sample.adl'))
+        sample = Stamina::ADL.parse_sample_file(File.expand_path('../characteristic.adl', __FILE__))
         blue_fringed = Stamina::Induction::BlueFringe.execute(sample)
         assert_equal 4, blue_fringed.state_count
         s0, = blue_fringed.initial_state

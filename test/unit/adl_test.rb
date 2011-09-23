@@ -191,8 +191,7 @@ module Stamina
     def test_valid_adl_automaton_example
       fa = nil
       assert_nothing_raised(ADL::ParseError) do
-        here =  File.dirname(__FILE__)
-        automaton_adl = File.join(here, '..', '..', 'example', 'adl', 'automaton.adl')
+        automaton_adl = File.expand_path("../ref-automaton.adl", __FILE__)
         fa = ADL::parse_automaton_file(automaton_adl)
       end # assert_nothing_raised
       assert_equal(5, fa.state_count)
@@ -377,8 +376,7 @@ module Stamina
   
     # Tests validity of sample.adl file
     def test_valid_adl_sample_example
-      here =  File.dirname(__FILE__)
-      sample_adl = File.join(here, '..', '..', 'example', 'adl', 'sample.adl')
+      sample_adl = File.expand_path("../ref-sample.adl", __FILE__)
       sample = ADL::parse_sample_file(sample_adl)
       expected = Sample.new 
       expected << InputString.new(['a', 'b', 'a', 'b'], true)

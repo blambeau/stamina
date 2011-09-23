@@ -1,5 +1,5 @@
 module Stamina
-  
+  EXAMPLES_FOLDER = File.expand_path("../../examples", __FILE__)
 end
 require 'stamina/ext/math'
 require 'stamina/version'

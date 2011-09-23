@@ -4,7 +4,7 @@ module Stamina
       include Enumerable
 
       # Category where examples are located
-      FOLDER = File.join(File.dirname(__FILE__), "examples")
+      FOLDER = Stamina::EXAMPLES_FOLDER
 
       def each
         Dir[File.join(FOLDER, "*")].sort.each do |file|
