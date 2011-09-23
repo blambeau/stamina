@@ -4,6 +4,7 @@ module Stamina
 
     # Automaton capturing this regular language
     attr_reader :fa
+    protected :fa
 
     #
     # Creates a regular language instance based on an automaton.
@@ -11,6 +12,9 @@ module Stamina
     def initialize(fa)
       @fa = fa
     end
+
+    ############################################################################
+    # CLASS METHODS
 
     #
     # Coerces `arg` to a regular language
@@ -48,6 +52,9 @@ module Stamina
     def self.parse(str)
       RegLang.new(Parser.parse(str).to_fa)
     end
+
+    ############################################################################
+    # OPERATORS
 
     #
     # Returns the prefix-closed version of this regular language.
@@ -115,6 +122,27 @@ module Stamina
       RegLang.new(fa.keep(symbols))
     end
 
+    ############################################################################
+    # CANONICAL DFA
+    
+    def short_prefixes
+      canonical_info.short_prefixes
+    end
+
+    def kernel
+      canonical_info.kernel
+    end
+
+    private
+
+    def canonical_info
+      @canonical_info ||= CanonicalInfo.new(self)
+    end
+
+    ############################################################################
+    # QUERIES
+    public
+
     #
     # Checks if the language is empty
     #
@@ -128,6 +156,17 @@ module Stamina
     def include?(str)
       fa.accepts?(str)
     end
+
+    #
+    # Checks if `self` and `other` capture the same regular language.
+    #
+    def eql?(other)
+      self.to_cdfa <=> other.to_cdfa
+    end
+    alias :<=> :eql?
+
+    ############################################################################
+    # COERCIONS
 
     #
     # Returns self.
@@ -173,17 +212,7 @@ module Stamina
       dfa.to_dot
     end
 
-    #
-    # Checks if `self` and `other` capture the same regular language.
-    #
-    def eql?(other)
-      self.to_cdfa <=> other.to_cdfa
-    end
-    alias :<=> :eql?
-
-    protected :fa
-
     EMPTY = RegLang.new(Automaton::DUM)
   end # class RegLang
 end # module Stamina
-require 'stamina/reg_lang/kernel'
+require 'stamina/reg_lang/canonical_info'
