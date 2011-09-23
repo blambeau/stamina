@@ -575,6 +575,22 @@ module Stamina
       end
     end
 
+    # Coerces `arg` to an automaton
+    def self.coerce(arg)
+      if arg.respond_to?(:to_fa)
+        arg.to_fa
+      elsif arg.is_a?(String)
+        parse(arg)
+      else
+        raise ArgumentError, "Invalid argument #{arg} for `Automaton`"
+      end
+    end
+
+    # Parses an automaton using ADL
+    def self.parse(str)
+      ADL::parse_automaton(str)
+    end
+
     ### public read-only section #################################################
     public
   
