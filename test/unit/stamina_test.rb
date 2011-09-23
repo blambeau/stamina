@@ -68,6 +68,24 @@ module Stamina
         fa.connect(1,0,'b')
       end
     end
+  
+    # Returns an automaton recognizing a*
+    def a_star
+      Automaton.new(true) do |fa|
+        fa.alphabet = ["a"]
+        fa.add_state(:initial => true,  :accepting => true)
+        fa.connect(0,0,'a')
+      end
+    end
+  
+    # Returns an automaton recognizing b*
+    def b_star
+      Automaton.new(true) do |fa|
+        fa.alphabet = ["b"]
+        fa.add_state(:initial => true,  :accepting => true)
+        fa.connect(0,0,'b')
+      end
+    end
 
     # Tests the validity of examples
     def test_validity_of_examples
