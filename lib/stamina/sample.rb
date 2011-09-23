@@ -34,7 +34,22 @@ module Stamina
       strings.each{|s| self << s } unless strings.nil?
     end
 
+    # 
+    # Coerces `arg` to a Sample instance.
+    #
+    def self.coerce(arg)
+      if arg.is_a?(Sample)
+        arg
+      elsif arg.is_a?(String)
+        parse(arg)
+      else
+        raise ArgumentError, "Invalid argument #{arg} for `Sample`"
+      end
+    end
+
+    #
     # Parses an ADL input
+    #
     def self.parse(adl)
       ADL::parse_sample(adl)
     end
