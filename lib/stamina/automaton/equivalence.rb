@@ -16,6 +16,7 @@ module Stamina
       # Both must already have basic attributes in common
       return false unless state_count==other.state_count
       return false unless edge_count==other.edge_count
+      return false unless alphabet==other.alphabet
       return false unless equiv[initial_state, other.initial_state]
 
       # We instantiate the decoration algorithm for checking equivalence on this
