@@ -76,5 +76,17 @@ module Stamina
       assert expected.eql?(x & y)
     end
 
+    def test_difference_on_same
+      x = RegLang.parse("(a b)*")
+      assert (x - x) <=> RegLang::EMPTY
+    end
+
+    def test_empty?
+      x = RegLang.parse("(a b)*")
+      assert !x.empty?
+      assert RegLang::EMPTY.empty?
+      assert (x - x).empty?
+    end
+
   end # class RegLangTest
 end # module Stamina

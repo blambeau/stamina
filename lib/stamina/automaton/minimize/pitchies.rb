@@ -75,7 +75,7 @@ module Stamina
         end
         
         def minimized_dfa(oldfa, nb_states, partition)
-          Automaton.new(false) do |newfa| 
+          fa = Automaton.new(false) do |newfa| 
             # Add the number of states, with default marks
             newfa.add_n_states(nb_states, {:initial => false, :accepting => false, :error => false})
 
@@ -100,6 +100,8 @@ module Stamina
               end
             end
           end
+          fa.drop_states *fa.states.select{|s| s.sink?}
+          fa.state_count == 0 ? Automaton::DUM : fa
         end
 
         def main

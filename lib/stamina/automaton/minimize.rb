@@ -5,7 +5,7 @@ module Stamina
     # Checks if this automaton is minimal.
     #
     def minimal?
-      self.minimize <=> self.complete
+      self.minimize.state_count == self.state_count
     end
       
     #

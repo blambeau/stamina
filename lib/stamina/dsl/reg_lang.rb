@@ -2,6 +2,8 @@ module Stamina
   module Dsl
     module RegLang
 
+      EMPTY_LANG = ::Stamina::RegLang::EMPTY
+
       #
       # Coerces `arg` to a regular language.
       # 

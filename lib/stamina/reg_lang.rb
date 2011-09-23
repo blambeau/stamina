@@ -125,6 +125,13 @@ module Stamina
     end
 
     #
+    # Checks if the language is empty
+    #
+    def empty?
+      self <=> EMPTY
+    end
+
+    #
     # Checks if this regular language includes a given string
     #
     def include?(str)
@@ -184,5 +191,7 @@ module Stamina
     alias :<=> :eql?
 
     protected :fa
+
+    EMPTY = RegLang.new(Automaton::DUM)
   end # class RegLang
 end # module Stamina

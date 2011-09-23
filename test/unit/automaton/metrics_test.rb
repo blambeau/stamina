@@ -29,6 +29,11 @@ module Stamina
         assert_equal 2, @small_nfa.depth
       end
 
+      def test_depth_on_empty
+        a = Automaton.new{ add_state(:initial => true) }
+        assert_equal 0, a.depth
+      end
+
     end
   end
 end

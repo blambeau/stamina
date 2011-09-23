@@ -23,7 +23,7 @@ module Stamina
         # Computes a minimal dfa from the grouping information
         def compute_minimal_dfa(groups)
           indexes = []
-          Automaton.new do |fa|
+          fa = Automaton.new do |fa|
 
             # create one state for each group
             groups.each_with_index do |group,index|
@@ -54,6 +54,8 @@ module Stamina
             end
 
           end
+          fa.drop_states *fa.states.select{|s| s.sink?}
+          fa.state_count == 0 ? Automaton::DUM : fa
         end
         
         # Computes the initial partition

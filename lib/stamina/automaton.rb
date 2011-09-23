@@ -1196,7 +1196,6 @@ module Stamina
       cdfa = cdfa.determinize unless self.deterministic? 
       cdfa = cdfa.complete    unless self.complete?
       cdfa = cdfa.minimize
-      cdfa.drop_states *cdfa.states.select{|s| s.sink?}
       cdfa
     end
 
@@ -1313,6 +1312,9 @@ module Stamina
     end
   
     protected :compute_initial_states
+
+    DUM = Automaton.new{ add_state(:initial => true, :accepting => false) }
+    DEE = Automaton.new{ add_state(:initial => true, :accepting => true)  }
   end # class Automaton
     
 end # module Stamina
