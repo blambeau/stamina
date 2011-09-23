@@ -1,15 +1,6 @@
+require "stamina/reg_lang/parser"
 module Stamina
   class RegLang
-    require "stamina/reg_lang/node"
-    require "stamina/reg_lang/parenthesized"
-    require "stamina/reg_lang/symbol"
-    require "stamina/reg_lang/question"
-    require "stamina/reg_lang/plus"
-    require "stamina/reg_lang/star"
-    require "stamina/reg_lang/sequence"
-    require "stamina/reg_lang/alternative"
-    require "stamina/reg_lang/regexp"
-    Citrus.require "stamina/reg_lang/parser"
 
     # Automaton capturing this regular language
     attr_reader :fa
