@@ -110,7 +110,21 @@ module Stamina
     end
     alias :difference :-
 
-    # 
+    #
+    # Returns the regular language defined when abstracting from `symbols`
+    #
+    def hide(symbols)
+      RegLang.new(fa.hide(symbols))
+    end
+
+    #
+    # Returns the regular language defined when projecting on `symbols`
+    #
+    def project(symbols)
+      RegLang.new(fa.keep(symbols))
+    end
+
+    #
     # Checks if this regular language includes a given string
     #
     def include?(str)

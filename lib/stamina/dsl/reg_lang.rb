@@ -27,14 +27,14 @@ module Stamina
       # Hides allbut `alph` symbols in the regular language `arg`
       # 
       def project(arg, alph)
-        hide(arg, automaton(arg).alphabet.to_a - alph.to_a)
+        regular(arg).project(alph)
       end
 
       # 
       # Hides `alph` symbols in the regular language `arg`
       # 
       def hide(arg, alph)
-        regular(automaton(arg).hide(alph))
+        regular(arg).hide(alph)
       end
 
     end # module RegLang
