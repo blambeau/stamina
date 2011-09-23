@@ -35,6 +35,8 @@ module Stamina
 
       # example handlers 
       get '/examples/:folder/:file' do
+        cache_control :no_cache
+        expires 0, :no_cache
         send_file File.join(Gui::Examples::FOLDER, 
                             params[:folder], 
                             "#{params[:file]}.rb")
