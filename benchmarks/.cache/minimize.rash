@@ -1,0 +1,12 @@
+{:ruby => "ruby 1.9.2p290", :req_size => 16, :state_count => 20, :bench => :hopcroft, :tms => Viiite::Tms(0.00999999999999801,0.0,0.0,0.0,0.004530336)}
+{:ruby => "ruby 1.9.2p290", :req_size => 16, :state_count => 20, :bench => :pitchies, :tms => Viiite::Tms(0.0,0.0,0.0,0.0,0.002634399)}
+{:ruby => "ruby 1.9.2p290", :req_size => 32, :state_count => 40, :bench => :hopcroft, :tms => Viiite::Tms(0.010000000000005116,0.0,0.0,0.0,0.011103542)}
+{:ruby => "ruby 1.9.2p290", :req_size => 32, :state_count => 40, :bench => :pitchies, :tms => Viiite::Tms(0.0,0.0,0.0,0.0,0.00367823)}
+{:ruby => "ruby 1.9.2p290", :req_size => 64, :state_count => 80, :bench => :hopcroft, :tms => Viiite::Tms(0.030000000000001137,0.0,0.0,0.0,0.032708081)}
+{:ruby => "ruby 1.9.2p290", :req_size => 64, :state_count => 80, :bench => :pitchies, :tms => Viiite::Tms(0.00999999999999801,0.0,0.0,0.0,0.009622719)}
+{:ruby => "ruby 1.9.2p290", :req_size => 128, :state_count => 160, :bench => :hopcroft, :tms => Viiite::Tms(0.1700000000000017,0.0,0.0,0.0,0.166731575)}
+{:ruby => "ruby 1.9.2p290", :req_size => 128, :state_count => 160, :bench => :pitchies, :tms => Viiite::Tms(0.030000000000001137,0.0,0.0,0.0,0.024631942)}
+{:ruby => "ruby 1.9.2p290", :req_size => 256, :state_count => 320, :bench => :hopcroft, :tms => Viiite::Tms(0.5999999999999943,0.0,0.0,0.0,0.59340698)}
+{:ruby => "ruby 1.9.2p290", :req_size => 256, :state_count => 320, :bench => :pitchies, :tms => Viiite::Tms(0.07000000000000028,0.0,0.0,0.0,0.065211395)}
+{:ruby => "ruby 1.9.2p290", :req_size => 512, :state_count => 640, :bench => :hopcroft, :tms => Viiite::Tms(2.770000000000003,0.0,0.0,0.0,2.775667902)}
+{:ruby => "ruby 1.9.2p290", :req_size => 512, :state_count => 640, :bench => :pitchies, :tms => Viiite::Tms(0.23999999999999488,0.0,0.0,0.0,0.242371278)}
