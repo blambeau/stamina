@@ -55,7 +55,7 @@ module Stamina
       end
 
       def test_it_can_be_used_on_small_dfas
-        dfa = RandomDFA.new(16).execute
+        dfa = RandomDFA.new.execute(16)
         training, test = RandomSample.execute(dfa)
 
         assert test.size > 0

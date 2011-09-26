@@ -5,19 +5,7 @@ module Stamina
     # 
     class RandomDFA
 
-      # Number of wished states 
-      attr_reader :state_count
-
-      # Accepting ratio
-      attr_reader :accepting_ratio
-
-      # Creates an algorithm instance with default options
-      def initialize(state_count = 64, accepting_ratio = 0.5)
-        @state_count = state_count
-        @accepting_ratio = accepting_ratio
-      end
-
-      def execute
+      def execute(state_count = 64, accepting_ratio = 0.5)
         dfa = Automaton.new
         
         # Generate 5/4*state_count states

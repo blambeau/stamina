@@ -5,7 +5,7 @@ module Stamina
     class RandomDFATest < StaminaTest
 
       def test_it_looks_ok_with_default_options
-        dfa = RandomDFA.new(32).execute
+        dfa = RandomDFA.new.execute(32,12)
         assert dfa.deterministic?
         assert dfa.minimal?
         assert dfa.complete?
