@@ -118,6 +118,10 @@ module Stamina
       # and rejected by the other
       def distinguish(x, y)
         raise ArgumentError, "x and y should be different" if x == y
+        build_distinguish_matrix[[x,y].sort]
+      end
+
+      def build_distinguish_matrix
         @diff_matrix ||= begin
           mat = {}
 
@@ -147,7 +151,6 @@ module Stamina
 
           mat
         end
-        @diff_matrix[[x,y].sort]
       end
 
       # Recursively finds a positive/negative suffix for `state`
