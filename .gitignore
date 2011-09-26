@@ -5,3 +5,5 @@ doc/api
 .yardoc
 .bundle
 fa.dot
+benchmarks/.cache
+
