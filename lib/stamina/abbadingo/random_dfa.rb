@@ -5,7 +5,16 @@ module Stamina
     # 
     class RandomDFA
 
-      def execute(state_count = 64, accepting_ratio = 0.5)
+      DEFAULT_OPTIONS = {
+        :minimize => :hopcroft
+      }
+
+      def execute(state_count = 64, 
+                  accepting_ratio = 0.5,
+                  options = {})
+        options = DEFAULT_OPTIONS.merge(options)
+
+        # Built dfa
         dfa = Automaton.new
         
         # Generate 5/4*state_count states
@@ -27,7 +36,18 @@ module Stamina
         dfa.ith_state(Kernel.rand(dfa.state_count)).initial!
         
         # Minimize the automaton and return it
-        Stamina::Automaton::Minimize::Pitchies.execute(dfa)
+        case options[:minimize]
+          when :hopcroft
+            Stamina::Automaton::Minimize::Hopcroft.execute(dfa)
+          when :pitchies
+            Stamina::Automaton::Minimize::Pitchies.execute(dfa)
+          else
+            dfa
+        end
+      end
+
+      def self.execute(*args)
+        new.execute(*args)
       end
 
     end # class RandomDFA
