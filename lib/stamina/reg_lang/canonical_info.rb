@@ -69,6 +69,15 @@ module Stamina
       #
       def characteristic_sample
         sample = Sample.new
+
+        # at least one positive string should be found from
+        # the initial state
+        if pos = positive_suffix(cdfa.initial_state)
+          sample << InputString.new(pos, true)
+        else
+          sample << InputString.new([], false)
+          return sample
+        end
         
         # condition 1: positive string for each element of the kernel 
         cdfa.each_edge do |edge|
@@ -77,11 +86,10 @@ module Stamina
         end
 
         # condition 2: pair-wise distinguising suffixes
-        diffs = {}
         cdfa.each_state do |source|
           cdfa.each_edge do |edge|
             next if (target = edge.target) == source
-            if suffix = distinguish(source, target, [], diffs)
+            if suffix = distinguish(source, target)
               sign = cdfa.accepts?(suffix, source)
               sample << InputString.new(short_prefix(source) + suffix, sign)
               sample << InputString.new(short_prefix(edge) + suffix, !sign)
@@ -102,9 +110,44 @@ module Stamina
         end
       end
 
+      def cross(xs, ys)
+        xs.each{|x| ys.each{|y| yield(x,y)}}
+      end
+
       # Distinguishes two states, returning a suffix which is accepted for one
       # and rejected by the other
-      def distinguish(x, y, stack = [], seen = {}, recur = {})
+      def distinguish(x, y)
+        raise ArgumentError, "x and y should be different" if x == y
+        @diff_matrix ||= begin
+          mat = {}
+
+          # pairs to be explored
+          to_explore = [] 
+
+          # start by marking accepting vs. non-accepting states
+          acc, nonacc = cdfa.states.partition{|s| s.accepting?}
+          cross(acc, nonacc) do |*pair|
+            mat[pair.sort!] = []
+            to_explore << pair
+          end
+
+          # Visit each pair backwards
+          while pair = to_explore.pop
+            suffix = mat[pair]
+            cross(pair[0].in_edges, pair[1].in_edges) do |se, te|
+              next if se.symbol != te.symbol
+              source = [se.source, te.source].sort!
+              if mat[source].nil? || 
+                 (mat[source].length > (1+suffix.length))
+                mat[source] = [se.symbol] + suffix
+                to_explore.push(source)
+              end
+            end
+          end
+
+          mat
+        end
+        @diff_matrix[[x,y].sort]
       end
 
       # Recursively finds a positive/negative suffix for `state`

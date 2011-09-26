@@ -7,8 +7,12 @@ module Stamina
     def test_examples
       pattern = File.join(Stamina::Gui::Examples::FOLDER, "**", "*.rb")
       Dir[pattern].each do |file|
-        assert_nothing_raised do
+        begin
           Stamina::Engine.execute File.read(file)
+        rescue => ex
+          puts ex.message
+          puts ex.backtrace.join("\n")
+          assert false, "File #{file} does not raise error"
         end
       end
     end

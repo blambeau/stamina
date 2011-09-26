@@ -88,6 +88,32 @@ module Stamina
         assert_equal expected, info.kernel
       end
 
+      def test_characteristic_on_dum
+        expected = Sample.parse <<-ADL
+          -
+        ADL
+        info = CanonicalInfo.new(Automaton::DUM)
+        assert_equal expected, info.characteristic_sample
+      end
+
+      def test_characteristic_on_dee
+        expected = Sample.parse <<-ADL
+          +
+        ADL
+        info = CanonicalInfo.new(Automaton::DEE)
+        assert_equal expected, info.characteristic_sample
+      end
+
+      def test_characteristic_on_ab_star
+        expected = Sample.parse <<-ADL
+          +
+          + a b
+          - a
+        ADL
+        info = CanonicalInfo.new(ab_star)
+        assert_equal expected, info.characteristic_sample
+      end
+
     end # class CanonicalInfoTest
   end # class RegLang
 end # module Stamina
