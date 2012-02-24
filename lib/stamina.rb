@@ -32,5 +32,3 @@ require_relative "stamina/engine"
 module Stamina
   extend Stamina::Dsl
 end
-
-require_relative 'stamina-gui/stamina/gui'

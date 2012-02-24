@@ -1,4 +1,3 @@
-require 'stamina'
 module Stamina
   #
   # Stamina - A Ruby Automaton & Induction Toolkit
@@ -43,4 +42,3 @@ require_relative 'command/abbadingo_dfa'
 require_relative 'command/abbadingo_samples'
 require_relative 'command/infer'
 require_relative 'command/run'
-require_relative 'command/gui'
