@@ -11,4 +11,5 @@ Gem::Specification.new do |s|
   s.add_dependency("stamina-core",      "= #{$version}")
   s.add_dependency("stamina-induction", "= #{$version}")
   s.add_dependency("sinatra", "~> 1.3")
+  s.add_dependency("json",    "~> 1.6")
 end

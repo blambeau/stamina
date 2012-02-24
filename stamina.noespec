@@ -48,6 +48,7 @@ variables:
     - {name: rspec,     version: "~> 2.8.0",  groups: [development]}
     - {name: wlang,     version: "~> 0.10.2", groups: [development]}
     - {name: gnuplot,   version: "~> 2.3.6",  groups: [development]}
+    - {name: json,      version: "~> 1.6",    groups: [development]}
   rake_tasks:
     unit_test:
       libs: [lib, test/unit]

@@ -11,4 +11,5 @@ group :development do
   gem "rspec", "~> 2.8.0"
   gem "wlang", "~> 0.10.2"
   gem "gnuplot", "~> 2.3.6"
+  gem "json", "~> 1.6"
 end
