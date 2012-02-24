@@ -24,7 +24,7 @@ module Stamina
       # main config, statics and root
       enable :sessions
 
-      set :public, _('public')
+      set :public_folder, _('public')
       set :views,  _('templates')
 
       get '/' do
