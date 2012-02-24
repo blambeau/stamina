@@ -18,7 +18,7 @@ module Stamina
       # Install options
       options do |opt|
 
-        self.output = [:main]
+        @output = [:main]
         opt.on("--output=x,y,z", Array,
                "Output specified variables only") do |args|
           self.output = args.collect{|v| v.to_sym}
@@ -28,7 +28,7 @@ module Stamina
           self.output = nil
         end
 
-        self.images = []
+        @images = []
         opt.on('--gif') do 
           self.images << :gif
         end
