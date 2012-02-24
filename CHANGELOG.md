@@ -1,13 +1,16 @@
-# 0.4.1 / FIX ME
+# 0.5.0 / FIX ME
 
 * Major enhancements
 
-    * adl2dot command now support samples as input in addition to automata. In
-      that case, the dot result models a PTA (prefix tree acceptor)
-    * Added --png to 'stamina adl2dot'
+    * The project has been split in different sub gems (one for core, one for induction
+      tools and one for the sinatra gui). This implies a lot of changes, but the public
+      API has not been affected.
 
 * Minor enhancements
     * Fixed a bug with bundler usage in main stamina binary
+    * adl2dot command now support samples as input in addition to automata. In that case,
+      the dot result models a PTA (prefix tree acceptor)
+    * Added --png to 'stamina adl2dot'
 
 # 0.4.0 / 2011-05-01
 
