@@ -27,7 +27,7 @@ Gem::Specification.new do |s|
   #
   # The description should be more detailed than the summary.  For example,
   # you might wish to copy the entire README into the description.
-  s.description = "Stamina is an automaton and regular inference toolkit initially developped for the baseline \nof the Stamina Competition (stamina.chefbe.net)."
+  s.description = "Stamina is an automaton and regular inference toolkit initially developped for the \nbaseline of the Stamina Competition (stamina.chefbe.net)."
 
   # The URL of this gem home page (optional)
   s.homepage = "http://stamina.chefbe.net/"
@@ -124,14 +124,11 @@ Gem::Specification.new do |s|
   # for each development dependency. These gems are required for developers
   #
   s.add_development_dependency("rake", "~> 0.9.2")
-  s.add_development_dependency("bundler", "~> 1.0")
-  s.add_development_dependency("rspec", "~> 2.4.0")
-  s.add_development_dependency("yard", "~> 0.6.4")
-  s.add_development_dependency("bluecloth", "~> 2.0.9")
-  s.add_development_dependency("wlang", "~> 0.10.1")
+  s.add_development_dependency("rspec", "~> 2.8.0")
+  s.add_development_dependency("wlang", "~> 0.10.2")
   s.add_development_dependency("gnuplot", "~> 2.3.6")
-  s.add_dependency("quickl", "~> 0.4.1")
-  s.add_dependency("citrus", "~> 2.4.0")
+  s.add_dependency("quickl", "~> 0.4.3")
+  s.add_dependency("citrus", "~> 2.4")
   s.add_dependency("sinatra", "~> 1.2.6")
 
   # The version of ruby required by this gem
