@@ -1,6 +1,6 @@
 require 'epath'
 
-$root = Path.dir/".."
+$root = Path.dir
 $lib  = $root/:lib
 
 require $lib/"stamina-core/stamina/version"

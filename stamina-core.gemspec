@@ -1,4 +1,4 @@
-Kernel.load File.expand_path('../commons.rb', __FILE__)
+Kernel.load File.expand_path('../stamina-gemspec.rb', __FILE__)
 
 Gem::Specification.new do |s|
   populate_gemspec(s, ($lib/"stamina-core").glob("**/*"))

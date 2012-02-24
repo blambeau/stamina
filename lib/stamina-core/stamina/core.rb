@@ -1,5 +1,4 @@
 require_relative 'version'
-require_relative 'loader'
 require_relative 'errors'
 require_relative 'ext/math'
 require_relative 'markable'
