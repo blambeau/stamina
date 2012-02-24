@@ -8,7 +8,19 @@ template-info:
       ignore: true
     spec/test___lower__.rb:
       ignore: true
+    tasks/gem.rake:
+      ignore: true
     tasks/spec_test.rake:
+      ignore: true
+    __lower__.gemspec:
+      ignore: true
+    lib/__lower__.rb:
+      ignore: true
+    lib/__lower__/loader.rb:
+      ignore: true
+    lib/__lower__/version.rb:
+      ignore: true
+    Rakefile:
       ignore: true
 variables:
   lower: 
