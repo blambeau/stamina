@@ -2,30 +2,35 @@ require 'set'
 require 'enumerator'
 require 'stringio'
 
-require 'stamina/version'
-require 'stamina/loader'
+require_relative 'stamina/version'
+require_relative 'stamina/loader'
+require_relative 'stamina/errors'
+
 module Stamina
 
   EXAMPLES_FOLDER = File.expand_path("../../examples", __FILE__)
 
 end
-require 'stamina/errors'
-require 'stamina/ext/math'
-require 'stamina/markable'
-require 'stamina/adl'
-require 'stamina/sample'
-require 'stamina/input_string'
-require 'stamina/classifier'
-require 'stamina/automaton'
-require 'stamina/scoring'
-require 'stamina/utils'
-require 'stamina/induction/union_find'
-require 'stamina/induction/commons'
-require "stamina/induction/rpni"
-require "stamina/induction/blue_fringe"
-require "stamina/reg_lang"
-require "stamina/dsl"
-require "stamina/engine"
+
+require_relative 'stamina/ext/math'
+require_relative 'stamina/markable'
+require_relative 'stamina/adl'
+require_relative 'stamina/sample'
+require_relative 'stamina/input_string'
+require_relative 'stamina/classifier'
+require_relative 'stamina/automaton'
+require_relative 'stamina/scoring'
+require_relative 'stamina/utils'
+require_relative 'stamina/induction/union_find'
+require_relative 'stamina/induction/commons'
+require_relative "stamina/induction/rpni"
+require_relative "stamina/induction/blue_fringe"
+require_relative "stamina/reg_lang"
+require_relative "stamina/dsl"
+require_relative "stamina/engine"
+
 module Stamina
   extend Stamina::Dsl
 end
+
+require_relative 'stamina-gui/stamina/gui'

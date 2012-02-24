@@ -1,4 +1,4 @@
-require "stamina/reg_lang/parser"
+require_relative "reg_lang/parser"
 module Stamina
   class RegLang
 
@@ -219,4 +219,4 @@ module Stamina
     EMPTY = RegLang.new(Automaton::DUM)
   end # class RegLang
 end # module Stamina
-require 'stamina/reg_lang/canonical_info'
+require_relative 'reg_lang/canonical_info'

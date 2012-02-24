@@ -1,1 +1,1 @@
-require 'stamina/utils/decorate'
+require_relative 'utils/decorate'

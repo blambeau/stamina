@@ -1,7 +1,7 @@
 require 'tmpdir'
 require 'json'
 require 'sinatra/base'
-require 'stamina/gui/examples'
+require_relative 'examples'
 module Stamina
   module Gui
     class App < Sinatra::Base

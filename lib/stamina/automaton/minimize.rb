@@ -19,5 +19,5 @@ module Stamina
 
   end # class Automaton
 end # module Stamina
-require 'stamina/automaton/minimize/hopcroft'
-require 'stamina/automaton/minimize/pitchies'
+require_relative 'minimize/hopcroft'
+require_relative 'minimize/pitchies'

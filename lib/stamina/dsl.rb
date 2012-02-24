@@ -1,8 +1,8 @@
 module Stamina
   module Dsl
-    require 'stamina/dsl/core'
-    require 'stamina/dsl/automata'
-    require 'stamina/dsl/reg_lang'
-    require 'stamina/dsl/induction'
+    require_relative 'dsl/core'
+    require_relative 'dsl/automata'
+    require_relative 'dsl/reg_lang'
+    require_relative 'dsl/induction'
   end # module Dsl
 end # module Stamina

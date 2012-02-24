@@ -1320,13 +1320,13 @@ module Stamina
   end # class Automaton
 
 end # module Stamina
-require 'stamina/automaton/walking'
-require 'stamina/automaton/complete'
-require 'stamina/automaton/complement'
-require 'stamina/automaton/strip'
-require 'stamina/automaton/equivalence'
-require 'stamina/automaton/determinize'
-require 'stamina/automaton/minimize'
-require 'stamina/automaton/metrics'
-require 'stamina/automaton/compose'
-require 'stamina/automaton/hide'
+require_relative 'automaton/walking'
+require_relative 'automaton/complete'
+require_relative 'automaton/complement'
+require_relative 'automaton/strip'
+require_relative 'automaton/equivalence'
+require_relative 'automaton/determinize'
+require_relative 'automaton/minimize'
+require_relative 'automaton/metrics'
+require_relative 'automaton/compose'
+require_relative 'automaton/hide'

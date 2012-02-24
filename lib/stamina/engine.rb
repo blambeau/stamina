@@ -1,4 +1,4 @@
-require "stamina/engine/context"
+require_relative 'engine/context'
 module Stamina
   class Engine
     include Stamina::Dsl

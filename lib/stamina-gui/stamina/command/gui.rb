@@ -10,7 +10,6 @@ module Stamina
 
       # Command execution
       def execute(args)
-        require 'stamina/gui/app'
         Stamina::Gui::App.run!
       end
 
