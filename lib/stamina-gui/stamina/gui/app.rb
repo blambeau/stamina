@@ -21,11 +21,9 @@ module Stamina
       end
       def _(path); self.class._(path); end
 
-      # main config, statics and root
-      enable :sessions
-
       set :public_folder, _('public')
-      set :views,  _('templates')
+      set :views,      _('templates')
+      set :tmpdir,     Dir.mktmpdir("stamina-gui")
 
       get '/' do
         erb :index, :locals => {
@@ -45,8 +43,7 @@ module Stamina
       # THE go post service
 
       post '/go' do
-        session[:tmpdir] ||= Dir.mktmpdir("stamina-gui")
-        context = go_for(session[:tmpdir], params[:src])
+        context = go_for(settings.tmpdir, params[:src])
         content_type :json
         context.collect{|k,v|
           (k != :main and v.respond_to?(:to_dot)) ? k : nil
@@ -64,8 +61,7 @@ module Stamina
       get '/automata/*' do
         cache_control :no_cache
         expires 0, :no_cache
-        session[:tmpdir] ||= Dir.mktmpdir("stamina-gui")
-        send_file File.join(session[:tmpdir], params[:splat])
+        send_file File.join(settings.tmpdir, params[:splat])
       end
 
     end # class App

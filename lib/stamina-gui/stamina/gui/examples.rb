@@ -5,6 +5,7 @@ module Stamina
 
       # Category where examples are located
       FOLDER = File.expand_path("../../../../../examples", __FILE__)
+      raise "Stamina examples are missing" unless File.exists?(FOLDER)
 
       def each
         Dir[File.join(FOLDER, "*")].sort.each do |file|
