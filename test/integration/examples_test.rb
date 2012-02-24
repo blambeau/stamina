@@ -1,6 +1,6 @@
 require 'test/unit'
 require 'stamina'
-require 'stamina/gui/examples'
+require 'stamina-gui/stamina/gui/examples'
 module Stamina
   class ExamplesTest < Test::Unit::TestCase
 
