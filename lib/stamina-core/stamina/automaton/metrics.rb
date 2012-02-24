@@ -61,7 +61,7 @@ module Stamina
             (d0 <= d1 ? d0 : d1)
           end
         end
-        algo.set_propagate {|d,e| d+1 }
+        algo.set_propagate{|d,e| d.nil? ? 0 : d+1 }
         algo.execute(self, nil, 0)
         deepest = states.max do |s0,s1|
           # Here, we do not take unreachable states into account
