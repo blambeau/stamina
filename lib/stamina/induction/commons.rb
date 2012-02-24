@@ -1,21 +1,21 @@
 module Stamina
   module Induction
-    
+
     #
-    # Defines common utilities used by rpni and blue_fringe. About acronyms: 
+    # Defines common utilities used by rpni and blue_fringe. About acronyms:
     # - _pta_ stands for Prefix Tree Acceptor
     # - _ufds_ stands for Union-Find Data Structure
     #
-    # Methods pta2ufds and sample2ufds are simply conversion methods used when the induction 
-    # algorithm starts (executed on a sample, it first built a pta then convert it to a union 
-    # find). Method ufds2dfa is used when the algorithm ends, to convert refined union find to 
+    # Methods pta2ufds and sample2ufds are simply conversion methods used when the induction
+    # algorithm starts (executed on a sample, it first built a pta then convert it to a union
+    # find). Method ufds2dfa is used when the algorithm ends, to convert refined union find to
     # a dfa.
     #
-    # The merge_user_data method is probably the most important as it actually computes 
+    # The merge_user_data method is probably the most important as it actually computes
     # the merging of two states and build information about merging for determinization.
     #
     module Commons
-      
+
       DEFAULT_OPTIONS = {
         :verbose    => false,
         :verbose_io => $stderr
@@ -23,7 +23,7 @@ module Stamina
 
       # Additional options of the algorithm
       attr_reader :options
-      
+
       # Is the verbose mode on ?
       def verbose?
         @verbose ||= !!options[:verbose]
@@ -32,7 +32,7 @@ module Stamina
       def verbose_io
         @verbose_io ||= options[:verbose_io] || $stderr
       end
-      
+
       # Display an information message (when verbose)
       def info(msg)
         if verbose?
@@ -42,14 +42,14 @@ module Stamina
       end
 
       #
-      # Factors and returns a UnionFind data structure from a PTA, keeping natural order 
-      # of its states for union-find elements. The resulting UnionFind contains a Hash as 
+      # Factors and returns a UnionFind data structure from a PTA, keeping natural order
+      # of its states for union-find elements. The resulting UnionFind contains a Hash as
       # mergeable user data, presenting the following keys:
       # - :initial, :accepting and :error flags of each state
       # - :master indicating the index of the state in the PTA
       # - :delta a delta function through a Hash {symbol => state_index}
       #
-      # In this version, other user data attached to PTA states is lost during the 
+      # In this version, other user data attached to PTA states is lost during the
       # conversion.
       #
       def pta2ufds(pta)
@@ -64,9 +64,9 @@ module Stamina
           data
         end
       end
-      
+
       #
-      # Converts a Sample to an (augmented) prefix tree acceptor. This method ensures 
+      # Converts a Sample to an (augmented) prefix tree acceptor. This method ensures
       # that the states of the PTA are in lexical order, according to the <code><=></code>
       # operator defined on symbols. States reached by negative strings are tagged as
       # non accepting and error.
@@ -83,11 +83,11 @@ module Stamina
         pta2ufds(sample2pta(sample))
       end
 
-      # 
+      #
       # Computes the quotient automaton from a refined UnionFind data structure.
       #
       # In this version, only accepting and initial flags are taken into account
-      # when creating quotient automaton states. Other user data is lost during 
+      # when creating quotient automaton states. Other user data is lost during
       # the conversion.
       #
       def ufds2dfa(ufds)
@@ -108,11 +108,11 @@ module Stamina
           end
         end
       end
-      
+
       #
       # Merges two user data hashes _d1_ and _d2_ according to rules defined
       # below. Also fills a _determinization_ array with pairs of state indices
-      # that are reached from d1 and d2 through the same symbol and should be 
+      # that are reached from d1 and d2 through the same symbol and should be
       # merged for determinization. This method does NOT ensure that those pairs
       # correspond to distinguish states according to the union find. In other
       # words state indices in these pairs do not necessarily corespond to master
@@ -126,31 +126,31 @@ module Stamina
       # - result[:accepting] =  d1[:accepting] or d2[:accepting]
       # - result[:error]     =  d1[:error]     or d2[:error]
       # - result[:master]    =  min(d1[:master], d2[:master])
-      # - result[:delta]     =  merging of delta hashes, keeping smaller target index 
+      # - result[:delta]     =  merging of delta hashes, keeping smaller target index
       #   on key collisions.
       #
       def merge_user_data(d1, d2, determinization)
         # we compute flags first
-        new_data = {:initial => d1[:initial] || d2[:initial], 
+        new_data = {:initial => d1[:initial] || d2[:initial],
                     :accepting => d1[:accepting] || d2[:accepting],
                     :error => d1[:error] || d2[:error],
                     :master => d1[:master] < d2[:master] ? d1[:master] : d2[:master]}
-                
+
         # merge failure if accepting and error states are merged
         return nil if new_data[:accepting] and new_data[:error]
-                
+
         # we recompute the delta function of the resulting state
         # keeping merging for determinization as pairs in _determinization_
         new_data[:delta] = d1[:delta].merge(d2[:delta]) do |symbol, t1, t2|
           determinization << [t1, t2]
           t1 < t2 ? t1 : t2
         end
-        
+
         # returns merged data
         new_data
       end
-      
+
     end # module Commons
-    
+
   end # module Induction
 end # module Stamina

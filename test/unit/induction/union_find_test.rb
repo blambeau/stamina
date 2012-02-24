@@ -3,13 +3,13 @@ require 'stamina/induction/union_find'
 module Stamina
   module Induction
     class UnionFindTest < Test::Unit::TestCase
-      
+
       def assert_whole_find_is(expected, ufds)
         0.upto(expected.size-1) do |i|
           assert_equal expected[i], ufds.find(i)
         end
       end
-      
+
       def test_initially
         ufds = UnionFind.new(5)
         assert_equal 5, ufds.size
@@ -18,7 +18,7 @@ module Stamina
           assert_equal true, ufds.leader?(i)
         end
       end
-      
+
       def test_one_union
         ufds = UnionFind.new(5)
         ufds.union(3,0)
@@ -30,7 +30,7 @@ module Stamina
         ufds.union(0,3)
         assert_whole_find_is [0, 1, 2, 0, 4], ufds
       end
-      
+
       def test_two_unions
         ufds = UnionFind.new(5)
         ufds.union(3,0)
@@ -52,7 +52,7 @@ module Stamina
         assert_equal false, ufds.leader?(3)
         assert_equal false, ufds.leader?(4)
       end
-      
+
       def test_union_supports_identity_union
         ufds = UnionFind.new(5)
         ufds.union(0,0)
@@ -64,7 +64,7 @@ module Stamina
         ufds.union(0,1)
         assert_whole_find_is [0, 0, 2, 3, 4], ufds
       end
-      
+
       def test_dup
         ufds = UnionFind.new(5)
         ufds.union(3,0)
@@ -74,7 +74,7 @@ module Stamina
         assert_equal 0, copy.find(4)
         assert_equal 4, ufds.find(4)
       end
-      
+
       def test_transactional_support
         ufds = UnionFind.new(5)
         ufds.save_point
@@ -88,7 +88,7 @@ module Stamina
         ufds.rollback
         assert_whole_find_is [0, 1, 2, 0, 4], ufds
       end
-      
+
       def test_validity_of_rdoc_example
         # create a union-find for 10 elements
         ufds = Stamina::Induction::UnionFind.new(10) do |index|
@@ -96,29 +96,29 @@ module Stamina
           # smallest element, greatest element and concatenation of names
           {:smallest => index, :greatest => index, :names => index.to_s}
         end
-    
+
         # each element is its own leader
         assert_equal true, (0...10).all?{|s| ufds.leader?(s)}
         assert_equal false, (0...10).all?{|s| ufds.slave?(s)}
-    
+
         # and their respective group number are the element indices themselve
         assert_equal [0, 1, 2, 3, 4, 5, 6, 7, 8, 9], ufds.to_a
-    
+
         # now, let merge 4 with 0
         ufds.union(0, 4) do |d0, d4|
           {:smallest => d0[:smallest] < d4[:smallest] ? d0[:smallest] : d4[:smallest],
            :greatest => d0[:smallest] > d4[:smallest] ? d0[:smallest] : d4[:smallest],
            :names => d0[:names] + " " + d4[:names]}
         end
-    
+
         # let see what happens on group numbers
         assert_equal [0, 1, 2, 3, 0, 5, 6, 7, 8, 9], ufds.to_a
-    
+
         # let now have a look on mergeable_data of the group of 0 (same result for 4)
         expected = {:smallest => 0, :greatest => 4, :names => "0 4"}
         assert_equal expected, ufds.mergeable_data(0)
       end
-      
+
     end
   end
 end

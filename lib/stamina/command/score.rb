@@ -1,6 +1,6 @@
 module Stamina
   class Command
-    # 
+    #
     # Scores the labelling of a sample by an automaton
     #
     # SYNOPSIS
@@ -28,8 +28,7 @@ module Stamina
         scoring = Scoring.scoring(classified_as, reference)
         puts scoring.to_s
       end
-      
+
     end # class Score
   end # class Command
 end # module Stamina
-

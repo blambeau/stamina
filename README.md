@@ -40,7 +40,7 @@ Now, you can run RPNI on the training set using the following command
 And you can classify the test set using the induced automaton (generate the binary signature that will be uploaded on the competition server) using the following one:
 
   ./bin/classify example/competition/31_test.adl example/competition/31_rpni_result.adl
-  
+
 This will generate a string containing 0 and 1, which is the binary signature expected by the server.
 
 Now, you have to create your own induction algorithm. For this, "monkey-see-monkey-do" is a good way to start. Have a look (and copy the following files) at (see also the Roadmap section below)
@@ -72,7 +72,7 @@ Main classes of this project are:
    negative) as well as a sample implementation (a set of strings).
 3. Stamina::ADL, which provides parsing and printing methods for automata and samples.
 4. Stamina::Induction::Commons, Stamina::Induction::RPNI and Stamina::Induction::RedBlue
-   respectively provide common methods of the two algorithms (sample2pta, pta2unionfind, 
+   respectively provide common methods of the two algorithms (sample2pta, pta2unionfind,
    etc.) as well as the algorithm implementations themselve.
-5. Stamina::Induction::UnionFind implements a UnionFind data structure dedicated to the 
+5. Stamina::Induction::UnionFind implements a UnionFind data structure dedicated to the
    induction algorithms.

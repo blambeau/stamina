@@ -3,7 +3,7 @@ module Stamina
 
   # Tests ADL parser
   class ADLTest < Test::Unit::TestCase
-  
+
     # Tests ADL#parse on a valid dfa
     def test_can_parse_valid_empty_dfa
       fa = ADL::parse_automaton <<-AUTOMATON
@@ -18,7 +18,7 @@ module Stamina
       assert_equal(false, fa.accepts?('+'))
       assert_equal(false, fa.accepts?('+ a'))
     end
-  
+
     # Tests ADL#parse on a valid dfa
     def test_can_parse_valid_small_dfa
       fa = ADL::parse_automaton <<-AUTOMATON
@@ -45,7 +45,7 @@ module Stamina
       assert_equal(true, fa.accepts?('+ a b a a a b b a a a'))
       assert_equal(true, fa.accepts?('+ a b a a a b b a a a b b a'))
     end
-  
+
     # Tests that ADL#parse detects a missing state
     def test_detect_missing_header
       assert_raise(ADL::ParseError) do
@@ -70,7 +70,7 @@ module Stamina
         AUTOMATON
       end
     end
-  
+
     # Tests that ADL#parse detects a missing state
     def test_detect_missing_state
       assert_raise(ADL::ParseError) do
@@ -104,7 +104,7 @@ module Stamina
         AUTOMATON
       end
     end
-  
+
     # Tests that ADL#parse detects a missing edge
     def test_detect_missing_edge
       assert_raise(ADL::ParseError) do
@@ -142,34 +142,34 @@ module Stamina
         AUTOMATON
       end
     end
-  
+
     # Tests that ADL#parse detects a missing edge
     def test_allows_comments_and_white_lines
       fa = nil
       assert_nothing_raised(ADL::ParseError) do
         fa = ADL::parse_automaton <<-AUTOMATON
-      
+
           # a header is always allowed,
           # with empty lines as well
           #
           3 4
-        
+
           # state definitions may be introduced...
           0 true false
           1 false false
           # and perturbated
           2 false true
           0 1 a
-        
+
           # edge introduction may be misplaced
           1 2 b
           2 2 a
-        
+
           2 1 b
-        
+
           # and end of file may contain documentation as well
           # as empty lines:
-        
+
         AUTOMATON
       end
       assert_equal(3, fa.state_count)
@@ -186,7 +186,7 @@ module Stamina
       assert_equal(true, fa.accepts?('+ a b a a a b b a a a'))
       assert_equal(true, fa.accepts?('+ a b a a a b b a a a b b a'))
     end
-  
+
     # Tests ADL::parse on the documentation example
     def test_valid_adl_automaton_example
       fa = nil
@@ -205,7 +205,7 @@ module Stamina
       assert_equal(false, fa.accepts?('? hello w o r'))
       assert_equal(false, fa.accepts?('? hello w o r l'))
     end
-  
+
     # Tests ADL::parse on the documentation succint example
     def test_valid_adl_automaton_succint_example
       fa = nil
@@ -230,7 +230,7 @@ module Stamina
       assert_equal(false, fa.accepts?('? a b'))
       assert_equal(false, fa.accepts?('? a b a b'))
     end
-  
+
     # Checks that an initial state may arruve lately
     def test_parse_automaton_allows_late_initial_state
       fa = nil
@@ -247,7 +247,7 @@ module Stamina
         AUTOMATON
       end
     end
-  
+
     # Tests parse_automaton on an automated randomly generated using jail
     def test_parse_automaton_on_jail_randdfa
       fa = nil
@@ -255,10 +255,10 @@ module Stamina
         fa = ADL::parse_automaton_file(File.join(File.dirname(__FILE__),'randdfa.adl'))
       end
     end
-  
+
     # Tests an important security issue about parse_automaton
     def test_parse_automaton_does_not_executes_ruby_code
-      begin 
+      begin
         assert_raise ADL::ParseError do
           ADL::parse_automaton <<-AUTOMATON
           Kernel.exit(-1)
@@ -267,15 +267,15 @@ module Stamina
       rescue SystemExit
         assert false, 'SECURITY issue: ADL::parse_automaton executes ruby code'
       end
-      begin 
+      begin
         assert_raise ADL::ParseError do
-          ADL::parse_automaton_file(File.dirname(__FILE__)+'/exit.rb') 
+          ADL::parse_automaton_file(File.dirname(__FILE__)+'/exit.rb')
         end
       rescue SystemExit
         assert false, 'SECURITY issue: ADL::parse_automaton executes ruby code'
       end
     end
-  
+
     # Tests ADL::parse_string
     def test_parse_string
       s = ADL::parse_string('?')
@@ -293,14 +293,14 @@ module Stamina
       assert_equal(true, s.label)
       assert_equal(true, s.empty?)
       assert_equal([], s.symbols)
-    
+
       s = ADL::parse_string('-')
       assert_equal(true, InputString===s)
       assert_equal(false, s.positive?)
       assert_equal(false, s.label)
       assert_equal(true, s.empty?)
       assert_equal([], s.symbols)
-    
+
       s = ADL::parse_string('? a')
       assert_equal(['a'], s.symbols)
       assert_equal(false, s.positive?)
@@ -308,24 +308,24 @@ module Stamina
       assert_equal(true, s.unlabeled?)
       assert_equal(nil, s.label)
       assert_equal(['a'], s.symbols)
-    
+
       s = ADL::parse_string('+ a')
       assert_equal(['a'], s.symbols)
       assert_equal(true, s.positive?)
-    
+
       s = ADL::parse_string('- a')
       assert_equal(['a'], s.symbols)
       assert_equal(false, s.positive?)
-    
+
       s = ADL::parse_string('+ a b a b ')
       assert_equal(['a','b','a','b'], s.symbols)
       assert_equal(true, s.positive?)
-    
+
       s = ADL::parse_string('- a b a c')
       assert_equal(['a','b','a','c'], s.symbols)
       assert_equal(false, s.positive?)
     end
-  
+
     # Tests ADL::parse_sample
     def test_parse_sample
       sample = ADL::parse_sample <<-SAMPLE
@@ -339,19 +339,19 @@ module Stamina
       SAMPLE
       assert sample==Sample['+ a b a b a b', '+ a b', '- a a', '+', '? a b']
     end
-  
+
     # Tests that ADL::parse_sample accepts the empty sample
     def test_parse_sample_accepts_empty_sample
       samples = [
         ADL::parse_sample(""),
         ADL::parse_sample("#"),
-        ADL::parse_sample(<<-SAMPLE 
+        ADL::parse_sample(<<-SAMPLE
         SAMPLE
         ),
         ADL::parse_sample(<<-SAMPLE
-        
+
           # this is a comment, between two empty lines
-      
+
         SAMPLE
         )
       ]
@@ -359,7 +359,7 @@ module Stamina
         assert sample==Sample.new
       end
     end
-  
+
     # Tests that ADL::parse_sample accepts empty strings
     def test_parse_sample_accepts_empty_strings
       assert Sample['+'] == ADL::parse_sample('+')
@@ -372,13 +372,13 @@ module Stamina
         -
       SAMPLE
       )
-    end  
-  
+    end
+
     # Tests validity of sample.adl file
     def test_valid_adl_sample_example
       sample_adl = File.expand_path("../ref-sample.adl", __FILE__)
       sample = ADL::parse_sample_file(sample_adl)
-      expected = Sample.new 
+      expected = Sample.new
       expected << InputString.new(['a', 'b', 'a', 'b'], true)
       expected << InputString.new(['a', 'a'], false)
       expected << InputString.new(['a', 'b'], nil)
@@ -414,19 +414,19 @@ module Stamina
       expected << InputString.new(['a','b'], false)
       expected << InputString.new(['a','b','a'], true)
       assert expected==sample
-    end  
-  
+    end
+
     # Tests an important security issue about parse_automaton
     def test_parse_sample_does_not_executes_ruby_code
-      begin 
+      begin
         ADL::parse_sample <<-AUTOMATON
         + Kernel.exit(-1)
         AUTOMATON
       rescue SystemExit
         assert false, 'SECURITY issue: ADL::parse_automaton executes ruby code'
       end
-      begin 
-        ADL::parse_sample_file(File.dirname(__FILE__)+'/exit.rb') 
+      begin
+        ADL::parse_sample_file(File.dirname(__FILE__)+'/exit.rb')
       rescue SystemExit
         assert false, 'SECURITY issue: ADL::parse_automaton executes ruby code'
       end
@@ -457,9 +457,9 @@ module Stamina
       assert_equal false,fa.get_state('B').accepting?
       assert_equal true,fa.get_state('C').accepting?
     end
-  
+
     def test_parsing_recognizes_failures
-      assert_raise Stamina::ADL::ParseError do 
+      assert_raise Stamina::ADL::ParseError do
         fa = ADL::parse_sample <<-EOF
           3 4
           A true false
@@ -471,7 +471,7 @@ module Stamina
           C B b
         EOF
       end
-      assert_raise Stamina::ADL::ParseError do 
+      assert_raise Stamina::ADL::ParseError do
         sample = ADL::parse_automaton <<-EOF
           + a b  a b  a b
           # this is a comment, next is an empty line

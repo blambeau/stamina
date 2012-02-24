@@ -2,7 +2,7 @@
 # This is the introduction example for Stamina induction algorithms
 #
 # Classical induction is aimed at learning a regular language from a
-# `positive` sample, under the control of a `negative` sample. 
+# `positive` sample, under the control of a `negative` sample.
 #
 # Samples are commonly captured through a Prefix Tree Acceptor (PTA).
 # A PTA capturing both a positive and a negative sample is called an
@@ -21,7 +21,7 @@ positive = sample <<-SAMPLE
 SAMPLE
 
 # a negative sample will be captured through a PTA
-# (no accepting states, but error states capturing negative 
+# (no accepting states, but error states capturing negative
 # strings)
 negative = sample <<-SAMPLE
   - b

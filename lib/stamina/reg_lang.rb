@@ -33,9 +33,9 @@ module Stamina
       end
     end
 
-    # 
+    #
     # Builds a sigma star language
-    # 
+    #
     def self.sigma_star(alph)
       new(Automaton.new do |fa|
         fa.alphabet = alph.to_a
@@ -46,7 +46,7 @@ module Stamina
       end)
     end
 
-    # 
+    #
     # Creates a regular language by parsing an expression.
     #
     def self.parse(str)
@@ -90,7 +90,7 @@ module Stamina
     alias :union :+
 
     #
-    # Returns a regular language defined as the intersection of `self` with 
+    # Returns a regular language defined as the intersection of `self` with
     # `other`.
     #
     def *(other)
@@ -124,7 +124,7 @@ module Stamina
 
     ############################################################################
     # CANONICAL DFA
-    
+
     def short_prefixes
       canonical_info.short_prefixes
     end
@@ -189,7 +189,7 @@ module Stamina
     end
 
     #
-    # Returns a deterministic finite automaton capturing this regular 
+    # Returns a deterministic finite automaton capturing this regular
     # language.
     #
     # Returned automaton is not guaranteed to be minimal or canonical.
@@ -208,7 +208,7 @@ module Stamina
 
     #
     # Returns a dot output
-    # 
+    #
     def to_dot
       dfa = to_cdfa
       dfa.depth

@@ -34,17 +34,17 @@ module Stamina
         # Compound automaton and states already seen
         compound_fa = Automaton.new
         map = {init => compound_fa.add_state(marks(init, true))}
-        
+
         # States to be visited
         to_visit = [init]
-        
+
         until to_visit.empty?
           source = to_visit.pop
           symbols.each_pair do |symbol, automata|
             catch(:avoid) do
               # build the target state
               target = source.zip(automata).collect{|ss,a|
-                if a.nil? 
+                if a.nil?
                   # this automaton does no synchronize on symbol
                   ss
                 elsif tt = ss.dfa_delta(symbol)
@@ -63,7 +63,7 @@ module Stamina
             end
           end
         end # to_visit.empty?
-        
+
         compound_fa
       end
 
@@ -83,29 +83,29 @@ end # module Stamina
 #      class CompoundState
 #        include Enumerable
 #        attr_reader   :states
-#        
+#
 #        def initialize(states)
 #          @states = states
 #        end
-#        
+#
 #        def hash
 #          states.hash
 #        end
-#        
+#
 #        def ==(other)
 #          other.states == states
 #        end
 #        alias :eql? :other
-#        
+#
 #        def marks(initial = false)
 #          {:initial   => initial,
 #           :accepting => states.all?{|s| s.accepting?},
 #           :error     => states.any?{|s| s.error?}
 #          }
 #        end
-#        
+#
 #        def each
 #          states.each &Proc.new
 #        end
-#        
+#
 #      end

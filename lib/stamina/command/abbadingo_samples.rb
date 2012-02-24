@@ -1,6 +1,6 @@
 module Stamina
   class Command
-    # 
+    #
     # Generates samples following Abbadingo's protocol
     #
     # SYNOPSIS
@@ -10,10 +10,10 @@ module Stamina
     # #{summarized_options}
     #
     class AbbadingoSamples < Quickl::Command(__FILE__, __LINE__)
-      
+
       # Install options
       options do |opt|
-      
+
       end # options
 
       # Command execution
@@ -33,8 +33,7 @@ module Stamina
         Stamina::ADL::print_sample_in_file(training, File.join(dirname, "#{basename}-training.adl"))
         Stamina::ADL::print_sample_in_file(test,     File.join(dirname, "#{basename}-test.adl"))
       end
-      
+
     end # class AbbadingoSamples
   end # class Command
 end # module Stamina
-

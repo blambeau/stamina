@@ -1,8 +1,8 @@
 module Stamina
   class Automaton
 
-    # 
-    # Returns a copy of self where all symbols in `alph` have been 
+    #
+    # Returns a copy of self where all symbols in `alph` have been
     # replaced by nil.
     #
     def hide(alph)
@@ -22,8 +22,8 @@ module Stamina
       self
     end
 
-    # 
-    # Returns a copy of self where all symbols not in `alph` have been 
+    #
+    # Returns a copy of self where all symbols not in `alph` have been
     # replaced by nil.
     #
     def keep(alph)

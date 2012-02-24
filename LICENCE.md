@@ -1,6 +1,6 @@
 The MIT License
 
-Copyright (c) 2008-2009 University of Louvain 
+Copyright (c) 2008-2009 University of Louvain
 (Universite catholique de Louvain-la-Neuve, Belgium)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy

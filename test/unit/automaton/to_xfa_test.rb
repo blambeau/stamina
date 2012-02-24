@@ -5,7 +5,7 @@ module Stamina
     class ToXFaTest < StaminaTest
 
       def nfa
-        @nfa ||= Automaton.new do 
+        @nfa ||= Automaton.new do
           add_state(:initial => true, :accepting => false)
           add_n_states(4)
           add_n_states(2, :accepting => true)

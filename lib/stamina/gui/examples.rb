@@ -40,7 +40,7 @@ module Stamina
       end # class Category
 
       class Example
-     
+
         attr_reader :file
 
         def initialize(file)

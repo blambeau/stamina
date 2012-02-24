@@ -5,7 +5,7 @@ module Stamina
   module Scoring
 
       #
-      # From the signatures of a learned model and a actual, returns an object 
+      # From the signatures of a learned model and a actual, returns an object
       # responding to all instance methods defined in the Scoring module.
       #
       def self.scoring(learned, actual, max_size=nil)
@@ -69,7 +69,7 @@ module Stamina
 
       #
       # Returns the percentage of true negative over all negative
-      # 
+      #
       def negative_predictive_value
         true_negative.to_f / (true_negative + false_negative)
       end
@@ -109,14 +109,14 @@ module Stamina
 
       #
       # Returns the likelihood that a predicted positive is an actual positive
-      # 
+      #
       def positive_likelihood
         sensitivity / (1.0 - specificity)
       end
 
       #
       # Returns the likelihood that a predicted negative is an actual negative
-      # 
+      #
       def negative_likelihood
        (1.0 - sensitivity) / specificity
       end
@@ -132,7 +132,7 @@ module Stamina
 
       #
       # Returns the error rate
-      # 
+      #
       def error_rate
         num = (false_positive + false_negative).to_f
         den = (true_positive + true_negative + false_positive + false_negative)
@@ -142,14 +142,14 @@ module Stamina
       #
       # Returns the harmonic mean between precision and recall
       #
-      def f_measure 
+      def f_measure
         2.0 * (precision * recall) / (precision + recall)
       end
 
       #
-      # Returns the balanced classification rate (arithmetic mean between 
+      # Returns the balanced classification rate (arithmetic mean between
       # sensitivity and specificity)
-      # 
+      #
       def balanced_classification_rate
         0.5 * (sensitivity + specificity)
       end
@@ -157,7 +157,7 @@ module Stamina
 
       #
       # Returns the balanced error rate (1 - bcr)
-      # 
+      #
       def balanced_error_rate
         1.0 - balanced_classification_rate
       end
@@ -165,7 +165,7 @@ module Stamina
 
       #
       # Returns the harmonic mean between sensitivity and specificity
-      # 
+      #
       def harmonic_balanced_classification_rate
         2.0 * (sensitivity * specificity) / (sensitivity + specificity)
       end
@@ -208,6 +208,6 @@ module Stamina
         end
         s
       end
-    
+
   end # module Scoring
 end # module Stamina

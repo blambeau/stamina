@@ -3,7 +3,7 @@ require 'stamina'
 module Stamina
   module Utils
     class DotTest < Test::Unit::TestCase
-    
+
       def setup
         @automaton = Automaton.new do |a|
           add_state(:initial => true, :accepting => false)
@@ -15,7 +15,7 @@ module Stamina
           connect(2, 2, nil)
         end
       end
-    
+
       def test_attributes2dot
         attrs = {:label => 'hello'}
         assert_equal 'label="hello"', @automaton.send(:attributes2dot, attrs)
@@ -24,7 +24,7 @@ module Stamina
         attrs = {:label => 'O"Neil'}
         assert_equal 'label="O\"Neil"', @automaton.send(:attributes2dot, attrs)
       end
-    
+
       def test_automaton_to_dot_with_default_rewriter
         expected = <<-EOF
           #digraph G {
@@ -41,7 +41,7 @@ module Stamina
         expected = expected.gsub(/^\s+#/,'')
         assert_equal expected, @automaton.to_dot
       end
-    
+
       def test_automaton_with_specific_rewriter
         expected = <<-EOF
           #digraph G {
@@ -58,7 +58,7 @@ module Stamina
         expected = expected.gsub(/^\s+#/,'')
         assert_equal expected, @automaton.to_dot {|elm,kind| elm.data}
       end
-    
+
     end
   end
 end

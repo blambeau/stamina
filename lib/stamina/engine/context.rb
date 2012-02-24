@@ -25,7 +25,7 @@ module Stamina
       end
 
       def to_s
-        collect{|k,v| 
+        collect{|k,v|
           "#{k}: #{v}"
         }.join("\n")
       end

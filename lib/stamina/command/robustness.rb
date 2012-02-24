@@ -8,15 +8,14 @@ module Stamina
         raise Quickl::IOAccessError, "File #{file} cannot be read"  unless File.readable?(file)
         file
       end
-      
+
       # Checks that a given file is writable or raises a Quickl::IOAccessError
       def assert_writable_file(file)
         raise Quickl::IOAccessError, "File #{file} cannot be written" \
           unless not(File.exists?(file)) or File.writable?(file)
         file
       end
-      
+
     end # module Robustness
   end # class Command
 end # module Stamina
-

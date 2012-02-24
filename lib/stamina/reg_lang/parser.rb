@@ -8,4 +8,3 @@ require "stamina/reg_lang/parser/sequence"
 require "stamina/reg_lang/parser/alternative"
 require "stamina/reg_lang/parser/regexp"
 Citrus.require "stamina/reg_lang/parser/parser"
-

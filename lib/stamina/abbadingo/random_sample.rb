@@ -7,12 +7,12 @@ module Stamina
 
       #
       # Implements an enumerator for binary strings whose length lies between 0
-      # and max_length (passed at construction). 
+      # and max_length (passed at construction).
       #
-      # The enumerator guarantees that strings are sampled with an uniform 
-      # distribution among all available. As the number of strings of a given 
-      # length is an exponential function, this means that you've got 50% change 
-      # of having a string of length max_length, 25% of max_length - 1, 12.5% of 
+      # The enumerator guarantees that strings are sampled with an uniform
+      # distribution among all available. As the number of strings of a given
+      # length is an exponential function, this means that you've got 50% change
+      # of having a string of length max_length, 25% of max_length - 1, 12.5% of
       # max_length - 2 and so on.
       #
       # How to use it?
@@ -21,7 +21,7 @@ module Stamina
       #   enum = Stamina::Abbadingo::StringEnumerator.new(10)
       #
       #   # this is how to generate strings while a predicate is true
-      #   enum.each do |s| 
+      #   enum.each do |s|
       #     # s is an array of binary integer symbols (0 or 1)
       #     # true for continuing, false otherwise
       #     (true || false)
@@ -44,9 +44,9 @@ module Stamina
       # where _cumul_ is the total number of string upto _length_ symbols.
       #
       # Therefore, the idea is to see each string has an identifier, say _x_,
-      # between 1 and 2**(max_length+1)-1 (see max). 
+      # between 1 and 2**(max_length+1)-1 (see max).
       #   * The length of the _x_th string is log2(x).floor (see length_for)
-      #   * The string itself is the binary decomposition of x, up to length_for(x) 
+      #   * The string itself is the binary decomposition of x, up to length_for(x)
       #     symbols (see string_for)
       #
       # As those identifiers naturally respect the exponential distribution, sampling
@@ -77,27 +77,27 @@ module Stamina
           (0..length-1).collect{|i| ((x >> i) % 2).to_s}
         end
 
-        # 
+        #
         # Returns the maximum identifier, which is also the number of strings
         # up to max_length symbols
-        # 
+        #
         def max
           @max ||= 2 ** (max_length+1) - 1
         end
 
         #
         # Generates a string at random
-        # 
+        #
         def one
           string_for(1+Kernel.rand(max))
         end
 
         #
-        # Yields the block with a random string, until the block return false 
+        # Yields the block with a random string, until the block return false
         # or nil.
         #
         def each
-          begin 
+          begin
             cont = yield(one)
           end while cont
         end
@@ -105,8 +105,8 @@ module Stamina
       end # class StringEnumerator
 
       #
-      # Generates a Sample instance with _nb_ strings randomly sampled with a 
-      # uniform distribution over all strings up   
+      # Generates a Sample instance with _nb_ strings randomly sampled with a
+      # uniform distribution over all strings up
       #
       def self.execute(classifier, max_length = classifier.depth + 3)
         enum = StringEnumerator.new(max_length)
@@ -123,7 +123,7 @@ module Stamina
           seen.size < nb
         end
 
-        # Make them 
+        # Make them
         strings = seen.keys.collect{|s| InputString.new(s, classifier.accepts?(s))}
         pos, neg = strings.partition{|s| s.positive?}
 
@@ -144,4 +144,3 @@ module Stamina
     end # class RandomSample
   end # module Abbadingo
 end # module Stamina
-

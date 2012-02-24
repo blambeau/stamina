@@ -9,14 +9,14 @@ module Stamina
         Sample.coerce(arg)
       end
 
-      # 
+      #
       # Learn a regular language from `arg` using the RPNI algorithm.
       #
       def rpni(arg)
         regular Stamina::Induction::RPNI.execute(sample(arg))
       end
 
-      # 
+      #
       # Learn a regular language from `arg` using the RPNI algorithm.
       #
       def blue_fringe(arg)

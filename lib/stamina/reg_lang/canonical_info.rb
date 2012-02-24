@@ -1,11 +1,11 @@
 module Stamina
   class RegLang
     class CanonicalInfo
-    
+
       SHORT_PREFIXES = begin
         algo = Stamina::Utils::Decorate.new(:short_prefix)
         algo.set_suppremum do |d0,d1|
-          if (d0.nil? || d1.nil?) 
+          if (d0.nil? || d1.nil?)
             (d0 || d1)
           else
             d0.size <= d1.size ? d0 : d1
@@ -18,7 +18,7 @@ module Stamina
       end
 
       attr_reader :cdfa
-      
+
       def initialize(lang)
         @cdfa = lang.to_cdfa
       end
@@ -65,7 +65,7 @@ module Stamina
       end
 
       #
-      # Builds a characteristic sample 
+      # Builds a characteristic sample
       #
       def characteristic_sample
         sample = Sample.new
@@ -78,8 +78,8 @@ module Stamina
           sample << InputString.new([], false)
           return sample
         end
-        
-        # condition 1: positive string for each element of the kernel 
+
+        # condition 1: positive string for each element of the kernel
         cdfa.each_edge do |edge|
           pos = short_prefix(edge) + positive_suffix(edge.target)
           sample << InputString.new(pos, true, false)
@@ -126,7 +126,7 @@ module Stamina
           mat = {}
 
           # pairs to be explored
-          to_explore = [] 
+          to_explore = []
 
           # start by marking accepting vs. non-accepting states
           acc, nonacc = cdfa.states.partition{|s| s.accepting?}
@@ -141,7 +141,7 @@ module Stamina
             cross(pair[0].in_edges, pair[1].in_edges) do |se, te|
               next if se.symbol != te.symbol
               source = [se.source, te.source].sort!
-              if mat[source].nil? || 
+              if mat[source].nil? ||
                  (mat[source].length > (1+suffix.length))
                 mat[source] = [se.symbol] + suffix
                 to_explore.push(source)

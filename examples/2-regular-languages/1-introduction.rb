@@ -12,12 +12,11 @@ complex = regular <<-LANG
 | b
 LANG
 
-# Sometimes, it is useful to capture the universal regular language 
+# Sometimes, it is useful to capture the universal regular language
 # over an alphabet, that is,
 univ = regular("(a | b | c | d | e)*")
 
-# Here is a friendly shortcut, very useful if the alphabet become 
+# Here is a friendly shortcut, very useful if the alphabet become
 # large
 univ2 = sigma_star('a'..'e')
 assert univ <=> univ2
-

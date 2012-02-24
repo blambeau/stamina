@@ -3,7 +3,7 @@ module Stamina
     module Core
 
       def assert(x, msg = nil)
-        raise Stamina::AssertionError, 
+        raise Stamina::AssertionError,
               "Assertion failed: #{msg || 'no message provided'}",
               caller unless x
       end

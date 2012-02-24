@@ -2,7 +2,7 @@ require 'stamina_test'
 module Stamina
   class Automaton
     class CompleteTest < StaminaTest
-    
+
       def test_on_not_complete
         x, y, z = nil, nil, nil
         dfa = Automaton.new(true) do |fa|
@@ -37,7 +37,7 @@ module Stamina
         dfa.complete!
         assert_equal 2, dfa.state_count
       end
- 
+
       def test_it_has_a_non_touching_impl
         dfa = Automaton.new(true) do |fa|
           fa.alphabet = ["a", "b"]
@@ -54,4 +54,3 @@ module Stamina
     end # class CompleteTest
   end # class Automaton
 end # module Stamina
-

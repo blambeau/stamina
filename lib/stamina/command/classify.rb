@@ -1,6 +1,6 @@
 module Stamina
   class Command
-    # 
+    #
     # Classifies a sample thanks with an automaton
     #
     # SYNOPSIS
@@ -24,7 +24,7 @@ module Stamina
           assert_writable_file(value)
           @output_file = value
         end
-      
+
       end # options
 
       # Command execution
@@ -34,15 +34,14 @@ module Stamina
         automaton = Stamina::ADL::parse_automaton_file assert_readable_file(args.last)
 
         if of = output_file
-          File.open(of, 'w'){|io| 
+          File.open(of, 'w'){|io|
             io << automaton.signature(sample)
           }
         else
           $stdout << automaton.signature(sample)
         end
       end
-      
+
     end # class Classify
   end # class Command
 end # module Stamina
-

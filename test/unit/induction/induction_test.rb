@@ -6,7 +6,7 @@ module Stamina
   module Induction
     class InductionTest < Test::Unit::TestCase
       include Stamina::Induction::Commons
-      
+
       # Asserts that two states are equivalent and recurse.
       def equivalent_states!(s1, s2, equivalences)
         return "#{s1.index} and #{s2.index} don't agree on flags" \
@@ -30,13 +30,13 @@ module Stamina
         end
         nil
       end
-      
+
       # Checks if two DFAs are equivalent.
       def equivalent?(dfa1, dfa2)
         return "not same number of states" unless dfa1.state_count==dfa2.state_count
         equivalent_states!(dfa1.initial_state, dfa2.initial_state, {})
       end
-      
+
       # Puts a PTA under @pta
       def setup
         @sample = Stamina::ADL.parse_sample <<-EOF
@@ -50,21 +50,21 @@ module Stamina
         EOF
         @pta = sample2pta(@sample)
       end
-      
+
       # Returns index-th state of the PTA
       def s(index)
         @pta.ith_state(index)
       end
-      
+
       # Factors a UnionFind instance from the PTA under @pta.
       def factor_ufds
         pta2ufds(@pta)
       end
-      
+
       # Just to avoid a stupid ruby error on empty test units.
       def test_empty
       end
-      
+
     end
   end # module Induction
 end # module Stamina

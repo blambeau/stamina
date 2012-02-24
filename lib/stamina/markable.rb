@@ -11,13 +11,13 @@ module Stamina
   # == Detailed API
   module Markable
 
-    # 
+    #
     # Returns user-value associated to _key_, nil if no such key in user-data.
     #
     def [](key) @data[key] end
 
-    # 
-    # Associates _value_ to _key_ in user-data. Overrides previous value if 
+    #
+    # Associates _value_ to _key_ in user-data. Overrides previous value if
     # present.
     #
     def []=(key,value)

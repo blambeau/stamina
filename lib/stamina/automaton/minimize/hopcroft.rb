@@ -8,7 +8,7 @@ module Stamina
           raise ArgumentError, "Deterministic automaton expected", caller unless automaton.deterministic?
           @automaton = automaton
         end
-        
+
         # Compute a Hash {symbol => state_group} from a group of states
         def reverse_delta(group)
           h = Hash.new{|h,k| h[k]=Set.new}
@@ -19,7 +19,7 @@ module Stamina
           end
           h
         end
-        
+
         # Computes a minimal dfa from the grouping information
         def compute_minimal_dfa(groups)
           indexes = []
@@ -57,7 +57,7 @@ module Stamina
           fa.drop_states *fa.states.select{|s| s.sink?}
           fa.state_count == 0 ? Automaton::DUM : fa
         end
-        
+
         # Computes the initial partition
         def initial_partition
           p = [Set.new, Set.new]
@@ -66,32 +66,32 @@ module Stamina
           end
           p.reject{|g| g.empty?}
         end
-        
+
         # Main method of the algorithm
         def main
           # Partition states a first time according to accepting/non accepting
           @partition = initial_partition # P in pseudo code
           @worklist = @partition.dup     # W in pseudo code
-          
+
           # Until a block needs to be refined
           until @worklist.empty?
             refined = @worklist.pop
-            
+
             # We compute the reverse delta on the group and look at the groups
             rdelta = reverse_delta(refined)
             rdelta.each_pair do |symbol, sources| # sources is la in pseudo code
-              
+
               # Find blocks to be refined
               @partition.dup.each_with_index do |block, index| # block is R in pseudo code
                 next if block.subset?(sources)
                 intersection = block & sources    # R1 in pseudo code
                 next if intersection.empty?
                 difference = block - intersection # R2 in pseudo code
-                
+
                 # replace R in P with R1 and R2
                 @partition[index] = intersection
                 @partition << difference
-                
+
                 # Adds the new blocks as to be refined
                 if @worklist.include?(block)
                   @worklist.delete(block)
@@ -100,18 +100,18 @@ module Stamina
                   @worklist << (intersection.size <= difference.size ? intersection : difference)
                 end
               end # @partition.each
-              
+
             end # rdelta.each_pair
           end # until @worklist.empty?
-          
+
           compute_minimal_dfa(@partition)
         end # def main
-        
+
         # Execute the minimizer
         def self.execute(automaton, options={})
           Hopcroft.new(automaton.strip.complete!, options).main
         end
-      
+
       end # class Hopcroft
     end # module Minimize
   end # class Automaton

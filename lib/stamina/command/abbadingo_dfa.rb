@@ -1,6 +1,6 @@
 module Stamina
   class Command
-    # 
+    #
     # Generates a DFA following Abbadingo's protocol
     #
     # SYNOPSIS
@@ -10,7 +10,7 @@ module Stamina
     # #{summarized_options}
     #
     class AbbadingoDfa < Quickl::Command(__FILE__, __LINE__)
-      include Robustness 
+      include Robustness
 
       # Size of the target automaton
       attr_accessor :size
@@ -26,7 +26,7 @@ module Stamina
 
       # Install options
       options do |opt|
-      
+
         @size = 64
         opt.on("--size=X", Integer, "Sets the size of the automaton to generate") do |x|
           @size = x
@@ -66,7 +66,7 @@ module Stamina
         end until accept?(dfa)
 
         # flush it
-        if output_file 
+        if output_file
           File.open(output_file, 'w') do |file|
             Stamina::ADL.print_automaton(dfa, file)
           end
@@ -74,8 +74,7 @@ module Stamina
           Stamina::ADL.print_automaton(dfa, $stdout)
         end
       end
-      
+
     end # class AbbadingoDFA
   end # class Command
 end # module Stamina
-

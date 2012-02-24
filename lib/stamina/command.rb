@@ -18,7 +18,7 @@ module Stamina
 
     # Install options
     options do |opt|
-      
+
       # Show the help and exit
       opt.on_tail("--help", "Show help") do
         raise Quickl::Help
@@ -44,4 +44,3 @@ require 'stamina/command/abbadingo_samples'
 require 'stamina/command/infer'
 require 'stamina/command/run'
 require 'stamina/command/gui'
-

@@ -19,7 +19,7 @@ module Stamina
       assert_equal 2, scoring.true_negative
       assert_equal 0, scoring.false_positive
       assert_equal 0, scoring.false_negative
-      
+
       # precision and recall are ok
       assert_equal (3.0 / (3.0 + 0.0)), scoring.precision
       assert_equal (3.0 / (3.0 + 0.0)), scoring.recall
@@ -28,7 +28,7 @@ module Stamina
       assert_equal (3.0 / (3.0 + 0.0)), scoring.sensitivity
       assert_equal (3.0 / (3.0 + 0.0)), scoring.specificity
 
-      # 
+      #
       assert_equal 1.0, scoring.accuracy
       assert_equal 1.0, scoring.bcr
       assert_equal 1.0, scoring.f_measure

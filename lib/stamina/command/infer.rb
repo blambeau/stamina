@@ -1,7 +1,7 @@
 module Stamina
   class Command
-    # 
-    # Grammar inference, induces a DFA from a training sample using an 
+    #
+    # Grammar inference, induces a DFA from a training sample using an
     # chosen algorithm.
     #
     # SYNOPSIS
@@ -12,7 +12,7 @@ module Stamina
     #
     class Infer < Quickl::Command(__FILE__, __LINE__)
       include Robustness
-      
+
       attr_accessor :algorithm
       attr_accessor :take
       attr_accessor :score
@@ -22,7 +22,7 @@ module Stamina
 
       # Install options
       options do |opt|
-      
+
         @algorithm = :rpni
         opt.on("--algorithm=X", "Sets the induction algorithm to use (rpni, bluefringe)") do |x|
           @algorithm = x.to_sym
@@ -33,7 +33,7 @@ module Stamina
           @take = x.to_f
           unless @take > 0.0 and @take <= 1.0
             raise Quickl::InvalidOption, "Invalid --take option: #{@take}"
-          end 
+          end
         end
 
         @score = nil
@@ -72,7 +72,7 @@ module Stamina
         end
 
         dfa, tms = nil, nil
-        tms = Benchmark.measure do 
+        tms = Benchmark.measure do
           dfa = algo_clazz.execute(sample, {:verbose => verbose})
         end
         [dfa, tms]
@@ -92,7 +92,7 @@ module Stamina
       # Command execution
       def execute(args)
         raise Quickl::Help unless args.size == 1
-      
+
         # Parses the sample
         $stderr << "Parsing sample...\n" if verbose
         sample = load_sample(assert_readable_file(args.first))
@@ -102,7 +102,7 @@ module Stamina
 
         # Flush result
         unless drop
-          if output_file 
+          if output_file
             File.open(output_file, 'w') do |file|
               Stamina::ADL.print_automaton(dfa, file)
             end
@@ -134,8 +134,7 @@ module Stamina
         # Display information
         puts meta.inspect
       end
-      
+
     end # class Infer
   end # class Command
 end # module Stamina
-

@@ -75,7 +75,7 @@ module Stamina
         SAMPLE
         assert_equal(false, sample.correctly_classified_by?(@small_dfa))
       end
-  
+
       # Tests Classify#correctly_classified_by? is correct on valid sample against
       # small_nfa example
       def test_valid_sample_correctly_classified_by_small_nfa
@@ -88,7 +88,7 @@ module Stamina
           + a b
           + a b c a
           - a b c
-          + a b b b b b b 
+          + a b b b b b b
           - a z
           - z
         SAMPLE
@@ -107,7 +107,7 @@ module Stamina
           + a b
           + a b c a
           - a b c
-          + a b b b b b b 
+          + a b b b b b b
           - a z
           - z
         SAMPLE
@@ -121,7 +121,7 @@ module Stamina
           - a b
           + a b c a
           - a b c
-          + a b b b b b b 
+          + a b b b b b b
           - a z
           - z
         SAMPLE
@@ -135,7 +135,7 @@ module Stamina
           + a b
           + a b c a
           - a b c
-          + a b b b b b b 
+          + a b b b b b b
           - a z
           - z
         SAMPLE

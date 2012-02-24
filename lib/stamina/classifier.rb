@@ -7,10 +7,10 @@ module Stamina
   # Note that an Automaton being a classifier it already includes this module.
   #
   module Classifier
-    
+
     #
     # Computes a signature for a given sample (that is, an ordered set of strings).
-    # The signature is a string containing 1 (considered positive, or accepted) 
+    # The signature is a string containing 1 (considered positive, or accepted)
     # and 0 (considered negative, or rejected), one for each string.
     #
     def signature(sample)
@@ -35,8 +35,8 @@ module Stamina
       Stamina::Scoring.scoring(signature(sample), sample.signature)
     end
     alias :classification_scoring :scoring
-    
-    # 
+
+    #
     # Checks if a labeled sample is correctly classified by the classifier.
     #
     def correctly_classify?(sample)
@@ -47,6 +47,6 @@ module Stamina
       end
       true
     end
-    
+
   end # module Classifier
 end # module Stamina

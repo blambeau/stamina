@@ -6,7 +6,7 @@ module Stamina
 
       def test_length_for
         rs = RandomSample::StringEnumerator.new
-        assert_equal 0, rs.length_for(1) 
+        assert_equal 0, rs.length_for(1)
         assert_equal 1, rs.length_for(2)
         assert_equal 1, rs.length_for(3)
         assert_equal 2, rs.length_for(4)
@@ -62,12 +62,12 @@ module Stamina
         assert training.size > 0
 
         # check training sample
-        assert training.positive_count > 0 
+        assert training.positive_count > 0
         assert training.negative_count > 0
         assert dfa.correctly_classify?(training)
 
         # check test sample
-        assert test.positive_count > 0 
+        assert test.positive_count > 0
         assert test.negative_count > 0
         assert dfa.correctly_classify?(test)
        end

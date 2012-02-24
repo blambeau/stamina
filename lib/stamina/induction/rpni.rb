@@ -1,8 +1,8 @@
 module Stamina
   module Induction
-    
+
     #
-    # Implementation of the standard Regular Positive and Negative Induction (RPNI) 
+    # Implementation of the standard Regular Positive and Negative Induction (RPNI)
     # algorithm. From a given sample, containing positive and negative strings, RPNI
     # computes the smallest deterministic automaton compatible with the sample.
     #
@@ -19,18 +19,18 @@ module Stamina
     #   dfa = Stamina::Induction::RPNI.execute(sample, {:verbose => true})
     #
     # Remarks:
-    # - Constructor and instance methods of this class are public but not intended 
+    # - Constructor and instance methods of this class are public but not intended
     #   to be used directly. They are left public for testing purposes only.
-    # - This class intensively uses the Stamina::Induction::UnionFind class and 
+    # - This class intensively uses the Stamina::Induction::UnionFind class and
     #   methods defined in the Stamina::Induction::Commons module which are worth
     #   reading to understand the algorithm implementation.
     #
     class RPNI
       include Stamina::Induction::Commons
-      
+
       # Union-find data structure used internally
       attr_reader :ufds
-      
+
       # Creates an algorithm instance with given options.
       def initialize(options={})
         raise ArgumentError, "Invalid options #{options.inspect}" unless options.is_a?(Hash)
@@ -38,7 +38,7 @@ module Stamina
       end
 
       #
-      # Merges a state of rank j with a state of lower rank i. This merge method 
+      # Merges a state of rank j with a state of lower rank i. This merge method
       # includes merging for determinization.
       #
       # Preconditions:
@@ -49,8 +49,8 @@ module Stamina
       # - Union find is refined, states i and j having been merged, as well as all
       #   state pairs that need to be merged to ensure the deterministic property
       #   of the quotient automaton.
-      # - If the resulting quotient automaton is consistent with the negative sample, 
-      #   this method returns true and the refined union-find correctly encodes the 
+      # - If the resulting quotient automaton is consistent with the negative sample,
+      #   this method returns true and the refined union-find correctly encodes the
       #   quotient automaton. Otherwise, the method returns false and the union-find
       #   information must be considered inaccurate.
       #
@@ -63,7 +63,7 @@ module Stamina
           return false unless new_data
           new_data
         end
-        
+
         # Merge for determinization
         determinization.each do |pair|
           # we take the leader states of the pair to merge
@@ -71,15 +71,15 @@ module Stamina
           # do nothing if already the same leader state
           next if pair[0]==pair[1]
           # otherwise recurse or fail
-          return false unless merge_and_determinize(pair[0], pair[1]) 
+          return false unless merge_and_determinize(pair[0], pair[1])
         end
-        
+
         # Everything seems ok!
         true
       end
-      
+
       #
-      # Makes a complete merge (including determinization), or simply do nothing if 
+      # Makes a complete merge (including determinization), or simply do nothing if
       # it leads accepting a negative string.
       #
       # Preconditions:
@@ -90,8 +90,8 @@ module Stamina
       # - Union find is refined, states i and j having been merged, as well as all
       #   state pairs that need to be merged to ensure the deterministic property
       #   of the quotient automaton.
-      # - If the resulting quotient automaton is consistent with the negative sample, 
-      #   this method returns true and the refined union-find correctly encodes the 
+      # - If the resulting quotient automaton is consistent with the negative sample,
+      #   this method returns true and the refined union-find correctly encodes the
       #   quotient automaton. Otherwise, the union find has not been changed.
       #
       def successfull_merge_or_nothing(i,j)
@@ -100,9 +100,9 @@ module Stamina
           merge_and_determinize(i, j)
         end
       end
-      
+
       #
-      # Main method of the algorithm. Refines the union find passed as first argument 
+      # Main method of the algorithm. Refines the union find passed as first argument
       # by merging well chosen state pairs. Returns the refined union find.
       #
       # Preconditions:
@@ -120,7 +120,7 @@ module Stamina
         # First loop, iterating all PTA states
         (1...@ufds.size).each do |i|
           # we ignore those that have been previously merged
-          next if @ufds.slave?(i) 
+          next if @ufds.slave?(i)
           # second loop: states of lower rank, with ignore
           (0...i).each do |j|
             next if @ufds.slave?(j)
@@ -135,21 +135,21 @@ module Stamina
         end # i loop
         @ufds
       end
-      
+
       #
       # Build the smallest DFA compatible with the sample given as input.
       #
       # Preconditions:
       # - The sample is consistent (does not contains the same string both labeled as
       #   positive and negative) and contains at least one string.
-      # 
+      #
       # Postconditions:
       # - The returned DFA is the smallest DFA that correctly labels the learning sample
       #   given as input.
       #
       # Remarks:
       # - This instance version of RPNI.execute is not intended to be used directly and
-      #   is mainly provided for testing purposes. Please use the class variant of this 
+      #   is mainly provided for testing purposes. Please use the class variant of this
       #   method if possible.
       #
       def execute(sample)
@@ -161,7 +161,7 @@ module Stamina
         # compute and return quotient automaton
         ufds2dfa(ufds)
       end
-      
+
       #
       # Build the smallest DFA compatible with the sample given as input.
       #
@@ -171,7 +171,7 @@ module Stamina
       # Preconditions:
       # - The sample is consistent (does not contains the same string both labeled as
       #   positive and negative) and contains at least one string.
-      # 
+      #
       # Postconditions:
       # - The returned DFA is the smallest DFA that correctly labels the learning sample
       #   given as input.
@@ -179,8 +179,8 @@ module Stamina
       def self.execute(sample, options={})
         RPNI.new(options).execute(sample)
       end
-      
+
     end # class RPNI
-    
+
   end # module Induction
 end # module Stamina

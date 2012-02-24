@@ -6,7 +6,7 @@ module Stamina
 
       #
       # Coerces `arg` to a regular language.
-      # 
+      #
       def regular(arg)
         Stamina::RegLang.coerce(arg)
       end
@@ -26,7 +26,7 @@ module Stamina
       end
 
       #
-      # Extracts the short prefixes of a regular language (coerced from `arg`) 
+      # Extracts the short prefixes of a regular language (coerced from `arg`)
       # as a Sample instance.
       #
       def short_prefixes(arg)
@@ -34,7 +34,7 @@ module Stamina
       end
 
       #
-      # Extracts the kernel of a regular language (coerced from `arg`) as 
+      # Extracts the kernel of a regular language (coerced from `arg`) as
       # a Sample instance.
       #
       def kernel(arg)
@@ -42,23 +42,23 @@ module Stamina
       end
 
       #
-      # Extracts a characteristic sample for a regular language (coerced from 
+      # Extracts a characteristic sample for a regular language (coerced from
       # `arg`) as a Sample instance.
       #
       def characteristic_sample(arg)
         regular(arg).characteristic_sample
       end
 
-      # 
+      #
       # Hides allbut `alph` symbols in the regular language `arg`
-      # 
+      #
       def project(arg, alph)
         regular(arg).project(alph)
       end
 
-      # 
+      #
       # Hides `alph` symbols in the regular language `arg`
-      # 
+      #
       def hide(arg, alph)
         regular(arg).hide(alph)
       end

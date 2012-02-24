@@ -156,8 +156,8 @@ module Stamina
 
       check_dfa_unchanged(@dfa)
       assert_equal(true,  @dfa.accepts?('? c'))
-      
-      
+
+
       outA_edge1 = @dfa.initial_state.out_edges.select { |e| e.symbol == 'a'}[0]
       outA_edge2 = outA_edge1.to.out_edges.select { |e| e.symbol == 'a'}[0]
 
@@ -180,9 +180,8 @@ module Stamina
       assert_not_same outB_edge1, outAN_edge1
       assert_not_same outB_edge2, outAN_edge2
     end
-    
-    
+
+
 
   end # class AutomataOperationsTest
 end # module Stamina
-

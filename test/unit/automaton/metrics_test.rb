@@ -37,4 +37,3 @@ module Stamina
     end
   end
 end
-

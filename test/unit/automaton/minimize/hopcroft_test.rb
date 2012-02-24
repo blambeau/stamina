@@ -12,4 +12,3 @@ module Stamina
     end # module Minimize
   end # class Automaton
 end # module Stamina
-

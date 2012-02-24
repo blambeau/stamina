@@ -3,7 +3,7 @@ module Stamina
   module Dsl
     class InductionTest < StaminaTest
       include Stamina::Dsl
-    
+
       def test_sample
         expected = (Sample.new << "+ a")
         assert_equal expected, sample(expected)

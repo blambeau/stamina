@@ -1,6 +1,6 @@
 module Stamina
   class Command
-    # 
+    #
     # Prints metrics about an automaton or sample
     #
     # SYNOPSIS
@@ -11,10 +11,10 @@ module Stamina
     #
     class Metrics < Quickl::Command(__FILE__, __LINE__)
       include Robustness
-      
+
       # Install options
       options do |opt|
-      
+
       end # options
 
       # Command execution
@@ -27,8 +27,8 @@ module Stamina
         else
           $stdin.readlines.join("\n")
         end
-        
-        # Flush metrics 
+
+        # Flush metrics
         begin
           target = Stamina::ADL::parse_automaton(input)
           puts "Alphabet size:   #{target.alphabet_size}"
@@ -37,15 +37,14 @@ module Stamina
           puts "Degree (avg):    #{target.avg_degree}"
           puts "Accepting ratio: #{target.accepting_ratio}"
           puts "Depth:           #{target.depth}"
-        rescue ADL::ParseError 
+        rescue ADL::ParseError
           sample = Stamina::ADL::parse_sample(input)
           puts "Size:     #{sample.size}"
           puts "Positive: #{sample.positive_count} (#{sample.positive_count.to_f / sample.size})"
           puts "Negative: #{sample.negative_count} (#{sample.negative_count.to_f / sample.size})"
         end
       end
-      
+
     end # class Metrics
   end # class Command
 end # module Stamina
-

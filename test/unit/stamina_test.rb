@@ -1,11 +1,11 @@
 require 'test/unit'
 require 'stamina'
 module Stamina
-  
+
   #
   # Main test class for stamina. By default this test installs default example
   # automata on setup.
-  #  
+  #
   # In particular, it installs the following automata:
   # - @small_dfa: a small deterministic automaton whose picture can be found in
   #   small_dfa.gif
@@ -22,7 +22,7 @@ module Stamina
     def load_adl_automaton(file, resolver)
       Stamina::ADL.parse_automaton_file(File.expand_path("../#{file}", resolver))
     end
-  
+
     # Creates a small automaton for the sake of simple tests
     def setup
       @small_dfa = Automaton.new do
@@ -37,7 +37,7 @@ module Stamina
         connect(s2, s0, 'c')
         connect(s1, s1, 'c')
       end
-    
+
       @small_nfa = Automaton.new do
         s0, s1, s2, s3 = add_n_states(4)
         s0.initial!
@@ -52,12 +52,12 @@ module Stamina
         connect(s3, s0, 'a')
         connect(s2, s1, nil)
       end
-    
+
       @examples = [@small_dfa, @small_nfa]
       @dfa_examples = [@small_dfa]
       @nfa_examples = [@small_nfa]
     end
-  
+
     # Returns an automaton recognizing (ab)*
     def ab_star
       Automaton.new(true) do |fa|
@@ -68,7 +68,7 @@ module Stamina
         fa.connect(1,0,'b')
       end
     end
-  
+
     # Returns an automaton recognizing a*
     def a_star
       Automaton.new(true) do |fa|
@@ -77,7 +77,7 @@ module Stamina
         fa.connect(0,0,'a')
       end
     end
-  
+
     # Returns an automaton recognizing b*
     def b_star
       Automaton.new(true) do |fa|
@@ -96,11 +96,11 @@ module Stamina
         assert_equal(false, e.deterministic?)
       end
     end
-  
+
     def assert_not_equivalent(expected, dfa)
       assert !expected.complete.equivalent?(dfa.complete)
     end
-  
+
     def assert_equivalent(expected, dfa)
       assert expected.complete.equivalent?(dfa.complete)
     end

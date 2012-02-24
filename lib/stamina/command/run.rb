@@ -1,6 +1,6 @@
 module Stamina
   class Command
-    # 
+    #
     # Run a file with the Stamina Engine
     #
     # SYNOPSIS
@@ -24,18 +24,18 @@ module Stamina
           self.output = args.collect{|v| v.to_sym}
         end
         opt.on("--all",
-               "Output all variables") do 
+               "Output all variables") do
           self.output = nil
         end
 
         @images = []
-        opt.on('--gif') do 
+        opt.on('--gif') do
           self.images << :gif
         end
-        opt.on('--png') do 
+        opt.on('--png') do
           self.images << :png
         end
-        opt.on('--dot') do 
+        opt.on('--dot') do
           self.images << :dot
         end
 
@@ -78,8 +78,7 @@ module Stamina
           end
         end
       end
-      
+
     end # class Run
   end # class Command
 end # module Stamina
-

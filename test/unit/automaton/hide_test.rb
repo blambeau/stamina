@@ -34,4 +34,3 @@ module Stamina
     end # class HideTest
   end # class Automaton
 end # module Stamina
-

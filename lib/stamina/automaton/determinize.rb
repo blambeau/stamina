@@ -59,8 +59,8 @@ module Stamina
 
         # the minimized automaton
         minimized = Automaton.new
-        
-        # - map between compound states and minimized states 
+
+        # - map between compound states and minimized states
         # - states to visit
         map = {}
         to_visit = []
@@ -69,7 +69,7 @@ module Stamina
         init = CompoundState.new(fa, fa.initial_states, true)
         map[init] = minimized.add_state(init.marks)
         to_visit  = [init]
-        
+
         until to_visit.empty?
           current = to_visit.pop
           alph.each do |symbol|

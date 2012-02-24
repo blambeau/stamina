@@ -1,16 +1,16 @@
 module Stamina
   class Automaton
-    
+
     #
     # Checks if this automaton is equivalent to another one.
     #
-    # Automata must be both minimal and complete to guarantee that this method 
+    # Automata must be both minimal and complete to guarantee that this method
     # works.
     #
     def equivalent?(other, equiv = nil, key = :equiv_state)
       equiv ||= Proc.new{|s1,s2| (s1 && s2) &&
-                                 (s1.accepting? == s2.accepting?) && 
-                                 (s1.error? == s2.error?) && 
+                                 (s1.accepting? == s2.accepting?) &&
+                                 (s1.error? == s2.error?) &&
                                  (s1.initial? == s2.initial?) }
 
       # Both must already have basic attributes in common
@@ -25,7 +25,7 @@ module Stamina
       #   * d0 is thus 'other.initial_state.index'
       #   * suppremum is identity and fails when the equivalent state is not unique
       #   * propagation checks transition function delta
-      # 
+      #
       algo = Stamina::Utils::Decorate.new(key)
       algo.set_suppremum do |d0, d1|
         if (d0.nil? or d1.nil?)

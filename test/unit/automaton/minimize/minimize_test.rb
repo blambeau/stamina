@@ -5,7 +5,7 @@ module Stamina
       class MinimizeTest < StaminaTest
 
         # To be overriden
-        def algo 
+        def algo
           nil
         end
 
@@ -51,4 +51,3 @@ module Stamina
     end # module Minimize
   end # class Automaton
 end # module Stamina
-

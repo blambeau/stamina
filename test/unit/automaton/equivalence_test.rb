@@ -6,7 +6,7 @@ module Stamina
       def test_equivalence_on_small_dfa
         assert_equal true, @small_dfa <=> @small_dfa
       end
-      
+
       def test_equivalence_on_real_case
         dfa1 = Stamina::ADL.parse_automaton <<-EOF
           3 5
@@ -48,7 +48,7 @@ module Stamina
         assert_equal true, dfa2 <=> dfa3
         assert_equal true, dfa3 <=> dfa2
       end
-      
+
       def test_equivalence_does_not_change_the_automata
         dfa1 = Stamina::ADL.parse_automaton <<-EOF
           1 1
@@ -59,7 +59,7 @@ module Stamina
         assert_equal true, dfa1 <=> dfa1
         assert_not_nil dfa1.initial_state
       end
-      
+
       def test_non_equivalent_dfa_are_recognized_1
         dfa1 = Stamina::ADL.parse_automaton <<-EOF
           3 5
@@ -75,7 +75,7 @@ module Stamina
         assert_equal false, @small_dfa <=> dfa1
         assert_equal false, dfa1 <=> @small_dfa
       end
-      
+
       def test_non_equivalent_dfa_are_recognized_2
         dfa1 = Stamina::ADL.parse_automaton <<-EOF
           5 4
@@ -99,7 +99,7 @@ module Stamina
         assert_not_nil dfa2.initial_state
         assert_equal false, dfa1 <=> dfa2
       end
-      
+
       def test_equivalence_takes_care_of_state_flags
         dfa1 = Stamina::ADL.parse_automaton <<-EOF
           1 0
@@ -116,4 +116,3 @@ module Stamina
     end # class EquivalenceTest
   end # class Automaton
 end # module Stamina
-

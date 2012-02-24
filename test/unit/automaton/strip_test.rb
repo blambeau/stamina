@@ -33,4 +33,3 @@ module Stamina
     end # class StripTest
   end # class Automaton
 end # module Stamina
-

@@ -2,7 +2,7 @@ module Stamina
   class RegLang
     module Question
       include Node
-    
+
       def to_fa!(fa)
         f1, t1 = fa.add_n_states(2)
         f2, t2 = self.term.to_fa!(fa)

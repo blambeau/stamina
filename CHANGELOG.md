@@ -2,7 +2,7 @@
 
 * Major enhancements
 
-    * adl2dot command now support samples as input in addition to automata. In 
+    * adl2dot command now support samples as input in addition to automata. In
       that case, the dot result models a PTA (prefix tree acceptor)
     * Added --png to 'stamina adl2dot'
 
@@ -19,9 +19,9 @@
     * Added Automaton stripping (removal of unreachable states) under Automaton#strip[!]
     * Added Automaton minimization (Hopcroft + Pitchies) under Automaton#minimize
     * Added Abbadingo generators under Abbadingo::RandomDFA and Abbadingo::RandomSample
-    * Added a main 'stamina' command relying on Quickl. classiy/adl2dot commands become 
+    * Added a main 'stamina' command relying on Quickl. classiy/adl2dot commands become
       subcommands of stamina itself (see stamina --help for a list of available commands).
-      Induction command (rpni and redblue) are now handled by a 'stamina infer' with 
+      Induction command (rpni and redblue) are now handled by a 'stamina infer' with
       options.
     * Error states and now correctly handled in ADL::parse and ADL::flush
     * RedBlue has been renamed as BlueFringe everywhere (red_?blue -> blue_fringe)
@@ -69,4 +69,3 @@
 # 0.2.1 / 2010-05-01
 
 * Main public version for the official competition, extracted from private SVN.
-

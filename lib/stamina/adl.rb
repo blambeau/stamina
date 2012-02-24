@@ -1,14 +1,14 @@
 module Stamina
   #
-  # Automaton Description Language module. This module provides parsing and 
+  # Automaton Description Language module. This module provides parsing and
   # printing methods for automata and samples. Documentation of the file format
   # used for an automaton is given in parse_automaton; file format for samples is
   # documented in parse_sample.
-  # 
+  #
   # Methods of this module are not intended to be included by a class but invoked
   # on the module instead:
   #
-  #   begin 
+  #   begin
   #     dfa = Stamina::ADL.parse_automaton_file("my_automaton.adl")
   #   rescue ADL::ParseError => ex
   #     puts "Oops, the ADL automaton file seems corrupted..."
@@ -16,22 +16,22 @@ module Stamina
   #
   # == Detailed API
   module ADL
-  
+
     #################################################################################
     # Automaton Section                                                             #
     #################################################################################
-  
+
     #
     # Parses a given automaton description and returns an Automaton instance.
     #
     # Raises:
     # - ArgumentError unless _descr_ is an IO object or a String.
-    # - ADL::ParseError if the ADL automaton format is not respected. 
+    # - ADL::ParseError if the ADL automaton format is not respected.
     #
     # ADL provides a really simple grammar to describe automata. Here is a succint
     # example (full documentation of the ADL automaton grammar can be found in
-    # the self-documenting example/adl/automaton.adl file).  
-    #     
+    # the self-documenting example/adl/automaton.adl file).
+    #
     #    # Some header comments: tool which has generated this automaton,
     #    # maybe a date or other tool options ...
     #    # here: 'this automaton accepts the a(ba)* regular language'
@@ -48,7 +48,7 @@ module Stamina
         state_read, edge_read = 0, 0
         states = {}
         mode = :header
-  
+
         automaton = Automaton.new do |fa|
           # parse each description line
           line_number = 1
@@ -57,16 +57,16 @@ module Stamina
             l = l[0,index] if index
             l = l.strip
             next if l.empty? or l[0,1]=='#'
-          
+
             case mode
-            when :header    
-              # looking for |state_count edge_count| 
+            when :header
+              # looking for |state_count edge_count|
               raise(ADL::ParseError,
                     "Parse error line #{line_number}: 'state_count edge_count' expected, "\
                     "'#{l}' found.") unless /^(\d+)\s+(\d+)$/ =~ l
               state_count, edge_count = $1.to_i, $2.to_i
               mode = :states
-            
+
             when :states
               # looking for |number initial accepting|
               raise(ADL::ParseError,
@@ -74,14 +74,14 @@ module Stamina
                     "'#{l}' found.") unless /^(\S+)\s+(true|false)\s+(true|false)(\s+(true|false))?$/ =~ l
               id, initial, accepting, error = $1, $2, $3, $5
               initial, accepting, error = ("true"==initial), ("true"==accepting), ("true"==error)
-            
+
               state = fa.add_state(:initial => initial, :accepting => accepting, :error => error)
               state[:name]=id.to_s
               states[id] = state
-            
+
               state_read += 1
               mode = (edge_count==0 ? :end : :edges) if state_read==state_count
-            
+
             when :edges
               # looking for |source target symbol|
               raise(ADL::ParseError,
@@ -94,31 +94,31 @@ module Stamina
               raise(ADL::ParseError,
                     "Parse error line #{line_number}: no such state #{target}") \
                     unless states[target]
-  
+
               fa.connect(states[source], states[target], {:symbol => symbol})
-                                    
+
               edge_read += 1
               mode = :end if edge_read==edge_count
-            
+
             when :end
               raise(ADL::ParseError,
                     "Parse error line #{line_number}: trailing data found '#{l}")
-            
+
             end # case mode
-          
+
             line_number += 1
           end
-  
+
           raise(ADL::ParseError, "Parse error: #{state_count} states annouced, "\
                                "#{state_read} found.") if state_count != state_read
           raise(ADL::ParseError, "Parse error: #{edge_count} edges annouced, "\
                                "#{edge_read} found.") if edge_count != edge_read
-        
+
         end # Automaton.new
       end
       return automaton
     end # def self.parse
-  
+
     #
     # Parses an automaton file _f_.
     #
@@ -134,9 +134,9 @@ module Stamina
       end
       automaton
     end
-    
+
     #
-    # Prints an automaton to a buffer (responding to <code>:&lt;&lt;</code>) in ADL 
+    # Prints an automaton to a buffer (responding to <code>:&lt;&lt;</code>) in ADL
     # format. Returns the buffer itself.
     #
     def self.print_automaton(fa, buffer="")
@@ -149,8 +149,8 @@ module Stamina
       end
       buffer
     end
-  
-    #  
+
+    #
     # Prints an automaton to a file whose path is provided.
     #
     # Shortcut for:
@@ -163,14 +163,14 @@ module Stamina
         print_automaton(fa, io)
       end
     end
-    
+
     #################################################################################
     # String and Sample Section                                                     #
     #################################################################################
-  
+
     #
-    # Parses an input string _str_ and returns a InputString instance. Format of 
-    # input strings is documented in parse_sample. _str_ is required to be a ruby 
+    # Parses an input string _str_ and returns a InputString instance. Format of
+    # input strings is documented in parse_sample. _str_ is required to be a ruby
     # String.
     #
     # Raises:
@@ -192,16 +192,16 @@ module Stamina
           raise ADL::ParseError, "Invalid string format #{str}", caller
       end
     end
-    
+
     #
-    # Parses the sample provided by _descr_. When a block is provided, yields it with 
+    # Parses the sample provided by _descr_. When a block is provided, yields it with
     # InputString instances and ignores the sample argument. Otherwise, fills the sample
     # (any object responding to <code><<</code>) with string, creating a fresh new
     # one (as a Sample instance) if sample is nil.
     #
-    # ADL provides a really simple grammar to describe samples (here is a succint 
+    # ADL provides a really simple grammar to describe samples (here is a succint
     # example, the full documentation of the sample grammar can be found in the
-    # self-documenting example/adl/sample.adl file): 
+    # self-documenting example/adl/sample.adl file):
     #
     #    #
     #    # Some header comments: tool which has generated this sample,
@@ -236,7 +236,7 @@ module Stamina
       end
       sample
     end
-  
+
     #
     # Parses an automaton file _f_.
     #
@@ -251,9 +251,9 @@ module Stamina
       end
       sample
     end
-  
+
     #
-    # Prints a sample in ADL format on a buffer. Sample argument is expected to be 
+    # Prints a sample in ADL format on a buffer. Sample argument is expected to be
     # an object responding to each, yielding InputString instances. Buffer is expected
     # to be an object responding to <code><<</code>.
     #
@@ -262,7 +262,7 @@ module Stamina
         buffer << str.to_s << "\n"
       end
     end
-  
+
     #
     # Prints a sample in a file.
     #
@@ -279,20 +279,20 @@ module Stamina
 
     ### private section ##########################################################
     private
-  
+
     #
     # Converts a parsable argument to an IO object or raises an ArgumentError.
-    # 
+    #
     def self.to_io(descr)
       case descr
       when IO
-        yield descr 
+        yield descr
       when String
         yield StringIO.new(descr)
       else
         raise ArgumentError, "IO instance expected, #{descr.class} received", caller
       end
     end
-  
+
   end # module ADL
 end # module Stamina
