@@ -1,10 +1,14 @@
 # 0.5.0 / FIX ME
 
+* Breaking features.
+
+  * Support for ruby 1.8.7 has been definitely removed.
+
 * Major enhancements
 
-    * The project has been split in different sub gems (one for core, one for induction
-      tools and one for the sinatra gui). This implies a lot of changes, but the public
-      API has not been affected.
+  * The project has been split in different sub gems (core, induction and gui). This
+    implies a lot of internal changes, but the public API has not been affected. A main
+    'stamina' gem automatically includes all sub gems so previous behavior is guaranteed.
 
 * Minor enhancements
     * Fixed a bug with bundler usage in main stamina binary
