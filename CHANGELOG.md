@@ -1,4 +1,10 @@
-# 0.5.0 / FIX ME
+# 0.5.1 / 2012-02-24
+
+* Bugfixes
+
+  * Fixes external requires in the different gems (no such file to load sinatra)
+
+# 0.5.0 / 2012-02-24
 
 * Breaking features.
 
