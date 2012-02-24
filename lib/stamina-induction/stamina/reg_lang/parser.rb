@@ -1,0 +1,10 @@
+require_relative "parser/node"
+require_relative "parser/parenthesized"
+require_relative "parser/symbol"
+require_relative "parser/question"
+require_relative "parser/plus"
+require_relative "parser/star"
+require_relative "parser/sequence"
+require_relative "parser/alternative"
+require_relative "parser/regexp"
+Citrus.require File.expand_path("../parser/parser", __FILE__)

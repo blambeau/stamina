@@ -1,6 +1,6 @@
 # We require your library, mainly to have access to the VERSION number.
 # Feel free to set $version manually.
-$LOAD_PATH.unshift File.expand_path('../lib', __FILE__)
+$LOAD_PATH.unshift File.expand_path('../lib/stamina-core', __FILE__)
 require "stamina/version"
 $version = Stamina::Version.to_s
 

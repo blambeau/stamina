@@ -1,4 +1,3 @@
-require 'stamina/utils/decorate'
 module Stamina
   class Automaton
     #

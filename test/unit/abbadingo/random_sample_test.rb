@@ -1,5 +1,4 @@
 require 'stamina_test'
-require 'stamina/abbadingo'
 module Stamina
   module Abbadingo
     class RandomSampleTest < StaminaTest

@@ -1,7 +1,10 @@
 require_relative 'engine/context'
 module Stamina
   class Engine
-    include Stamina::Dsl
+
+    def initialize
+      extend(Stamina::Dsl)
+    end
 
     def execute_binding
       binding

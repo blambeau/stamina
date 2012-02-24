@@ -1,0 +1,6 @@
+require_relative 'command/metrics'
+require_relative 'command/classify'
+require_relative 'command/score'
+require_relative 'command/abbadingo_dfa'
+require_relative 'command/abbadingo_samples'
+require_relative 'command/infer'

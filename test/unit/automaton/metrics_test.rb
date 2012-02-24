@@ -1,5 +1,4 @@
 require 'stamina_test'
-require 'stamina/adl'
 module Stamina
   class Automaton
     class MetricsTest < StaminaTest

@@ -49,4 +49,7 @@ module Stamina
     end
 
   end # module Classifier
+  class Automaton
+    include Stamina::Classifier
+  end
 end # module Stamina

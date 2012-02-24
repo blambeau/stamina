@@ -1,4 +1,3 @@
-require 'stamina/adl'
 require 'stamina_test'
 module Stamina
   class Automaton

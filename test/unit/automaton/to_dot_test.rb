@@ -1,5 +1,4 @@
-require 'test/unit'
-require 'stamina'
+require 'stamina_test'
 module Stamina
   module Utils
     class DotTest < Test::Unit::TestCase

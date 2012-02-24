@@ -357,6 +357,5 @@ module Stamina
 
     end # end Walking
     include Stamina::Automaton::Walking
-    include Stamina::Classifier
   end # class Automaton
 end # end Stamina

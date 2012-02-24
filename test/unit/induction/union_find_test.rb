@@ -1,5 +1,4 @@
-require 'test/unit'
-require 'stamina/induction/union_find'
+require 'stamina_test'
 module Stamina
   module Induction
     class UnionFindTest < Test::Unit::TestCase
