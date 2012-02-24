@@ -59,7 +59,7 @@ module Stamina
 
           # textual output
           puts "# #{varname} ###########################################"
-          puts varvalue
+          puts varvalue.respond_to?(:to_adl) ? varvalue.to_adl : varvalue
           puts
 
           # image output

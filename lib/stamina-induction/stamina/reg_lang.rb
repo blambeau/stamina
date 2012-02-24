@@ -216,6 +216,10 @@ module Stamina
       dfa.to_dot
     end
 
+    def to_adl
+      to_cdfa.to_adl
+    end
+
     EMPTY = RegLang.new(Automaton::DUM)
   end # class RegLang
 end # module Stamina
