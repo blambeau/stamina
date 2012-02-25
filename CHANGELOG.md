@@ -1,3 +1,7 @@
+# 0.5.3 / 2012-02-25
+
+* Resolve accuracy between github tags and rubygems
+
 # 0.5.2 / 2012-02-25
 
 * Bug fixes
