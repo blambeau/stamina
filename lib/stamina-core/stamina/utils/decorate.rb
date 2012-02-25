@@ -53,13 +53,15 @@ module Stamina
 
       # Executes the propagation algorithm on a given automaton.
       def execute(fa, bottom, d0)
+        to_explore = []
+
         # install initial decoration
         fa.states.each do |s|
           s[@decoration_key] = (s.initial? ? d0 : bottom)
+          to_explore << s if s.initial?
         end
 
         # fix-point loop starting with initial states
-        to_explore = fa.initial_states
         until to_explore.empty?
           source = to_explore.pop
           source.out_edges.each do |edge|

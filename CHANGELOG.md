@@ -1,8 +1,16 @@
+# 0.5.2 / 2012-02-25
+
+* Bug fixes
+
+  * Fixed the decoration algorithm on non deterministic automata. Initial states
+    considered are only those explicitly marked as initial (:initial => true) and not
+    all states reached through epsilon symbols.
+
 # 0.5.1 / 2012-02-24
 
-* Bugfixes
+* Bug fixes
 
-  * Fixes external requires in the different gems (no such file to load sinatra)
+  * Fixed external requires in the different gems (no such file to load sinatra)
 
 # 0.5.0 / 2012-02-24
 
