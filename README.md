@@ -1,5 +1,8 @@
 # What is Stamina?
 
+[![Build Status](https://secure.travis-ci.org/blambeau/stamina.png)](http://travis-ci.org/blambeau/stamina)
+[![Dependency Status](https://gemnasium.com/blambeau/stamina.png)](https://gemnasium.com/blambeau/stamina)
+
 This Stamina distribution is an implementation of the well-known regular induction algorithms RPNI (Regular Positive and Negative Inference) and RedBlue (aka BlueFringe). It has been implemented during the Stamina regular language inference challenge in 2010, challenge initiated by Kyril Bogdanov and Neil Walkinshaw (University of Shefield, England) as well as Christophe Damas, Pierre Dupont and Bernard Lambeau (Universite catholique de Louvain, UCL, Belgium)
 
 It's official maintainer is Bernard Lambeau. Any comment, question, bug report, etc. to be adressed to bernard dot lambeau at uclouvain dot be or, better, on the supporting {redmine bugtracker}[http://redmine.chefbe.net/projects/stamina].
