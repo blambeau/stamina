@@ -290,6 +290,7 @@ module Stamina
       def parses?(input, from=nil)
         not(reached(input,from).empty?)
       end
+      alias :parse? :parses?
 
       #
       # Checks if the automaton accepts an input string. Returns true if at least
@@ -298,6 +299,7 @@ module Stamina
       def accepts?(input, from=nil)
         not reached(input,from).select{|s| s.accepting? and not s.error?}.empty?
       end
+      alias :accept? :accepts?
 
       #
       # Checks if the automaton rejects an input string. Returns true if no
@@ -306,6 +308,7 @@ module Stamina
       def rejects?(input, from=nil)
         not(accepts?(input, from))
       end
+      alias :reject? :rejects?
 
       # Returns '1' if the string is accepted by the automaton,
       # '0' otherwise.
