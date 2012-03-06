@@ -1214,7 +1214,7 @@ module Stamina
     #
     #   {:label => "#{edge.symbol}"}
     #
-    def to_dot(&rewriter)
+    def to_dot(sort_states = true, &rewriter)
       unless rewriter
         to_dot do |elm, kind|
           case kind
@@ -1236,9 +1236,14 @@ module Stamina
         buffer = "digraph G {\n"
         attrs = attributes2dot(rewriter.call(self, :automaton))
         buffer << "  graph [#{attrs}];\n"
-        self.depth
-        states.sort{|s1,s2| s1[:depth] <=> s2[:depth]}.each do |s|
-          s.remove_mark(:depth)
+        ss = if sort_states
+          self.depth
+          states.sort{|s1,s2| s1[:depth] <=> s2[:depth]}
+        else
+          self.states
+        end
+        ss.each do |s|
+          s.remove_mark(:depth) if sort_states
           attrs = attributes2dot(rewriter.call(s, :state))
           buffer << "  #{s.index} [#{attrs}];\n"
         end
