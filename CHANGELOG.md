@@ -1,3 +1,8 @@
+# O.5.4 / FIX ME
+
+* InputString and Sample have been moved from stamina-induction to stamina-core as ADL
+  and Walking rely on them.
+
 # 0.5.3 / 2012-02-25
 
 * Resolve accuracy between github tags and rubygems

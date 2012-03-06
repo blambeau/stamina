@@ -1,5 +1,3 @@
-require_relative 'sample'
-require_relative 'input_string'
 require_relative 'classifier'
 require_relative 'scoring'
 require_relative 'induction/union_find'
