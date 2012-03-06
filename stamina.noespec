@@ -28,7 +28,7 @@ variables:
   upper:
     Stamina
   version:
-    0.5.3
+    0.5.4
   summary: |-
     Automaton and Regular Inference Toolkit
   description: |-

@@ -1,9 +1,10 @@
-# O.5.4 / FIX ME
+# O.5.4 / 2012-03-06
 
 * InputString and Sample have been moved from stamina-induction to stamina-core as ADL
   and Walking rely on them.
 * Walking methods `parses?`, `accepts?` and `rejects?` are now aliased as `parse?`,
   `accept?` and `reject?`, respectively.
+* Automaton#to_dot now accepts a boolean argument to bypass sorting its states.
 
 # 0.5.3 / 2012-02-25
 
