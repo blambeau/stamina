@@ -38,6 +38,28 @@ module Stamina
         assert expected.complete <=> nfa.determinize.complete
       end
 
+      def test_on_non_singleton_epsilon_closure_on_initial_state
+        nfa = Automaton.new do
+          add_state(:initial => true, :accepting => false)
+          add_state(:initial => false, :accepting => false)
+          add_state(:initial => false, :accepting => false)
+          add_state(:initial => false, :accepting => false)
+          add_state(:initial => false, :accepting => true)
+          connect(0,1,nil)
+          connect(0,3,"a")
+          connect(1,2,"a")
+          connect(1,0,"b")
+          connect(2,4,nil)
+        end
+        expected = Automaton.new do
+          add_state(:initial => true, :accepting => false)
+          add_state(:initial => false, :accepting => true)
+          connect(0,1,"a")
+          connect(0,0,"b")
+        end
+        assert expected.complete <=> nfa.determinize.complete
+      end
+
     end
   end
 end
