@@ -182,21 +182,9 @@ module Stamina
           target = dfa_delta(symbol)
           target.nil? ? [] : [target]
         else
-          # 1) first compute epsilon closure of self
           at_epsilon = epsilon_closure
-
-          # 2) now, look where we can go from there
-          at_espilon_then_symbol = at_epsilon.collect do |s|
-            s.step(symbol)
-          end.flatten.uniq
-
-          # 3) look where we can go from there using epsilon
-          result = at_espilon_then_symbol.collect do |s|
-            s.epsilon_closure
-          end.flatten.uniq
-
-          # return result as an array
-          result
+          at_espilon_then_symbol = at_epsilon.map{|s| s.step(symbol)}.flatten.uniq
+          at_espilon_then_symbol.map{|s| s.epsilon_closure}.flatten.uniq
         end
       end
 

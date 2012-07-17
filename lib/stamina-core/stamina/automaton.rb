@@ -763,9 +763,7 @@ module Stamina
 
     # Returns true if the automaton is deterministic, false otherwise
     def deterministic?
-      if @deterministic.nil?
-        @deterministic = @states.all?{|s| s.deterministic?}
-      end
+      @deterministic = @states.all?{|s| s.deterministic?} if @deterministic.nil?
       @deterministic
     end
 
