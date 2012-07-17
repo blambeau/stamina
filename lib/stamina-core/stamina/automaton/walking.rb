@@ -135,7 +135,7 @@ module Stamina
       #
       def step(from, symbol)
         from = walking_to_from(from)
-        from.collect{|s| s.step(symbol)}.flatten.uniq
+        from.map{|s| s.step(symbol)}.flatten.uniq
       end
 
       #
@@ -144,7 +144,7 @@ module Stamina
       # reached with the given symbol.
       #
       def dfa_step(from, symbol)
-        step = walking_to_from(from).collect{|s| s.dfa_step(symbol)}.flatten.uniq
+        step = walking_to_from(from).map{|s| s.dfa_step(symbol)}.flatten.uniq
         walking_to_dfa_result(step, from)
       end
 
@@ -158,7 +158,7 @@ module Stamina
       # regular expression, where eps is the epsilon symbol.
       #
       def delta(from, symbol)
-        walking_to_from(from).collect{|s| s.delta(symbol)}.flatten.uniq
+        walking_to_from(from).map{|s| s.delta(symbol)}.flatten.uniq
       end
 
       #
@@ -171,7 +171,7 @@ module Stamina
         if from.is_a?(Automaton::State)
           from.dfa_delta(symbol)
         else
-          delta = walking_to_from(from).collect{|s| s.dfa_delta(symbol)}.flatten.uniq
+          delta = walking_to_from(from).map{|s| s.dfa_delta(symbol)}.flatten.uniq
           walking_to_dfa_result(delta, from)
         end
       end
@@ -344,7 +344,7 @@ module Stamina
       # Implements _from_ conventions.
       def walking_to_from(from)
         return initial_states if from.nil?
-        Array===from ? from.collect{|s| to_state(s)} : [to_state(from)]
+        Array===from ? from.map{|s| to_state(s)} : [to_state(from)]
       end
 
       # Implements _return_ conventions of dfa_xxx methods.
