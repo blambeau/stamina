@@ -1,3 +1,7 @@
+# 0.5.5 / FIX ME
+
+* Generalized the decoration algorithm to work backwards as well as forwards.
+
 # O.5.4 / 2012-03-06
 
 * InputString and Sample have been moved from stamina-induction to stamina-core as ADL

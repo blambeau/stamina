@@ -15,6 +15,9 @@ module Stamina
         @decoration_key = decoration_key
         @suppremum = nil
         @propagate = nil
+        @initiator = nil
+        @start_predicate = nil
+        @backward = false
       end
 
       # Installs a suppremum function through a block.
@@ -24,11 +27,9 @@ module Stamina
         @suppremum = block
       end
 
-      # Installs a propagate function through a block.
-      def set_propagate(&block)
-        raise ArgumentError, 'Propagate expected through a block' if block.nil?
-        raise ArgumentError, 'Block of arity 2 expected' unless block.arity==2
-        @propagate = block
+      # Same as #set_suppremum, but with an explicit proc
+      def suppremum=(proc)
+        set_suppremum(&proc)
       end
 
       # Computes the suppremum between two decorations. By default, this method
@@ -41,6 +42,18 @@ module Stamina
         raise "No suppremum function installed or implemented by decorations"
       end
 
+      # Installs a propagate function through a block.
+      def set_propagate(&block)
+        raise ArgumentError, 'Propagate expected through a block' if block.nil?
+        raise ArgumentError, 'Block of arity 2 expected' unless block.arity==2
+        @propagate = block
+      end
+
+      # Same as #set_propagate, but with an explicit proc
+      def propagate=(proc)
+        set_propagate(&proc)
+      end
+
       # Computes the propagation rule. By default, this method looks for a propagate
       # function installed with set_propagate. If not found, it tries calling a +
       # method on deco. If not found it raises an error.
@@ -51,21 +64,63 @@ module Stamina
         raise "No propagate function installed or implemented by decorations"
       end
 
+      # Set an initiator methods, responsible of computing the initial decoration of
+      # each state
+      def set_initiator(&block)
+        raise ArgumentError, 'Initiator expected through a block' if block.nil?
+        raise ArgumentError, 'Block of arity 1 expected' unless block.arity==1
+        @initiator = block
+      end
+
+      # Same as #set_initiator but with an explicit proc
+      def initiator=(proc)
+        set_initiator(&proc)
+      end
+
+      # Returns the initial decoration of state `s`
+      def init_deco(s)
+        return @initiator.call(s) if @initiator
+        raise "No initiator function installed"
+      end
+
+      # Sets the start predicate to use
+      def set_start_predicate(&block)
+        raise ArgumentError, 'Start predicate expected through a block' if block.nil?
+        raise ArgumentError, 'Block of arity 1 expected' unless block.arity==1
+        @start_predicate = block
+      end
+
+      # Same as #set_start_predicate but with an explicit proc
+      def start_predicate=(proc)
+        set_start_predicate(&proc)
+      end
+
+      # Returns the start predicate
+      def take_at_start?(s)
+        return @start_predicate.call(s) if @start_predicate
+        raise "No start predicate function installed"
+      end
+
+      # Sets if the algorithms works backward
+      def backward=(val)
+        @backward = val
+      end
+
+      # Work backward?
+      def backward?
+        @backward
+      end
+
       # Executes the propagation algorithm on a given automaton.
-      def execute(fa, bottom, d0)
-        to_explore = []
-
-        # install initial decoration
+      def call(fa)
         fa.states.each do |s|
-          s[@decoration_key] = (s.initial? ? d0 : bottom)
-          to_explore << s if s.initial?
+          s[@decoration_key] = init_deco(s)
         end
-
-        # fix-point loop starting with initial states
+        to_explore = fa.states.select{|s| take_at_start?(s)}
         until to_explore.empty?
           source = to_explore.pop
-          source.out_edges.each do |edge|
-            target = edge.target
+          (backward? ? source.in_edges : source.out_edges).each do |edge|
+            target = backward? ? edge.source : edge.target
             p_decor = propagate(source[@decoration_key], edge)
             p_decor = suppremum(target[@decoration_key], p_decor)
             unless p_decor == target[@decoration_key]
@@ -74,8 +129,14 @@ module Stamina
             end
           end
         end
-
         fa
+      end
+
+      # Executes the propagation algorithm on a given automaton.
+      def execute(fa, bottom, d0)
+        self.initiator       = lambda{|s| (s.initial? ? d0 : bottom)}
+        self.start_predicate = lambda{|s| s.initial? }
+        call(fa)
       end
 
     end # class Decorate
