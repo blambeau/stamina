@@ -1,0 +1,1 @@
+require_relative 'transition_system/equivalence'
