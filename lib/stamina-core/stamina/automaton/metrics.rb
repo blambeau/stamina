@@ -49,23 +49,17 @@ module Stamina
       # each state as a mark under _key_, which defaults to :depth.
       #
       def depth(key = :depth)
-        algo = Stamina::Utils::Decorate.new(key)
+        algo = Stamina::Utils::Decorate.new
         algo.set_suppremum do |d0,d1|
-          # Here, unreached state has the max value (i.e. nil is +INF)
-          # and we look at the minimum depth for each state
-          if d0.nil?
-            d1
-          elsif d1.nil?
-            d0
-          else
-            (d0 <= d1 ? d0 : d1)
-          end
+          # Unreached state is MAX (i.e. nil is +INF); we look at the min depth for each state
+          (d0.nil? or d1.nil?) ? (d0 || d1) : (d0 <= d1 ? d0 : d1)
         end
         algo.set_propagate{|d,e| d+1 }
-        algo.execute(self, nil, 0)
+        algo.set_initiator{|s| s.initial? ? 0 : nil }
+        algo.set_start_predicate{|s| s.initial? }
+        algo.call(self, key)
         deepest = states.max do |s0,s1|
-          # Here, we do not take unreachable states into account
-          # so that -1 is taken when nil is encountered
+          # do not take unreachable states into account: -1 is taken if nil is encountered
           (s0[:depth] || -1) <=> (s1[:depth] || -1)
         end
         deepest[:depth]

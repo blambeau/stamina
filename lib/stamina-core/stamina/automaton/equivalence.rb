@@ -26,30 +26,29 @@ module Stamina
       #   * suppremum is identity and fails when the equivalent state is not unique
       #   * propagation checks transition function delta
       #
-      algo = Stamina::Utils::Decorate.new(key)
+      algo = Stamina::Utils::Decorate.new
       algo.set_suppremum do |d0, d1|
         if (d0.nil? or d1.nil?)
            (d0 || d1)
-        elsif d0==d1
-          d0
         else
-          raise Stamina::Abord
+          throw :non_equivalent unless d0==d1
+          d0
         end
       end
+      algo.set_initiator{|s| s.initial? ? other.initial_state.index : nil}
+      algo.set_start_predicate{|s| s.initial? }
       algo.set_propagate do |d,e|
         reached = other.ith_state(d).dfa_step(e.symbol)
-        raise Stamina::Abord if reached.nil?
-        raise Stamina::Abord unless equiv[e.target, reached]
+        throw :non_equivalent unless reached && equiv[e.target, reached]
         reached.index
       end
 
       # Run the algorithm now
-      begin
-        algo.execute(self, nil, other.initial_state.index)
+      catch(:non_equivalent) do
+        algo.call(self, key)
         return true
-      rescue Stamina::Abord
-        return false
       end
+      return false
     end
     alias :<=> :equivalent?
 

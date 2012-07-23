@@ -1,6 +1,7 @@
 # 0.5.5 / FIX ME
 
-* Generalized the decoration algorithm to work backwards as well as forwards.
+* Generalized the decoration algorithm to work backwards as well as forwards as well as
+  accepting an output Hash-like object, defaulting to true state decorations.
 
 # O.5.4 / 2012-03-06
 

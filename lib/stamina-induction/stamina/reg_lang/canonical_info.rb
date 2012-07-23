@@ -2,19 +2,23 @@ module Stamina
   class RegLang
     class CanonicalInfo
 
-      SHORT_PREFIXES = begin
-        algo = Stamina::Utils::Decorate.new(:short_prefix)
-        algo.set_suppremum do |d0,d1|
+      class ShortPrefixes < Utils::Decorate
+        def suppremum(d0, d1)
           if (d0.nil? || d1.nil?)
             (d0 || d1)
           else
-            d0.size <= d1.size ? d0 : d1
+            (d0.size <= d1.size) ? d0 : d1
           end
         end
-        algo.set_propagate do |deco, edge|
+        def propagate(deco, edge)
           deco.dup << edge.symbol
         end
-        algo
+        def init_deco(s)
+          s.initial? ? [] : nil
+        end
+        def take_at_start?(s)
+          s.initial?
+        end
       end
 
       attr_reader :cdfa
@@ -105,7 +109,7 @@ module Stamina
       # Ensures that short prefixes of states are recognized
       def prefixes!
         unless defined?(@prefixes)
-          SHORT_PREFIXES.execute(cdfa, nil, [])
+          ShortPrefixes.new.call(cdfa, :short_prefix)
           @prefixes = true
         end
       end
