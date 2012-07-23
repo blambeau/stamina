@@ -14,7 +14,9 @@ module Stamina
     #
     # Returns user-value associated to _key_, nil if no such key in user-data.
     #
-    def [](key) @data[key] end
+    def [](key)
+      @data[key]
+    end
 
     #
     # Associates _value_ to _key_ in user-data. Overrides previous value if
@@ -31,6 +33,17 @@ module Stamina
       oldvalue = @data[key]
       @data.delete(key)
       state_changed(:loaded_pair, [key,oldvalue,nil]) if self.respond_to? :state_changed
+    end
+
+    # Returns the values mapped to `keys` as an array
+    def marks(*keys)
+      raw_data.values_at(*keys)
+    end
+
+    # Returns RAW data, that is without duplicating it. Returns result should not be
+    # changed.
+    def raw_data
+      @data ||= {}
     end
 
     # Extracts the copy of attributes which can subsequently be modified.
