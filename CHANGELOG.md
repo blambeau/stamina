@@ -1,6 +1,7 @@
 # 0.6.0 / FIX ME
 
 * Added Markable#marks and Markable#raw_data
+* State#initial!, #accepting! and error! now accept an optional truth value parameter.
 * Generalized the decoration algorithm to work backwards as well as forwards as well as
   accepting an output Hash-like object, defaulting to true state decorations.
 * Generalized the DFA equivalence algorithm under TransitionSystem::Equivalence.

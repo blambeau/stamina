@@ -33,8 +33,8 @@ module Stamina
       end
 
       # Sets this state as an initial state.
-      def initial!
-        @data[:initial] = true
+      def initial!(value = true)
+        @data[:initial] = value
       end
 
       # Returns true if this state is an accepting state, false otherwise.
@@ -43,8 +43,8 @@ module Stamina
       end
 
       # Sets this state as an accepting state.
-      def accepting!
-        @data[:accepting] = true
+      def accepting!(value = true)
+        @data[:accepting] = value
       end
 
       # Returns true if this state is an error state, false otherwise.
@@ -53,8 +53,8 @@ module Stamina
       end
 
       # Sets this state as an error state.
-      def error!
-        @data[:error] = true
+      def error!(value = true)
+        @data[:error] = value
       end
 
       # Returns true if this state is deterministic, false otherwise.
