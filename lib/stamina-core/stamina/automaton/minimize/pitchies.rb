@@ -107,13 +107,13 @@ module Stamina
         def main
           alph, states = @automaton.alphabet, @automaton.states
           old_nb_states = -1
-          partition = states.collect{|s| s.accepting? ? 1 : 0}
+          partition = states.map{|s| s.accepting? ? 1 : 0}
           until (nb_states = partition.uniq.size) == old_nb_states
             old_nb_states = nb_states
             alph.each do |symbol|
-              reached = states.collect{|s| partition[s.dfa_step(symbol).index]}
+              reached = states.map{|s| partition[s.dfa_step(symbol).index]}
               rehash = Hash.new{|h,k| h[k] = h.size}
-              partition = partition.zip(reached).collect{|pair| rehash[pair]}
+              partition = partition.zip(reached).map{|pair| rehash[pair]}
             end
           end
           minimized_dfa(@automaton, nb_states, partition)
