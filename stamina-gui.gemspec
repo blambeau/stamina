@@ -14,8 +14,8 @@ Gem::Specification.new do |s|
   s.authors   = ["Bernard Lambeau"]
   s.email     = ["blambeau@gmail.com"]
 
-  s.add_dependency("stamina-core",      "= #{$version}")
-  s.add_dependency("stamina-induction", "= #{$version}")
+  s.add_dependency("stamina-core",      "= #{Stamina::VERSION}")
+  s.add_dependency("stamina-induction", "= #{Stamina::VERSION}")
   s.add_dependency("sinatra", "~> 1.3")
   s.add_dependency("json",    "~> 1.6")
 end
