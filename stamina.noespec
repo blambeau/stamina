@@ -1,6 +1,6 @@
 template-info:
-  name: "ruby"
-  version: 1.7.0
+  name: "rubygem.noe"
+  version: 1.7.4
   manifest:
     spec:
       ignore: true
@@ -28,7 +28,7 @@ variables:
   upper:
     Stamina
   version:
-    0.5.4
+    0.6.0
   summary: |-
     Automaton and Regular Inference Toolkit
   description: |-

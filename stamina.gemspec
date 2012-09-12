@@ -17,7 +17,7 @@ Gem::Specification.new do |s|
                     [ "lib/stamina.rb" ]
 
   s.bindir        = "bin"
-  s.executables   = Dir["bin/**/*"]
+  s.executables   = ["stamina"]
 
   s.homepage  = "https://github.com/blambeau/stamina"
   s.authors   = ["Bernard Lambeau"]

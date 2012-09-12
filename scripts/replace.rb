@@ -1,4 +1,4 @@
-require 'epath'
+require 'path'
 search, replace = ARGV
 Dir["**/*.rb"].each do |file|
   c = Path(file).read

@@ -1,4 +1,4 @@
-# 0.6.0 / FIX ME
+# 0.6.0 / 2012-09-12
 
 * Added Markable#marks and Markable#raw_data
 * State#initial!, #accepting! and error! now accept an optional truth value parameter.

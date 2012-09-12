@@ -5,6 +5,7 @@ group :runtime do
 end
 
 group :development do
+  gem "path", "~> 1.3"
   gem "citrus", "~> 2.4"
   gem "sinatra", "~> 1.3"
   gem "rake", "~> 0.9.2"

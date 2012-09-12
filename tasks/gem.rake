@@ -1,5 +1,5 @@
 task :gem do
-  require 'epath'
+  require 'path'
 
   `rm -rf pkg && mkdir pkg`
   (Path.dir/"..").glob("*.gemspec").each do |file|
