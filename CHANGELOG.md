@@ -1,3 +1,8 @@
+# 0.6.1 / FIX ME
+
+* Fixed a bug in TransitionSystem::Equivalence that did not take non complete mapping into
+  account.
+
 # 0.6.0 / 2012-09-12
 
 * Added Markable#marks and Markable#raw_data
