@@ -63,7 +63,9 @@ module Stamina
           symbol   = edge.symbol
           source   = reference.ith_state(deco)
           eq_edge  = algo.find_edge_counterpart(source, edge)
-          algo.fail("No such transition `#{symbol}` from #{source}") unless eq_edge
+          unless eq_edge
+            algo.fail("No such transition `#{symbol}` from #{source}")
+          end
           algo.equivalent_edges!(edge, eq_edge)
           algo.equivalent_states!(edge.target, eq_edge.target)
           eq_edge.target.index
@@ -89,8 +91,9 @@ module Stamina
           fail "No initial state on ts1" unless i1
           fail "No initial state on ts2" unless i2
           equivalent_states!(i1, i2)
-          EquivThroughDeco.new(ts2, self).call(ts1, {})
-          return true
+          mapping = {}
+          EquivThroughDeco.new(ts2, self).call(ts1, mapping)
+          return !mapping.any?{|k,v| v.nil?}
         end
         return false
       ensure
