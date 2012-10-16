@@ -28,7 +28,8 @@ module Stamina
           connect(s, sink, symbol)
         end
       end
-      drop_state(sink) if sink.adjacent_states == [sink]
+      adj = sink.adjacent_states
+      drop_state(sink) if adj.empty? or adj == [sink]
       self
     end
 

@@ -1,7 +1,9 @@
-# 0.6.1 / FIX ME
+# 0.6.1 / 2012-10-16
 
 * Fixed a bug in TransitionSystem::Equivalence that did not take non complete mapping into
   account.
+* Fixed a bug in Automaton#complete when the alphabet is empty.
+* Fixed a bug in Automaton#to_dot when sort_states is false and no rewriter is passed.
 
 # 0.6.0 / 2012-09-12
 

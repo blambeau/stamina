@@ -863,7 +863,7 @@ module Stamina
     #
     def to_dot(sort_states = true, &rewriter)
       unless rewriter
-        to_dot do |elm, kind|
+        to_dot(sort_states) do |elm, kind|
           case kind
             when :automaton
               {:pack => true, :rankdir => "LR", :ranksep => 0, :margin => 0}
